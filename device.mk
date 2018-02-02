@@ -184,6 +184,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/privapp-permissions-gemini.xml:system/etc/permissions/privapp-permissions-gemini.xml
 
+# Dex
+PRODUCT_DEXPREOPT_SPEED_APPS += \
+    SystemUI
+
 # Display
 PRODUCT_PACKAGES += \
     copybit.msm8996 \
