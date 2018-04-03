@@ -38,6 +38,7 @@ LOCAL_CFLAGS += -DQCAMERA_HAL3_SUPPORT
 #else
 LOCAL_CFLAGS += -DQCAMERA_HAL1_SUPPORT
 LOCAL_SRC_FILES += \
+        HAL/CameraParameters.cpp \
         HAL/QCamera2HWI.cpp \
         HAL/QCameraMuxer.cpp \
         HAL/QCameraMem.cpp \
@@ -45,7 +46,6 @@ LOCAL_SRC_FILES += \
         HAL/QCameraChannel.cpp \
         HAL/QCameraStream.cpp \
         HAL/QCameraPostProc.cpp \
-		HAL/CameraParameters.cpp \
         HAL/QCamera2HWICallbacks.cpp \
         HAL/QCameraParameters.cpp \
         HAL/QCameraParametersIntf.cpp \
@@ -90,7 +90,7 @@ LOCAL_C_INCLUDES := \
         $(LOCAL_PATH)/HAL3 \
         $(call project-path-for,qcom-media)/libstagefrighthw \
         $(call project-path-for,qcom-media)/mm-core/inc \
-        hardware/interfaces/camera/common/1.0/default/include
+        $(TARGET_OUT_HEADERS)/mm-camera-lib/cp/prebuilt
 
 #HAL 1.0 Include paths
 LOCAL_C_INCLUDES += \
