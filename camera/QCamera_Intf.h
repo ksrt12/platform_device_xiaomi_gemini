@@ -801,7 +801,7 @@ typedef struct {
 } denoise_param_t;
 
 #ifndef HAVE_CAMERA_SIZE_TYPE
-  #define HAVE_CAMERA_SIZE_TYPE
+#define HAVE_CAMERA_SIZE_TYPE
 struct camera_size_type {
   int width;
   int height;

@@ -14,11 +14,11 @@
 ** See the License for the specific language governing permissions and
 ** limitations under the License.
 */
- #define LOG_TAG "CameraParams"
-#include <utils/Log.h>
- #include <string.h>
+#define LOG_TAG "CameraParams"
+#include <log/log.h>
+#include <string.h>
 #include <stdlib.h>
-#include <camera/CameraParameters.h>
+#include "CameraParameters.h"
 #include <system/graphics.h>
  namespace android {
 // Parameter keys to communicate between camera application and driver.

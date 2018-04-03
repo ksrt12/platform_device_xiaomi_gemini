@@ -13,10 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- #ifndef ANDROID_HARDWARE_CAMERA_PARAMETERS_H
+#ifndef ANDROID_HARDWARE_CAMERA_PARAMETERS_H
 #define ANDROID_HARDWARE_CAMERA_PARAMETERS_H
- #include <utils/KeyedVector.h>
+#include <utils/KeyedVector.h>
 #include <utils/String8.h>
+#include <unistd.h>
  namespace android {
  struct Size {
     int width;
