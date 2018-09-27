@@ -77,7 +77,6 @@ vendor/lib/libqtigef.so|adf2bfcc4892e4d09d197e6643f639a429fea882
 
 # Bluetooth - from enchilada PKQ1.180716.001
 vendor/bin/hw/android.hardware.bluetooth@1.0-service-qti|d269f76a32c840827f17cc4b6b4f2d03683a7341
-vendor/bin/wcnss_filter|65c276e8ed95b55d337534411add48806e034a84
 vendor/etc/init/android.hardware.bluetooth@1.0-service-qti.rc|a979981c55f3dcaf6cf2212e71b901ca4d58b959
 vendor/lib64/hw/android.hardware.bluetooth@1.0-impl-qti.so|d6753f625bec4d3cd49e429a2bb16f5755e3f642
 vendor/lib64/libbtnv.so|0dfa39bd4f70e39d0ff7c789b2958edd8e3463dd
