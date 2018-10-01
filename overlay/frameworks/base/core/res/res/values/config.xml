@@ -137,7 +137,11 @@
     <integer-array name="config_autoBrightnessButtonBacklightValues">
     </integer-array>
 
-<!--     <bool name="config_deviceHasVariableButtonBrightness">true</bool> -->
+    <!-- Button backlight -->
+    <bool name="config_deviceHasVariableButtonBrightness">true</bool>
+
+    <!-- Whether to cleanup fingerprints upon connection to the daemon and when user switches -->
+    <bool name="config_cleanupUnusedFingerprints">false</bool>
 
     <!-- Screen brightness used to dim the screen when the user activity
          timeout expires.  May be less than the minimum allowed brightness setting
