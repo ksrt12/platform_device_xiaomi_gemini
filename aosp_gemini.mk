@@ -21,12 +21,13 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 
 # Inherit from gemini device
 $(call inherit-product, device/xiaomi/gemini/device.mk)
+HAVOC_BUILD_TYPE := ksrt12
 
-# Inherit some common AEX stuff.
-$(call inherit-product, vendor/syberia/common.mk)
+# Inherit some common Havoc stuff.
+$(call inherit-product, vendor/havoc/config/common.mk)
 
 # Device identifier. This must come after all inclusions.
-PRODUCT_NAME := syberia_gemini
+PRODUCT_NAME := aosp_gemini
 PRODUCT_DEVICE := gemini
 PRODUCT_BRAND := Xiaomi
 PRODUCT_MODEL := MI 5
@@ -46,5 +47,3 @@ TARGET_VENDOR := Xiaomi
 
 TARGET_BOOT_ANIMATION_RES := 1080
 export SKIP_ABI_CHECKS := true
-
-SYBERIA_BUILD_TYPE := OFFICIAL
