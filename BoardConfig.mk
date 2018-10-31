@@ -63,8 +63,7 @@ TARGET_KERNEL_SOURCE := /mnt/EXT/syberia/kernel/xiaomi/msm8996
 TARGET_KERNEL_CROSS_COMPILE_PREFIX := aarch64-linux-android-
 TARGET_KERNEL_CLANG_COMPILE := true
 TARGET_KERNEL_CLANG_VERSION := 8.0
-#KERNEL_TOOLCHAIN := $(ANDROID_BUILD_TOP)/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-8.x/bin
-TARGET_KERNEL_CLANG_PATH := $(ANDROID_TOP)/prebuilts/clang/host/$(HOST_OS)-x86/$(TARGET_KERNEL_CLANG_VERSION)/bin
+TARGET_KERNEL_CLANG_PATH := /home/ksrt12/dtc/out/8.0-DragonTC-20181030/bin
 
 # Platform
 TARGET_BOARD_PLATFORM := msm8996
@@ -248,6 +247,6 @@ WPA_SUPPLICANT_VERSION := VER_0_8_X
 # Inherit from the proprietary version
 -include vendor/xiaomi/gemini/BoardConfigVendor.mk
 
-USE_DEX2OAT_DEBUG := true
-ART_BUILD_TARGET_DEBUG := true
-ART_BUILD_HOST_DEBUG := true
+#USE_DEX2OAT_DEBUG := true
+#ART_BUILD_TARGET_DEBUG := true
+#ART_BUILD_HOST_DEBUG := true

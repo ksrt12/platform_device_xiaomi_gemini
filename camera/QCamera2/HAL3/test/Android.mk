@@ -13,8 +13,9 @@ else
     LOCAL_CFLAGS += -DCAMERA_CHIPSET_8937
 endif
 
+LOCAL_ADDITIONAL_DEPENDENCIES += INSTALLED_KERNEL_HEADERS
 LOCAL_C_INCLUDES += $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr/include
-LOCAL_C_INCLUDES+= $(kernel_includes)
+LOCAL_C_INCLUDES += $(kernel_includes)
 
 LOCAL_C_INCLUDES += \
     hardware/libhardware/include/hardware \

@@ -1,0 +1,291 @@
+From 47ef6ef5cbec40eaf1646f9c538d381efdb65411 Mon Sep 17 00:00:00 2001
+From: Kazakov Stepan <kazakov12stepan2012@live.ru>
+Date: Thu, 18 Oct 2018 19:10:03 +0300
+Subject: [PATCH] 1
+
+---
+ build/core/qcom_target.mk  | 20 +++++++++----------
+ build/core/qcom_utils.mk   |  2 --
+ build/envsetup.sh          | 18 +++++++++---------
+ build/tasks/kernel.mk      |  2 +-
+ build/tools/changelog.sh   |  0
+ config/BoardConfigHavoc.mk |  2 +-
+ config/BoardConfigQcom.mk  | 39 +++++++-------------------------------
+ config/common.mk           |  2 +-
+ config/version.mk          |  3 +--
+ 9 files changed, 29 insertions(+), 59 deletions(-)
+ mode change 100644 => 100755 build/tools/changelog.sh
+
+diff --git a/build/core/qcom_target.mk b/build/core/qcom_target.mk
+index 2244c38d..62c3eb87 100644
+--- a/build/core/qcom_target.mk
++++ b/build/core/qcom_target.mk
+@@ -1,6 +1,12 @@
++# Target-specific configuration
++
+ # Bring in Qualcomm helper macros
+ include vendor/havoc/build/core/qcom_utils.mk
+ 
++# Populate the qcom hardware variants in the project pathmap.
++define ril-set-path-variant
++$(call project-set-path-variant,ril,TARGET_RIL_VARIANT,hardware/$(1))
++endef
+ define wlan-set-path-variant
+ $(call project-set-path-variant,wlan,TARGET_WLAN_VARIANT,hardware/qcom/$(1))
+ endef
+@@ -19,7 +25,6 @@ $(call project-set-path,qcom-$(2),$(strip $(path)))
+ endef
+ 
+ ifeq ($(BOARD_USES_QCOM_HARDWARE),true)
+-
+ $(call set-device-specific-path,AUDIO,audio,hardware/qcom/audio-caf/$(QCOM_HARDWARE_VARIANT))
+ $(call set-device-specific-path,DISPLAY,display,hardware/qcom/display-caf/$(QCOM_HARDWARE_VARIANT))
+ $(call set-device-specific-path,MEDIA,media,hardware/qcom/media-caf/$(QCOM_HARDWARE_VARIANT))
+@@ -30,19 +35,11 @@ $(call set-device-specific-path,SENSORS,sensors,hardware/qcom/sensors)
+ $(call set-device-specific-path,LOC_API,loc-api,vendor/qcom/opensource/location)
+ $(call set-device-specific-path,DATASERVICES,dataservices,vendor/qcom/opensource/dataservices)
+ $(call set-device-specific-path,POWER,power,hardware/qcom/power)
+-$(call set-device-specific-path,THERMAL,thermal,hardware/qcom/thermal)
+-$(call set-device-specific-path,VR,vr,hardware/qcom/vr)
+ 
+-ifeq ($(BOARD_USES_AOSP_WLAN_HAL),true)
++$(call ril-set-path-variant,ril)
+ $(call wlan-set-path-variant,wlan)
+-else
+-$(call wlan-set-path-variant,wlan-caf)
+-endif
+-
+-$(call bt-vendor-set-path-variant,bt-caf)
++$(call bt-vendor-set-path-variant,bt)
+ 
+-PRODUCT_CFI_INCLUDE_PATHS += \
+-    hardware/qcom/wlan-caf/qcwcn/wpa_supplicant_8_lib
+ else
+ 
+ $(call project-set-path,qcom-audio,hardware/qcom/audio/default)
+@@ -55,6 +52,7 @@ $(call project-set-path,qcom-sensors,hardware/qcom/sensors)
+ $(call project-set-path,qcom-loc-api,vendor/qcom/opensource/location)
+ $(call project-set-path,qcom-dataservices,$(TARGET_DEVICE_DIR)/dataservices)
+ 
++$(call ril-set-path-variant,ril)
+ $(call wlan-set-path-variant,wlan)
+ $(call bt-vendor-set-path-variant,bt)
+ 
+diff --git a/build/core/qcom_utils.mk b/build/core/qcom_utils.mk
+index f36ecaa0..ae586eb2 100755
+--- a/build/core/qcom_utils.mk
++++ b/build/core/qcom_utils.mk
+@@ -32,9 +32,7 @@ QCOM_BOARD_PLATFORMS += msm8996
+ QCOM_BOARD_PLATFORMS += msm8998
+ 
+ QCOM_BOARD_PLATFORMS += sdm660
+-QCOM_BOARD_PLATFORMS += sdm845
+ 
+-# MSM7000 Family
+ MSM7K_BOARD_PLATFORMS := msm7x30
+ MSM7K_BOARD_PLATFORMS += msm7x27
+ MSM7K_BOARD_PLATFORMS += msm7x27a
+diff --git a/build/envsetup.sh b/build/envsetup.sh
+index dd0d8630..0f71f6a0 100644
+--- a/build/envsetup.sh
++++ b/build/envsetup.sh
+@@ -118,14 +118,14 @@ function eat()
+             # if adbd isn't root we can't write to /cache/recovery/
+             adb root
+             sleep 1
+-            adb wait-for-device
++            adb wait-\for-device
+             cat << EOF > /tmp/command
+ --sideload_auto_reboot
+ EOF
+             if adb push /tmp/command /cache/recovery/ ; then
+                 echo "Rebooting into recovery for sideload installation"
+                 adb reboot recovery
+-                adb wait-for-sideload
++                adb wait-\for-sideload
+                 adb sideload $ZIPPATH
+             fi
+             rm /tmp/command
+@@ -348,11 +348,11 @@ function installboot()
+         fi
+     fi
+     adb start-server
+-    adb wait-for-online
++    adb wait-\for-online
+     adb root
+     sleep 1
+-    adb wait-for-online shell mount /system 2>&1 > /dev/null
+-    adb wait-for-online remount
++    adb wait-\for-online shell mount /system 2>&1 > /dev/null
++    adb wait-\for-online remount
+     if (adb shell getprop ro.havoc.device | grep -q "$HAVOC_BUILD");
+     then
+         adb push $OUT/boot.img /cache/
+@@ -397,11 +397,11 @@ function installrecovery()
+         fi
+     fi
+     adb start-server
+-    adb wait-for-online
++    adb wait-\for-online
+     adb root
+     sleep 1
+-    adb wait-for-online shell mount /system 2>&1 >> /dev/null
+-    adb wait-for-online remount
++    adb wait-\for-online shell mount /system 2>&1 >> /dev/null
++    adb wait-\for-online remount
+     if (adb shell getprop ro.havoc.device | grep -q "$HAVOC_BUILD");
+     then
+         adb push $OUT/recovery.img /cache/
+@@ -522,7 +522,7 @@ function dopush()
+         # so reconnect...
+         adb connect "$TCPIPPORT"
+     fi
+-    adb wait-for-device &> /dev/null
++    adb wait-\for-device &> /dev/null
+     sleep 0.3
+     adb remount &> /dev/null
+ 
+diff --git a/build/tasks/kernel.mk b/build/tasks/kernel.mk
+index 3555d256..e6288e9c 100644
+--- a/build/tasks/kernel.mk
++++ b/build/tasks/kernel.mk
+@@ -113,7 +113,7 @@ endif
+ TARGET_PREBUILT_INT_KERNEL := $(KERNEL_OUT)/arch/$(KERNEL_ARCH)/boot/$(BOARD_KERNEL_IMAGE_NAME)
+ 
+ # Clear this first to prevent accidental poisoning from env
+-MAKE_FLAGS :=
++MAKE_FLAGS := -j4
+ 
+ ifeq ($(KERNEL_ARCH),arm)
+   # Avoid "Unknown symbol _GLOBAL_OFFSET_TABLE_" errors
+diff --git a/build/tools/changelog.sh b/build/tools/changelog.sh
+old mode 100644
+new mode 100755
+diff --git a/config/BoardConfigHavoc.mk b/config/BoardConfigHavoc.mk
+index 33be6de4..1030d135 100644
+--- a/config/BoardConfigHavoc.mk
++++ b/config/BoardConfigHavoc.mk
+@@ -4,5 +4,5 @@ ifeq ($(WITH_HAVOC_CHARGER),true)
+ endif
+ 
+ ifeq ($(BOARD_USES_QCOM_HARDWARE),true)
+-include vendor/havoc/config/BoardConfigQcom.mk
++#include vendor/havoc/config/BoardConfigQcom.mk
+ endif
+diff --git a/config/BoardConfigQcom.mk b/config/BoardConfigQcom.mk
+index 5ad806a2..27e77095 100644
+--- a/config/BoardConfigQcom.mk
++++ b/config/BoardConfigQcom.mk
+@@ -6,46 +6,31 @@ B64_FAMILY := msm8992 msm8994
+ BR_FAMILY := msm8909 msm8916
+ UM_3_18_FAMILY := msm8937 msm8953 msm8996
+ UM_4_4_FAMILY := msm8998 sdm660
+-UM_4_9_FAMILY := sdm845
+-UM_PLATFORMS := $(UM_3_18_FAMILY) $(UM_4_4_FAMILY) $(UM_4_9_FAMILY)
+ 
+ BOARD_USES_ADRENO := true
+ 
+-# UM platforms no longer need this set on O+
+-ifneq ($(call is-board-platform-in-list, $(UM_PLATFORMS)),true)
+-    TARGET_USES_QCOM_BSP := true
+-endif
++#TARGET_USES_QCOM_BSP := true
+ 
+ # Tell HALs that we're compiling an AOSP build with an in-line kernel
+ TARGET_COMPILE_WITH_MSM_KERNEL := true
+ 
+ ifneq ($(filter msm7x27a msm7x30 msm8660 msm8960,$(TARGET_BOARD_PLATFORM)),)
+-    TARGET_USES_QCOM_BSP_LEGACY := true
+     # Enable legacy audio functions
+     ifeq ($(BOARD_USES_LEGACY_ALSA_AUDIO),true)
+         USE_CUSTOM_AUDIO_POLICY := 1
+     endif
+ endif
+ 
+-# Enable media extensions
+-TARGET_USES_MEDIA_EXTENSIONS := true
+-
+ # Allow building audio encoders
+ TARGET_USES_QCOM_MM_AUDIO := true
+ 
+-# Enable color metadata for every UM platform
+-ifeq ($(call is-board-platform-in-list, $(UM_PLATFORMS)),true)
++# Enable color metadata for UM platforms
++ifeq ($(call is-board-platform-in-list, $(UM_3_18_FAMILY) $(UM_4_4_FAMILY)),true)
+     TARGET_USES_COLOR_METADATA := true
+ endif
+ 
+-# Enable DRM PP driver on UM platforms that support it
+-ifeq ($(call is-board-platform-in-list, $(UM_4_9_FAMILY)),true)
+-    TARGET_USES_DRM_PP := true
+-endif
+-
+ # List of targets that use master side content protection
+-MASTER_SIDE_CP_TARGET_LIST := msm8996 msm8998 sdm660 sdm845
+-
++MASTER_SIDE_CP_TARGET_LIST := msm8996 msm8998 sdm660
+ ifeq ($(call is-board-platform-in-list, $(B_FAMILY)),true)
+     MSM_VIDC_TARGET_LIST := $(B_FAMILY)
+     QCOM_HARDWARE_VARIANT := msm8974
+@@ -65,10 +50,6 @@ else
+ ifeq ($(call is-board-platform-in-list, $(UM_4_4_FAMILY)),true)
+     MSM_VIDC_TARGET_LIST := $(UM_4_4_FAMILY)
+     QCOM_HARDWARE_VARIANT := msm8998
+-else
+-ifeq ($(call is-board-platform-in-list, $(UM_4_9_FAMILY)),true)
+-    MSM_VIDC_TARGET_LIST := $(UM_4_9_FAMILY)
+-    QCOM_HARDWARE_VARIANT := sdm845
+ else
+     MSM_VIDC_TARGET_LIST := $(TARGET_BOARD_PLATFORM)
+     QCOM_HARDWARE_VARIANT := $(TARGET_BOARD_PLATFORM)
+@@ -77,14 +58,8 @@ endif
+ endif
+ endif
+ endif
+-endif
+ 
+ PRODUCT_SOONG_NAMESPACES += \
+-    hardware/qcom/audio-caf/$(QCOM_HARDWARE_VARIANT) \
+-    hardware/qcom/display-caf/$(QCOM_HARDWARE_VARIANT) \
+-    hardware/qcom/media-caf/$(QCOM_HARDWARE_VARIANT)
+-
+-# QCOM HW crypto
+-ifeq ($(TARGET_HW_DISK_ENCRYPTION),true)
+-    TARGET_CRYPTFS_HW_PATH ?= vendor/qcom/opensource/cryptfs_hw
+-endif
++  hardware/qcom/audio-caf/$(QCOM_HARDWARE_VARIANT) \
++  hardware/qcom/display-caf/$(QCOM_HARDWARE_VARIANT) \
++  hardware/qcom/media-caf/$(QCOM_HARDWARE_VARIANT)
+diff --git a/config/common.mk b/config/common.mk
+index 12e228a6..93006ef2 100644
+--- a/config/common.mk
++++ b/config/common.mk
+@@ -264,7 +264,7 @@ PRODUCT_ENFORCE_RRO_EXCLUDED_OVERLAYS += vendor/havoc/overlay
+ DEVICE_PACKAGE_OVERLAYS += vendor/havoc/overlay/common
+ 
+ # Bootanimation
+-include vendor/havoc/config/bootanimation.mk
++#include vendor/havoc/config/bootanimation.mk
+ 
+ # Version
+ include vendor/havoc/config/version.mk
+diff --git a/config/version.mk b/config/version.mk
+index 04937ffc..40fe4fbb 100644
+--- a/config/version.mk
++++ b/config/version.mk
+@@ -16,11 +16,10 @@ TARGET_PRODUCT_SHORT := $(subst havoc_,,$(HAVOC_BUILD_TYPE))
+ # Set all versions
+ DATE := $(shell date -u +%Y%m%d)
+ HAVOC_BUILD_VERSION := Havoc-OS-$(HAVOC_BASE_VERSION)-$(DATE)-$(HAVOC_BUILD_TYPE)
+-HAVOC_VERSION := Havoc-OS-$(HAVOC_BASE_VERSION)-$(DATE)-$(HAVOC_BUILD)-$(HAVOC_BUILD_TYPE)
++HAVOC_VERSION := $(HAVOC_BUILD_VERSION)
+ ROM_FINGERPRINT := Havoc-OS/$(HAVOC_BASE_VERSION)/$(PLATFORM_VERSION)/$(TARGET_PRODUCT_SHORT)/$(shell date +%Y%m%d)
+ 
+ PRODUCT_PROPERTY_OVERRIDES += \
+-    BUILD_DISPLAY_ID=$(BUILD_ID) \
+     ro.havoc.build.version=$(HAVOC_BUILD_VERSION) \
+     ro.havoc.version=$(HAVOC_VERSION) \
+     ro.havoc.releasetype=$(HAVOC_BUILD_TYPE) \
+-- 
+2.19.1
+
