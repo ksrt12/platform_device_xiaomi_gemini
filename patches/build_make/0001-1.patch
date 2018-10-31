@@ -1,7 +1,7 @@
-From 0c891c91549f2f3fb4d0d6cddbcbee3ae37ac1e9 Mon Sep 17 00:00:00 2001
+From 14556be34f3e2d735f05c37e81024f884ee84496 Mon Sep 17 00:00:00 2001
 From: Kazakov Stepan <kazakov12stepan2012@live.ru>
 Date: Wed, 31 Oct 2018 16:43:32 +0300
-Subject: [PATCH] 1
+Subject: [PATCH 01/19] 1
 
 ---
  core/config.mk | 15 +++++++++------

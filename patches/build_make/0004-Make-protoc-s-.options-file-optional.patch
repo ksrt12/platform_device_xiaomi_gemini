@@ -1,0 +1,30 @@
+From c91186644f65cb94689f9ee3fbf08fff80b37e19 Mon Sep 17 00:00:00 2001
+From: David Ng <dave@codeaurora.org>
+Date: Thu, 8 Dec 2016 17:00:48 -0800
+Subject: [PATCH 04/19] Make protoc's .options file optional
+
+XYZ.proto isn't required to have XYZ.options. Make
+the .options a build dependency only if it exists.
+
+Change-Id: I7f72a5d9672a4b9823449af47983a7d104935cc8
+Signed-off-by: Joe Maples <joe@frap129.org>
+---
+ core/binary.mk | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/core/binary.mk b/core/binary.mk
+index 0c323817b..038f8a114 100644
+--- a/core/binary.mk
++++ b/core/binary.mk
+@@ -859,7 +859,7 @@ my_proto_source_suffix := .c
+ my_proto_c_includes := external/nanopb-c
+ my_protoc_flags := --nanopb_out=$(proto_gen_dir) \
+     --plugin=external/nanopb-c/generator/protoc-gen-nanopb
+-my_protoc_deps := $(NANOPB_SRCS) $(proto_sources_fullpath:%.proto=%.options)
++my_protoc_deps := $(NANOPB_SRCS) $(wildcard $(proto_sources_fullpath:%.proto=%.options))
+ else
+ my_proto_source_suffix := $(LOCAL_CPP_EXTENSION)
+ ifneq ($(my_proto_source_suffix),.cc)
+-- 
+2.19.1
+

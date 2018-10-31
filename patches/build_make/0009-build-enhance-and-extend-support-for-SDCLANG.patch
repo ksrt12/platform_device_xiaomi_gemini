@@ -1,0 +1,162 @@
+From 59fb13b1fbb2b2de381a5146184ac0ead09081b7 Mon Sep 17 00:00:00 2001
+From: Alex Naidis <alex.naidis@linux.com>
+Date: Sat, 24 Sep 2016 12:59:06 +0200
+Subject: [PATCH 09/19] build: enhance and extend support for SDCLANG
+
+* This commit enhances and extends the build system support for SDCLANG.
+  With this commit SDCLANG is production ready.
+
+* SDCLANG can be enabled globally by setting SDCLANG to true.
+  It can be enabled or disabled by setting LOCAL_SDCLANG accordingly.
+
+* The SDCLANG specific flags were changed. "-mno-ae" which was later
+  changed to SDLLVM_AE_FLAG was removed since this flag is designed for
+  internal usage at Qualcomm only. The usage of "-Wno-vectorizer-no-neon"
+  was streamlined to be used with the build system. The hacks were removed.
+  Flags which are forced to SDCLANG from the build system appear at
+  SDCLANG_PRECONFIGURED_FLAGS. Flags which can be added at compile time
+  can be defined as SDCLANG_COMMON_FLAGS. These get appended to cflags,
+  cppflags and conlyflags and can still be overriden by the target module.
+
+* We are storing the default settings for SDCLANG in
+  device/qcom/common/sdclang/sdclang.mk. Check there for more information.
+
+* Also LOCAL_SDCLANG_EXTRA_FLAGS_32 and SDCLANG_FLAG_DEFS were removed
+  since these are not defined anywhere.
+
+Carbon Pie Changes:
+* Removed the Linux-only guard, we are doing this check in vendor.
+* Removed LOCAL_SDCLANG_EXTRA_FLAGS_64 to follow the 32bit removal.
+
+Change-Id: I61aad39b052405d4514874cb567d718fbe81a56b
+Signed-off-by: Alex Naidis <alex.naidis@linux.com>
+Signed-off-by: Joe Maples <joe@frap129.org>
+---
+ core/binary.mk         | 34 ++++++++++++++++++++--------------
+ core/clear_vars.mk     |  2 --
+ core/executable.mk     |  8 --------
+ core/shared_library.mk |  9 ---------
+ core/static_library.mk |  8 --------
+ 5 files changed, 20 insertions(+), 41 deletions(-)
+
+diff --git a/core/binary.mk b/core/binary.mk
+index 4da0db9eb..bdebda5bc 100644
+--- a/core/binary.mk
++++ b/core/binary.mk
+@@ -552,22 +552,28 @@ my_target_global_cflags := $($(LOCAL_2ND_ARCH_VAR_PREFIX)CLANG_$(my_prefix)GLOBA
+ my_target_global_conlyflags := $($(LOCAL_2ND_ARCH_VAR_PREFIX)CLANG_$(my_prefix)GLOBAL_CONLYFLAGS) $(my_c_std_conlyflags)
+ my_target_global_cppflags := $($(LOCAL_2ND_ARCH_VAR_PREFIX)CLANG_$(my_prefix)GLOBAL_CPPFLAGS) $(my_cpp_std_cppflags)
+ my_target_global_ldflags := $($(LOCAL_2ND_ARCH_VAR_PREFIX)CLANG_$(my_prefix)GLOBAL_LDFLAGS)
+-ifeq ($(my_sdclang),true)
+-    ifeq ($(strip $(my_cc)),)
+-        my_cc := $(SDCLANG_PATH)/clang
+-    endif
+-    ifeq ($(strip $(my_cxx)),)
+-        my_cxx := $(SDCLANG_PATH)/clang++
+-    endif
+-endif
+-ifeq ($(my_sdclang_2),true)
+-    ifeq ($(strip $(my_cc)),)
+-        my_cc := $(SDCLANG_PATH_2)/clang
++    ifeq ($(my_sdclang),true)
++        SDCLANG_PRECONFIGURED_FLAGS := -Wno-vectorizer-no-neon
++
++        my_target_global_cflags += $(SDCLANG_COMMON_FLAGS) $(SDCLANG_PRECONFIGURED_FLAGS)
++        my_target_global_conlyflags += $(SDCLANG_COMMON_FLAGS) $(SDCLANG_PRECONFIGURED_FLAGS)
++        my_target_global_cppflags += $(SDCLANG_COMMON_FLAGS) $(SDCLANG_PRECONFIGURED_FLAGS)
++
++        ifeq ($(strip $(my_cc)),)
++            my_cc := $(SDCLANG_PATH)/clang
++        endif
++        ifeq ($(strip $(my_cxx)),)
++            my_cxx := $(SDCLANG_PATH)/clang++
++        endif
+     endif
+-    ifeq ($(strip $(my_cxx)),)
+-        my_cxx := $(SDCLANG_PATH_2)/clang++
++    ifeq ($(my_sdclang_2),true)
++        ifeq ($(strip $(my_cc)),)
++            my_cc := $(SDCLANG_PATH_2)/clang
++        endif
++        ifeq ($(strip $(my_cxx)),)
++            my_cxx := $(SDCLANG_PATH_2)/clang++
++        endif
+     endif
+-endif
+ else
+ my_target_global_cflags := $($(LOCAL_2ND_ARCH_VAR_PREFIX)$(my_prefix)GLOBAL_CFLAGS)
+ my_target_global_conlyflags := $($(LOCAL_2ND_ARCH_VAR_PREFIX)$(my_prefix)GLOBAL_CONLYFLAGS) $(my_c_std_conlyflags)
+diff --git a/core/clear_vars.mk b/core/clear_vars.mk
+index 6adef9649..71233555c 100644
+--- a/core/clear_vars.mk
++++ b/core/clear_vars.mk
+@@ -445,8 +445,6 @@ LOCAL_MODULE_SYMLINKS_32:=
+ LOCAL_MODULE_SYMLINKS_64:=
+ LOCAL_SDCLANG:=
+ LOCAL_SDCLANG_2:=
+-LOCAL_SDCLANG_EXTRA_FLAGS_32:=
+-LOCAL_SDCLANG_EXTRA_FLAGS_64:=
+ LOCAL_SDCLANG_LTO:=
+ LOCAL_SHARED_LIBRARIES_32:=
+ LOCAL_SHARED_LIBRARIES_64:=
+diff --git a/core/executable.mk b/core/executable.mk
+index c024f22cf..b4bd3bacb 100644
+--- a/core/executable.mk
++++ b/core/executable.mk
+@@ -54,14 +54,6 @@ endif
+ 
+ my_skip_non_preferred_arch :=
+ 
+-ifeq ($(LOCAL_SDCLANG),true)
+-include $(SDCLANG_FLAG_DEFS)
+-endif
+-
+-ifeq ($(LOCAL_SDCLANG_2),true)
+-include $(SDCLANG_FLAG_DEFS)
+-endif
+-
+ # check if preferred arch is supported
+ include $(BUILD_SYSTEM)/module_arch_supported.mk
+ ifeq ($(my_module_arch_supported),true)
+diff --git a/core/shared_library.mk b/core/shared_library.mk
+index 98cf85480..eaaca8ea6 100644
+--- a/core/shared_library.mk
++++ b/core/shared_library.mk
+@@ -21,15 +21,6 @@ endif
+ endif
+ endif # my_module_multilib == both
+ 
+-
+-ifeq ($(LOCAL_SDCLANG),true)
+-include $(SDCLANG_FLAG_DEFS)
+-endif
+-
+-ifeq ($(LOCAL_SDCLANG_2),true)
+-include $(SDCLANG_FLAG_DEFS)
+-endif
+-
+ LOCAL_2ND_ARCH_VAR_PREFIX :=
+ include $(BUILD_SYSTEM)/module_arch_supported.mk
+ 
+diff --git a/core/static_library.mk b/core/static_library.mk
+index ccdcfcc74..7daa04143 100644
+--- a/core/static_library.mk
++++ b/core/static_library.mk
+@@ -7,14 +7,6 @@ ifndef my_module_multilib
+ my_module_multilib := both
+ endif
+ 
+-ifeq ($(LOCAL_SDCLANG),true)
+-include $(SDCLANG_FLAG_DEFS)
+-endif
+-
+-ifeq ($(LOCAL_SDCLANG_2),true)
+-include $(SDCLANG_FLAG_DEFS)
+-endif
+-
+ LOCAL_2ND_ARCH_VAR_PREFIX :=
+ include $(BUILD_SYSTEM)/module_arch_supported.mk
+ 
+-- 
+2.19.1
+

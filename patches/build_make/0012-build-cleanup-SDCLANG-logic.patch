@@ -1,0 +1,36 @@
+From 9608e810befe8debafe88c389ab692ae15eabc27 Mon Sep 17 00:00:00 2001
+From: Alex Naidis <alex.naidis@linux.com>
+Date: Thu, 13 Oct 2016 18:40:02 +0200
+Subject: [PATCH 12/19] build: cleanup SDCLANG logic
+
+* Flags which are already passed to cflags don't need to be added to
+  cppflags and conlyflags since at the end, cflags get stacked on top
+  anyways.
+
+* Also, unset SDCLANG_PRECONFIGURED_FLAGS since it is meant to be a
+  local variable.
+
+Change-Id: Id96e045fb7964aba733ff2e13c411d9adfd660aa
+Signed-off-by: Alex Naidis <alex.naidis@linux.com>
+Signed-off-by: Joe Maples <joe@frap129.org>
+---
+ core/binary.mk | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/core/binary.mk b/core/binary.mk
+index ea2f8e152..b03d8579f 100644
+--- a/core/binary.mk
++++ b/core/binary.mk
+@@ -555,8 +555,7 @@ my_target_global_ldflags := $($(LOCAL_2ND_ARCH_VAR_PREFIX)CLANG_$(my_prefix)GLOB
+         endif
+         endif
+         my_target_global_cflags += $(SDCLANG_COMMON_FLAGS) $(SDCLANG_PRECONFIGURED_FLAGS)
+-        my_target_global_conlyflags += $(SDCLANG_COMMON_FLAGS) $(SDCLANG_PRECONFIGURED_FLAGS)
+-        my_target_global_cppflags += $(SDCLANG_COMMON_FLAGS) $(SDCLANG_PRECONFIGURED_FLAGS)
++        SDCLANG_PRECONFIGURED_FLAGS :=
+ 
+         ifeq ($(strip $(my_cc)),)
+             my_cc := $(SDCLANG_PATH)/clang
+-- 
+2.19.1
+

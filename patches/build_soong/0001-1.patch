@@ -1,7 +1,7 @@
-From 1648fc0f3eba218564e7577d89ae672ffac9ebb9 Mon Sep 17 00:00:00 2001
+From 723aa3f488820c4e81d290f839ee8f21ea336989 Mon Sep 17 00:00:00 2001
 From: Kazakov Stepan <kazakov12stepan2012@live.ru>
 Date: Wed, 31 Oct 2018 16:45:12 +0300
-Subject: [PATCH] 1
+Subject: [PATCH 01/17] 1
 
 ---
  cc/config/arm64_device.go | 2 +-

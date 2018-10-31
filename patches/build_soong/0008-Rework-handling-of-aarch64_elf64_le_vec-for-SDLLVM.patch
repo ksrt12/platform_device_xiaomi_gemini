@@ -1,0 +1,98 @@
+From 3c2120ae23acff90ae5feae1865b704f18b727a6 Mon Sep 17 00:00:00 2001
+From: Pengxuan Zheng <pzheng@codeaurora.org>
+Date: Tue, 29 May 2018 16:06:44 -0700
+Subject: [PATCH 08/17] Rework handling of aarch64_elf64_le_vec for SDLLVM
+
+The logic we added to handle a flag not recognized by QCLD no longer works after
+a recent AOSP update. This patch is a rework of that logic after the AOSP
+update.
+
+CRs-Fixed: 2170323
+
+Change-Id: I94a18d7f10674d4ab605b9ffd8c14ac46bf1f6e6
+Signed-off-by: Joe Maples <joe@frap129.org>
+---
+ cc/config/arm64_device.go | 18 ------------------
+ cc/lto.go                 |  7 +++----
+ cc/sanitize.go            |  7 +++----
+ 3 files changed, 6 insertions(+), 26 deletions(-)
+
+diff --git a/cc/config/arm64_device.go b/cc/config/arm64_device.go
+index cc4c35e8..19d6256d 100644
+--- a/cc/config/arm64_device.go
++++ b/cc/config/arm64_device.go
+@@ -80,22 +80,6 @@ const (
+ 	arm64GccVersion = "8.x"
+ )
+ 
+-func setSdclangFlags() {
+-	sdclangArm64Ldflags := arm64Ldflags
+-	s := -1
+-	for i, l := range arm64Ldflags {
+-		if l == "-Wl,-m,aarch64_elf64_le_vec" {
+-			s = i
+-			break
+-		}
+-	}
+-	if s >= 0 {
+-		sdclangArm64Ldflags = append(arm64Ldflags[:s], arm64Ldflags[s+1:]...)
+-	}
+-
+-	pctx.StaticVariable("SdclangArm64Ldflags", strings.Join(sdclangArm64Ldflags, " "))
+-}
+-
+ func init() {
+ 	android.RegisterArchVariants(android.Arm64,
+ 		"armv8_a",
+@@ -123,8 +107,6 @@ func init() {
+ 	pctx.StaticVariable("Arm64Cppflags", strings.Join(arm64Cppflags, " "))
+ 	pctx.StaticVariable("Arm64IncludeFlags", bionicHeaders("arm64"))
+ 
+-	setSdclangFlags()
+-
+ 	pctx.StaticVariable("Arm64ClangCflags", strings.Join(ClangFilterUnknownCflags(arm64Cflags), " "))
+ 	pctx.StaticVariable("Arm64ClangLdflags", strings.Join(ClangFilterUnknownCflags(arm64Ldflags), " "))
+ 	pctx.StaticVariable("Arm64ClangCppflags", strings.Join(ClangFilterUnknownCflags(arm64Cppflags), " "))
+diff --git a/cc/lto.go b/cc/lto.go
+index 644e64f6..d4690143 100644
+--- a/cc/lto.go
++++ b/cc/lto.go
+@@ -109,12 +109,11 @@ func (lto *lto) flags(ctx BaseModuleContext, flags Flags) Flags {
+ 		}
+ 
+ 		if flags.Sdclang {
+-			var found bool
+-			if found, flags.LdFlags = removeFromList("${config.Arm64Ldflags}", flags.LdFlags); found {
+-				flags.LdFlags = append(flags.LdFlags, "${config.SdclangArm64Ldflags}")
+-			}
+ 			flags.CFlags = append(flags.CFlags, "-fuse-ld=qcld")
+ 			flags.LdFlags = append(flags.LdFlags, "-fuse-ld=qcld")
++			if ctx.Target().Arch.ArchType.Name == "arm64" {
++				flags.LdFlags = append(flags.LdFlags, "-Wl,-m,aarch64linux_androideabi")
++			}
+ 		}
+ 	}
+ 	return flags
+diff --git a/cc/sanitize.go b/cc/sanitize.go
+index 6acac6c0..ae6626dd 100644
+--- a/cc/sanitize.go
++++ b/cc/sanitize.go
+@@ -430,12 +430,11 @@ func (sanitize *sanitize) flags(ctx ModuleContext, flags Flags) Flags {
+ 
+ 		if flags.Sdclang {
+ 			_, flags.LdFlags = removeFromList("-Wl,-plugin-opt,O1", flags.LdFlags)
+-			var found bool
+-			if found, flags.LdFlags = removeFromList("${config.Arm64Ldflags}", flags.LdFlags); found {
+-				flags.LdFlags = append(flags.LdFlags, "${config.SdclangArm64Ldflags}")
+-			}
+ 			flags.CFlags = append(flags.CFlags, "-fuse-ld=qcld")
+ 			flags.LdFlags = append(flags.LdFlags, "-fuse-ld=qcld")
++			if ctx.Target().Arch.ArchType.Name == "arm64" {
++				flags.LdFlags = append(flags.LdFlags, "-Wl,-m,aarch64linux_androideabi")
++			}
+ 		}
+ 	}
+ 
+-- 
+2.19.1
+

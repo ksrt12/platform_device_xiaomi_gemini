@@ -1,7 +1,7 @@
-From 9c141bb1f6accc5ef3840f184407012e980ead40 Mon Sep 17 00:00:00 2001
+From f7bed63d8431259d73614c7febbe13c49336250f Mon Sep 17 00:00:00 2001
 From: Sam Mortimer <sam@mortimer.me.uk>
 Date: Fri, 17 Aug 2018 11:25:08 -0700
-Subject: [PATCH] soong: add PathForSourceRelaxed function
+Subject: [PATCH 02/17] soong: add PathForSourceRelaxed function
 
   * Extracted from https://github.com/LineageOS/android_build_soong/commit/46c841786b5535782e44dafa54e8736c4805e2dd
 
@@ -177,3 +177,6 @@ index 91dd9a6d..a9992d0d 100644
  // ExistentPathForSource returns an OptionalPath with the SourcePath if the
  // path exists, or an empty OptionalPath if it doesn't exist. Dependencies are added
  // so that the ninja file will be regenerated if the state of the path changes.
+-- 
+2.19.1
+

@@ -1,0 +1,58 @@
+From 2250b3c776d243fcf8e7a4d54849e98561ae9b87 Mon Sep 17 00:00:00 2001
+From: Joe Maples <joe@frap129.org>
+Date: Mon, 27 Aug 2018 12:01:46 -0400
+Subject: [PATCH 15/17] cc: Remove no-op SDClang*2 references
+
+Change-Id: I7368bee1fda0f3ca9290659872d3ac368b25c3d5
+Signed-off-by: Joe Maples <joe@frap129.org>
+---
+ cc/config/global.go | 12 ------------
+ cc/makevars.go      |  2 --
+ 2 files changed, 14 deletions(-)
+
+diff --git a/cc/config/global.go b/cc/config/global.go
+index d16e5eef..cc98a5bb 100644
+--- a/cc/config/global.go
++++ b/cc/config/global.go
+@@ -200,24 +200,12 @@ func init() {
+ 		}
+ 		return "${ClangBin}/"
+ 	})
+-	pctx.VariableFunc("SDClangBin2", func(ctx android.PackageVarContext) string {
+-		if override := ctx.Config().Getenv("SDCLANG_PATH_2"); override != "" {
+-			return override
+-		}
+-		return "${ClangBin}/"
+-	})
+ 	pctx.VariableFunc("SDClangFlags", func(ctx android.PackageVarContext) string {
+ 		if override := ctx.Config().Getenv("SDCLANG_COMMON_FLAGS"); override != "" {
+ 			return override
+ 		}
+ 		return ""
+ 	})
+-	pctx.VariableFunc("SDClangFlags2", func(ctx android.PackageVarContext) string {
+-		if override := ctx.Config().Getenv("SDCLANG_COMMON_FLAGS_2"); override != "" {
+-			return override
+-		}
+-		return ""
+-	})
+ 
+ 	// Find the path to SDLLVM's ASan libraries
+ 	var absPath string
+diff --git a/cc/makevars.go b/cc/makevars.go
+index d28195ed..9ce91657 100644
+--- a/cc/makevars.go
++++ b/cc/makevars.go
+@@ -191,9 +191,7 @@ func sdclangMakeVars(ctx android.MakeVarsContext) {
+ 		ctx.Strict("SDCLANG", strconv.FormatBool(config.SDClang))
+ 	}
+ 	ctx.Strict("SDCLANG_PATH", "${config.SDClangBin}")
+-	ctx.Strict("SDCLANG_PATH_2", "${config.SDClangBin2}")
+ 	ctx.Strict("SDCLANG_COMMON_FLAGS", "${config.SDClangFlags}")
+-	ctx.Strict("SDCLANG_COMMON_FLAGS_2", "${config.SDClangFlags2}")
+ }
+ 
+ func makeVarsToolchain(ctx android.MakeVarsContext, secondPrefix string,
+-- 
+2.19.1
+

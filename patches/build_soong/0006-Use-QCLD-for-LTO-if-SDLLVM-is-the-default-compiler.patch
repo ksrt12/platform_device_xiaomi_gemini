@@ -1,0 +1,37 @@
+From 477ad1d9bf41a0df059a27add0acb0ce33ad5f23 Mon Sep 17 00:00:00 2001
+From: Pengxuan Zheng <pzheng@codeaurora.org>
+Date: Sat, 7 Apr 2018 18:14:01 -0700
+Subject: [PATCH 06/17] Use QCLD for LTO if SDLLVM is the default compiler
+
+The default linker for LTO is gold, but SDLLVM need to use QCLD for LTO.
+
+Change-Id: Ia2dcffc6e0e34d8e69f016be18a7c529ff678d37
+CRs-Fixed: 2170323
+Signed-off-by: Joe Maples <joe@frap129.org>
+---
+ cc/lto.go | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/cc/lto.go b/cc/lto.go
+index a41d853a..644e64f6 100644
+--- a/cc/lto.go
++++ b/cc/lto.go
+@@ -107,6 +107,15 @@ func (lto *lto) flags(ctx BaseModuleContext, flags Flags) Flags {
+ 			flags.LdFlags = append(flags.LdFlags, "-Wl,-plugin-opt,-inline-threshold=0")
+ 			flags.LdFlags = append(flags.LdFlags, "-Wl,-plugin-opt,-unroll-threshold=0")
+ 		}
++
++		if flags.Sdclang {
++			var found bool
++			if found, flags.LdFlags = removeFromList("${config.Arm64Ldflags}", flags.LdFlags); found {
++				flags.LdFlags = append(flags.LdFlags, "${config.SdclangArm64Ldflags}")
++			}
++			flags.CFlags = append(flags.CFlags, "-fuse-ld=qcld")
++			flags.LdFlags = append(flags.LdFlags, "-fuse-ld=qcld")
++		}
+ 	}
+ 	return flags
+ }
+-- 
+2.19.1
+

@@ -1,0 +1,35 @@
+From 51106a9c2f1727454275cdd5864550f3316185e3 Mon Sep 17 00:00:00 2001
+From: Pengxuan Zheng <pzheng@codeaurora.org>
+Date: Sun, 10 Jun 2018 10:15:01 -0700
+Subject: [PATCH 08/19] Fix CFI sanitier flag processing for SDLLVM
+
+The original logic is broken after the recent AOSP update.
+
+CRs-Fixed: 2170323
+
+Change-Id: I654bd8b70f8a19362151f47dc6a32f3966ed95da
+Signed-off-by: Joe Maples <joe@frap129.org>
+---
+ core/config_sanitizers.mk | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/core/config_sanitizers.mk b/core/config_sanitizers.mk
+index 2650102dc..780a45f88 100644
+--- a/core/config_sanitizers.mk
++++ b/core/config_sanitizers.mk
+@@ -286,9 +286,10 @@ ifneq ($(filter cfi,$(my_sanitize)),)
+         LOCAL_ADDITIONAL_DEPENDENCIES += build/soong/cc/config/cfi_exports.map
+   endif
+   ifneq ($(filter true,$(my_sdclang) $(my_sdclang2)),)
+-    my_ldflags := $(filter-out -Wl,-plugin-opt,O1 -Wl,-m,aarch64_elf64_le_vec,$(my_ldflags))
++    SDCLANG_UNKNOWN_FLAGS := -Wl,-plugin-opt,O1
++    my_ldflags := $(filter-out $(SDCLANG_UNKNOWN_FLAGS),$(my_ldflags))
+     my_cflags += -fuse-ld=qcld
+-    my_ldflags += -fuse-ld=qcld
++    my_ldflags += -fuse-ld=qcld -Wl,-m,aarch64linux_androideabi
+   endif
+ endif
+ 
+-- 
+2.19.1
+
