@@ -1,0 +1,39 @@
+From 1648fc0f3eba218564e7577d89ae672ffac9ebb9 Mon Sep 17 00:00:00 2001
+From: Kazakov Stepan <kazakov12stepan2012@live.ru>
+Date: Wed, 31 Oct 2018 16:45:12 +0300
+Subject: [PATCH] 1
+
+---
+ cc/config/arm64_device.go | 2 +-
+ cc/config/arm_device.go   | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/cc/config/arm64_device.go b/cc/config/arm64_device.go
+index 11625e80..19d6256d 100644
+--- a/cc/config/arm64_device.go
++++ b/cc/config/arm64_device.go
+@@ -77,7 +77,7 @@ var (
+ )
+ 
+ const (
+-	arm64GccVersion = "4.9"
++	arm64GccVersion = "8.x"
+ )
+ 
+ func init() {
+diff --git a/cc/config/arm_device.go b/cc/config/arm_device.go
+index 4e0f6e05..fa8d1147 100644
+--- a/cc/config/arm_device.go
++++ b/cc/config/arm_device.go
+@@ -142,7 +142,7 @@ var (
+ )
+ 
+ const (
+-	armGccVersion = "4.9"
++	armGccVersion = "4.9u"
+ )
+ 
+ func init() {
+-- 
+2.19.1
+

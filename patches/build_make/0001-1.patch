@@ -1,0 +1,71 @@
+From 0c891c91549f2f3fb4d0d6cddbcbee3ae37ac1e9 Mon Sep 17 00:00:00 2001
+From: Kazakov Stepan <kazakov12stepan2012@live.ru>
+Date: Wed, 31 Oct 2018 16:43:32 +0300
+Subject: [PATCH] 1
+
+---
+ core/config.mk | 15 +++++++++------
+ core/main.mk   |  2 +-
+ 2 files changed, 10 insertions(+), 7 deletions(-)
+
+diff --git a/core/config.mk b/core/config.mk
+index 3538cfc91..4bf146e98 100644
+--- a/core/config.mk
++++ b/core/config.mk
+@@ -220,14 +220,14 @@ endif
+ # are specific to the user's build configuration.
+ include $(BUILD_SYSTEM)/envsetup.mk
+ 
++ifeq ($(BOARD_USES_QCOM_HARDWARE),true)
++include $(TOPDIR)vendor/havoc/build/core/BoardConfigQcom.mk
++endif
++
+ # Pruned directory options used when using findleaves.py
+ # See envsetup.mk for a description of SCAN_EXCLUDE_DIRS
+ FIND_LEAVES_EXCLUDES := $(addprefix --prune=, $(SCAN_EXCLUDE_DIRS) .repo .git)
+ 
+-# General entries for project pathmap.  Any entries listed here should
+-# be device and hardware independent.
+-$(call project-set-path-variant,ril,TARGET_RIL_VARIANT,hardware/ril)
+-
+ -include vendor/extra/BoardConfigExtra.mk
+ ifneq ($(HAVOC_BUILD),)
+ include vendor/havoc/config/BoardConfigHavoc.mk
+@@ -415,9 +415,9 @@ TARGET_CPU_ABI_LIST_32_BIT := $(subst $(space),$(comma),$(strip $(TARGET_CPU_ABI
+ TARGET_CPU_ABI_LIST_64_BIT := $(subst $(space),$(comma),$(strip $(TARGET_CPU_ABI_LIST_64_BIT)))
+ 
+ # GCC version selection
+-TARGET_GCC_VERSION := 4.9
++TARGET_GCC_VERSION := 8.x
+ ifdef TARGET_2ND_ARCH
+-2ND_TARGET_GCC_VERSION := 4.9
++2ND_TARGET_GCC_VERSION := 4.9u
+ endif
+ 
+ # Normalize WITH_STATIC_ANALYZER
+@@ -935,6 +935,9 @@ PLATFORM_SEPOLICY_COMPAT_VERSIONS := \
+     PLATFORM_SEPOLICY_VERSION \
+     TOT_SEPOLICY_VERSION \
+ 
++# Rules for QCOM targets
++include vendor/havoc/build/core/qcom_target.mk
++
+ # ###############################################################
+ # Set up final options.
+ # ###############################################################
+diff --git a/core/main.mk b/core/main.mk
+index 40c73256b..4a6dd908e 100644
+--- a/core/main.mk
++++ b/core/main.mk
+@@ -454,7 +454,7 @@ subdir_makefiles := $(SOONG_ANDROID_MK) $(file <$(OUT_DIR)/.module_paths/Android
+ subdir_makefiles_total := $(words $(subdir_makefiles))
+ .KATI_READONLY := subdir_makefiles_total
+ 
+-$(foreach mk,$(subdir_makefiles),$(info [$(call inc_and_print,subdir_makefiles_inc)/$(subdir_makefiles_total)] including $(mk) ...)$(eval include $(mk)))
++$(foreach mk,$(subdir_makefiles),$(info [$(call inc_and_print,subdir_makefiles_inc)/$(subdir_makefiles_total)] $(mk) ...)$(eval include $(mk)))
+ 
+ ifneq (,$(PDK_FUSION_PLATFORM_ZIP)$(PDK_FUSION_PLATFORM_DIR))
+ # Bring in the PDK platform.zip modules.
+-- 
+2.19.1
+
