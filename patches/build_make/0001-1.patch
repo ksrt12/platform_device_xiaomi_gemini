@@ -1,12 +1,11 @@
-From 14556be34f3e2d735f05c37e81024f884ee84496 Mon Sep 17 00:00:00 2001
+From 1b863fba79b155d07c5f878585246e012a48953f Mon Sep 17 00:00:00 2001
 From: Kazakov Stepan <kazakov12stepan2012@live.ru>
 Date: Wed, 31 Oct 2018 16:43:32 +0300
 Subject: [PATCH 01/19] 1
 
 ---
  core/config.mk | 15 +++++++++------
- core/main.mk   |  2 +-
- 2 files changed, 10 insertions(+), 7 deletions(-)
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
 diff --git a/core/config.mk b/core/config.mk
 index 3538cfc91..4bf146e98 100644
@@ -53,19 +52,6 @@ index 3538cfc91..4bf146e98 100644
  # ###############################################################
  # Set up final options.
  # ###############################################################
-diff --git a/core/main.mk b/core/main.mk
-index 40c73256b..4a6dd908e 100644
---- a/core/main.mk
-+++ b/core/main.mk
-@@ -454,7 +454,7 @@ subdir_makefiles := $(SOONG_ANDROID_MK) $(file <$(OUT_DIR)/.module_paths/Android
- subdir_makefiles_total := $(words $(subdir_makefiles))
- .KATI_READONLY := subdir_makefiles_total
- 
--$(foreach mk,$(subdir_makefiles),$(info [$(call inc_and_print,subdir_makefiles_inc)/$(subdir_makefiles_total)] including $(mk) ...)$(eval include $(mk)))
-+$(foreach mk,$(subdir_makefiles),$(info [$(call inc_and_print,subdir_makefiles_inc)/$(subdir_makefiles_total)] $(mk) ...)$(eval include $(mk)))
- 
- ifneq (,$(PDK_FUSION_PLATFORM_ZIP)$(PDK_FUSION_PLATFORM_DIR))
- # Bring in the PDK platform.zip modules.
 -- 
 2.19.1
 
