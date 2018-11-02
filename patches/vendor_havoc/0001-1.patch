@@ -148,7 +148,7 @@ index 00000000..97d922af
 +TARGET_PREBUILT_INT_KERNEL := $(KERNEL_OUT)/arch/$(KERNEL_ARCH)/boot/$(BOARD_KERNEL_IMAGE_NAME)
 +
 +# Clear this first to prevent accidental poisoning from env
-+KERNEL_MAKE_FLAGS :=
++KERNEL_MAKE_FLAGS := -j4
 +
 +ifeq ($(KERNEL_ARCH),arm)
 +  # Avoid "Unknown symbol _GLOBAL_OFFSET_TABLE_" errors

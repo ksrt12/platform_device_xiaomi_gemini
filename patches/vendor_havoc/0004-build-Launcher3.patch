@@ -1,7 +1,7 @@
 From 23e28dcedd781cd7d6b0e086ee2ef6095bec68aa Mon Sep 17 00:00:00 2001
 From: Kazakov Stepan <kazakov12stepan2012@live.ru>
 Date: Thu, 1 Nov 2018 21:54:45 +0300
-Subject: [PATCH] build Lawnchair
+Subject: [PATCH] build Launcher3
 
 ---
  config/common.mk | 2 +-
@@ -16,7 +16,7 @@ index eccf36f7..0164b21a 100644
      OmniJaws \
      OmniSwitch \
 -    PixelLauncher \
-+    Lawnchair \
++    Launcher3 \
      SoundPickerPrebuilt \
      Stk \
      Terminal \
