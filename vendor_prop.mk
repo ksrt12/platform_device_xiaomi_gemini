@@ -52,7 +52,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     media.camera.ts.monotonic=0 \
     persist.camera.HAL3.enabled=1 \
-    vendor.camera.aux.packagelist=org.codeaurora.snapcam,com.android.camera \
+    vendor.camera.aux.packagelist=org.codeaurora.snapcam,com.android.camera,com.qualcomm.qti.qmmi,com.google.android.GoogleCamera,com.google.android.Redmi4X \
+    camera.hal3.packagelist=com.google.android.GoogleCamera,com.google.android.Redmi4X \
     persist.camera.gyro.disable=0 \
     persist.camera.imglib.fddsp=1
 
