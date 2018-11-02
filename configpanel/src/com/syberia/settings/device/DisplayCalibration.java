@@ -15,7 +15,7 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 *
 */
-package com.syberia.settings.device;
+package com.havoc.settings.device;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -33,9 +33,9 @@ import android.view.MenuInflater;
 import android.util.Log;
 
 import android.app.ActionBar;
-import com.syberia.settings.device.preference.SeekBarPreference;
-import com.syberia.settings.device.utils.Utils;
-import com.syberia.settings.device.R;
+import com.havoc.settings.device.preference.SeekBarPreference;
+import com.havoc.settings.device.utils.Utils;
+import com.havoc.settings.device.R;
 
 public class DisplayCalibration extends PreferenceActivity implements
         OnPreferenceChangeListener {

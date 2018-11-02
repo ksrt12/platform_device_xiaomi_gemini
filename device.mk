@@ -402,3 +402,11 @@ PRODUCT_COPY_FILES += \
 
 PRODUCT_COPY_FILES += vendor/havoc/prebuilt/common/bootanimation/1080.zip:system/media/bootanimation.zip
 PRODUCT_PACKAGES += Phonograph TGX KiwiBrowser RootExplorer
+
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/media/audio/alarms/Creamy.ogg:system/media/audio/alarms/Creamy.ogg \
+    $(LOCAL_PATH)/media/audio/alarms/Huawei_Alarm.ogg:system/media/audio/alarms/Huawei_Alarm.ogg \
+    $(LOCAL_PATH)/media/audio/notifications/Ceres.ogg:system/media/audio/notifications/Ceres.ogg \
+    $(LOCAL_PATH)/media/audio/notifications/Huawei_Cascade.ogg:system/media/audio/notifications/Huawei_Cascade.ogg \
+    $(LOCAL_PATH)/media/audio/ringtones/Huawei_Tune_Piano.ogg:system/media/audio/ringtones/Huawei_Tune_Piano.ogg \
+    $(LOCAL_PATH)/media/audio/ringtones/Huawei_Tune.ogg:system/media/audio/ringtones/Huawei_Tune.ogg

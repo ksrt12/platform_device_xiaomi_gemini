@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.syberia.settings.device;
+package com.havoc.settings.device;
 
 import java.util.HashMap;
 import java.util.Map;

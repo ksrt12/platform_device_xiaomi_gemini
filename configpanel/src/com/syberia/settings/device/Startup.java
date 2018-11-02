@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.syberia.settings.device;
+package com.havoc.settings.device;
 
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
@@ -28,9 +28,9 @@ import android.os.UserHandle;
 import android.util.Log;
 
 import java.io.File;
-import com.syberia.settings.device.preference.VibratorStrengthPreference;
-import com.syberia.settings.device.utils.Utils;
-import com.syberia.settings.device.utils.FileUtils;
+import com.havoc.settings.device.preference.VibratorStrengthPreference;
+import com.havoc.settings.device.utils.Utils;
+import com.havoc.settings.device.utils.FileUtils;
 
 public class Startup extends BroadcastReceiver {
 

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.syberia.settings.device;
+package com.havoc.settings.device;
 
 import android.content.SharedPreferences;
 import android.content.Intent;
@@ -35,10 +35,10 @@ import android.view.MenuItem;
 
 import java.io.File;
 
-import com.syberia.settings.device.R;
-import com.syberia.settings.device.preference.VibratorStrengthPreference;
-import com.syberia.settings.device.utils.FileUtils;
-import com.syberia.settings.device.utils.Utils;
+import com.havoc.settings.device.R;
+import com.havoc.settings.device.preference.VibratorStrengthPreference;
+import com.havoc.settings.device.utils.FileUtils;
+import com.havoc.settings.device.utils.Utils;
 
 public class ButtonSettingsActivity extends PreferenceActivity implements OnPreferenceChangeListener{
 

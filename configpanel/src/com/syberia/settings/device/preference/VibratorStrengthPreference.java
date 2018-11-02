@@ -15,7 +15,7 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 *
 */
-package com.syberia.settings.device.preference;
+package com.havoc.settings.device.preference;
 
 import android.content.ContentResolver;
 import android.content.Context;
@@ -39,8 +39,8 @@ import android.util.Log;
 
 import java.util.List;
 
-import com.syberia.settings.device.utils.Utils;
-import com.syberia.settings.device.R;
+import com.havoc.settings.device.utils.Utils;
+import com.havoc.settings.device.R;
 
 public class VibratorStrengthPreference extends DialogPreference implements SeekBar.OnSeekBarChangeListener, DialogInterface.OnDismissListener {
 

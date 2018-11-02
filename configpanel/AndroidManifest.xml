@@ -16,7 +16,7 @@
      limitations under the License.
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.syberia.settings.device"
+    package="com.havoc.settings.device"
     android:versionCode="1"
     android:versionName="1.0"
     android:sharedUserId="android.uid.system">
@@ -26,7 +26,7 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
 
-    <protected-broadcast android:name="com.syberia.settings.device.CUST_UPDATE" />
+    <protected-broadcast android:name="com.havoc.settings.device.CUST_UPDATE" />
 
     <uses-sdk
         android:minSdkVersion="28" />
@@ -40,7 +40,7 @@
         android:directBootAware="true">
 
         <activity
-            android:name="com.syberia.settings.device.ButtonSettingsActivity"
+            android:name="com.havoc.settings.device.ButtonSettingsActivity"
             android:label="@string/button_panel_title">
             <intent-filter>
                 <action android:name="com.android.settings.action.EXTRA_SETTINGS" />
@@ -57,7 +57,7 @@
         </activity>
 
         <activity
-            android:name="com.syberia.settings.device.DisplayCalibration"
+            android:name="com.havoc.settings.device.DisplayCalibration"
             android:exported="true"
             android:label="@string/kcal_title" >
             <intent-filter>
@@ -68,7 +68,7 @@
 
         <activity android:name=".KeyHandler" />
 
-        <receiver android:name="com.syberia.settings.device.Startup" >
+        <receiver android:name="com.havoc.settings.device.Startup" >
             <intent-filter android:priority="100">
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.PRE_BOOT_COMPLETED" />
