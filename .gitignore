@@ -2,3 +2,4 @@
 *.orig
 *~
 patches/apply
+*.patch
