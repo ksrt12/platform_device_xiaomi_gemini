@@ -402,6 +402,7 @@ PRODUCT_COPY_FILES += \
 
 PRODUCT_COPY_FILES += vendor/havoc/prebuilt/common/bootanimation/1080.zip:system/media/bootanimation.zip
 PRODUCT_PACKAGES += Phonograph TGX KiwiBrowser RootExplorer
+PRODUCT_PACKAGES += nano htop
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/media/audio/alarms/Creamy.ogg:system/media/audio/alarms/Creamy.ogg \

@@ -2,7 +2,7 @@
 export WITH_SU=true;
 export USE_CCACHE=true;
 export SKIP_ABI_CHECKS=true;
-
+#export INC_ZIP="-i thi/havoc_gemini-target_files-fb721505ac.zip";
 apply=device/xiaomi/gemini/patches/apply;
 if [ ! -e $apply ]
 then sh $apply.sh;
@@ -20,7 +20,8 @@ export SDCLANG_COMMON_FLAGS="-O3 -fvectorize -Wno-user-defined-warnings -Wno-vec
 case $(uname -s) in
     Linux)
         if [ -d "$SDCLANG_PATH" ]; then
-            export SDCLANG=true
+            export SDCLANG=true;
+			echo "sdclang founded";
         fi
         ;;
     Darwin)
