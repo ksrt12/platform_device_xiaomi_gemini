@@ -1,7 +1,7 @@
-From 0e179a14cf13e14fbed237df4eaf46d4d3d59530 Mon Sep 17 00:00:00 2001
+From f6f188c2f0e37e0ea4147f2c10047291729adc2e Mon Sep 17 00:00:00 2001
 From: Kazakov Stepan <kazakov12stepan2012@live.ru>
 Date: Wed, 31 Oct 2018 19:25:08 +0300
-Subject: [PATCH 2/2] update kernel tasks
+Subject: [PATCH 2/3] update kernel tasks
 
 ---
  build/tasks/dt_image.mk |  17 +--

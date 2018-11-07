@@ -1,7 +1,7 @@
-From bf190e3d0af5cbc48925ee67a29d90818b6bec24 Mon Sep 17 00:00:00 2001
+From d82084b6392a62a8611a2c1e149d5ac2b72ee38e Mon Sep 17 00:00:00 2001
 From: Kazakov Stepan <kazakov12stepan2012@live.ru>
 Date: Thu, 1 Nov 2018 20:54:24 +0300
-Subject: [PATCH] fix perms
+Subject: [PATCH 3/3] fix perms
 
 ---
  build/tasks/dtbo.mk                           | 37 -------------------

@@ -1,0 +1,248 @@
+From 1e79d2ba438a21cad278cd982e362823b1b34fd5 Mon Sep 17 00:00:00 2001
+From: Suchand Ghosh <suchan@codeaurora.org>
+Date: Wed, 12 Apr 2017 14:26:23 +0530
+Subject: [PATCH] IMS: Conference URI support.
+
+Add Telephony extras EXTRAS_IS_CONFERENCE_URI,
+EXTRA_DIAL_CONFERENCE_URI which will require by Telecomm,
+TeleService, Telephony, Framework, IMS framework etc.
+
+IMS: Allow placeCall with complete URI
+
+Add extra "org.codeaurora.extra.SKIP_SCHEMA_PARSING".
+Application need to set the intent extra to dial with
+complete uri.
+
+IMS: Add participant support.
+
+Add Phone Capabilities ADD_PARTICIPANT and
+Telephony Property ADD_PARTICIPANT_KEY.
+
+IMS: Allow add participant with normal IMS call
+
+We should allow add participant with normal IMS
+call to make it conference.
+Send add participant through existing connection
+of normal IMS call.
+
+IMS: Add Participant support.
+
+Do not create new connection while adding participant
+with existing call. Rather send add participant request
+through IMSConference.
+
+IMS: Rectify the capability mask for add participant
+
+Properly set the add participant capability mask.
+
+CRs-Fixed: 2189932
+Change-Id: I5052710a2d11a57331bdfbe64247e6a39bf9147a
+Signed-off-by: DennySPB <dennyspb@gmail.com>
+---
+ telecomm/java/android/telecom/Call.java       |  8 ++++
+ telecomm/java/android/telecom/Conference.java |  8 ++++
+ telecomm/java/android/telecom/Connection.java |  8 ++++
+ .../android/telecom/ConnectionService.java    | 44 +++++++++++++++++++
+ .../internal/telecom/IConnectionService.aidl  |  2 +
+ .../telephony/TelephonyProperties.java        | 30 +++++++++++++
+ 6 files changed, 100 insertions(+)
+
+diff --git a/telecomm/java/android/telecom/Call.java b/telecomm/java/android/telecom/Call.java
+index 1c0e260bef5..d198a3fad78 100644
+--- a/telecomm/java/android/telecom/Call.java
++++ b/telecomm/java/android/telecom/Call.java
+@@ -354,6 +354,11 @@
+ 
+         /** Call supports the deflect feature. */
+         public static final int CAPABILITY_SUPPORT_DEFLECT = 0x01000000;
++        /**
++         * Add participant in an active or conference call option
++         * @hide
++         */
++        public static final int CAPABILITY_ADD_PARTICIPANT = 0x02000000;
+ 
+         //******************************************************************************************
+         // Next CAPABILITY value: 0x02000000
+@@ -540,6 +545,9 @@ public static String capabilitiesToString(int capabilities) {
+             }
+             if (can(capabilities, CAPABILITY_SUPPORT_DEFLECT)) {
+                 builder.append(" CAPABILITY_SUPPORT_DEFLECT");
++	    }
++            if (can(capabilities, CAPABILITY_ADD_PARTICIPANT)) {
++                builder.append(" CAPABILITY_ADD_PARTICIPANT");
+             }
+             builder.append("]");
+             return builder.toString();
+diff --git a/telecomm/java/android/telecom/Conference.java b/telecomm/java/android/telecom/Conference.java
+index 024bd303304..b5043fe52c9 100644
+--- a/telecomm/java/android/telecom/Conference.java
++++ b/telecomm/java/android/telecom/Conference.java
+@@ -339,6 +339,14 @@ public void onCallAudioStateChanged(CallAudioState state) {}
+      */
+     public void onConnectionAdded(Connection connection) {}
+ 
++    /**
++     * Invoked when the conference adds a participant to the conference call.
++     *
++     * @param participant The participant to be added with conference call.
++     * @hide
++     */
++    public void onAddParticipant(String participant) {}
++
+     /**
+      * Sets state to be on hold.
+      */
+diff --git a/telecomm/java/android/telecom/Connection.java b/telecomm/java/android/telecom/Connection.java
+index c04f9a9ef86..fca452e93b1 100644
+--- a/telecomm/java/android/telecom/Connection.java
++++ b/telecomm/java/android/telecom/Connection.java
+@@ -332,6 +332,14 @@
+     /** Call supports the deflect feature. */
+     public static final int CAPABILITY_SUPPORT_DEFLECT = 0x02000000;
+ 
++    /**
++     * Add participant in an active or conference call option
++     *
++     * @hide
++     */
++    public static final int CAPABILITY_ADD_PARTICIPANT = 0x04000000;
++
++
+     //**********************************************************************************************
+     // Next CAPABILITY value: 0x04000000
+     //**********************************************************************************************
+diff --git a/telecomm/java/android/telecom/ConnectionService.java b/telecomm/java/android/telecom/ConnectionService.java
+index fc32b177e8d..8b4e93d0b85 100644
+--- a/telecomm/java/android/telecom/ConnectionService.java
++++ b/telecomm/java/android/telecom/ConnectionService.java
+@@ -183,6 +183,8 @@
+     private static final int MSG_HANDOVER_FAILED = 32;
+     private static final int MSG_HANDOVER_COMPLETE = 33;
+     private static final int MSG_DEFLECT = 34;
++    //Proprietary values starts after this.
++    private static final int MSG_ADD_PARTICIPANT_WITH_CONFERENCE = 40;
+ 
+     private static Connection sNullConnection;
+ 
+@@ -516,6 +518,14 @@ public void splitFromConference(String callId, Session.Info sessionInfo) {
+             }
+         }
+ 
++        @Override
++        public void addParticipantWithConference(String callId, String participant) {
++            SomeArgs args = SomeArgs.obtain();
++            args.arg1 = callId;
++            args.arg2 = participant;
++            mHandler.obtainMessage(MSG_ADD_PARTICIPANT_WITH_CONFERENCE, args).sendToTarget();
++        }
++
+         @Override
+         public void mergeConference(String callId, Session.Info sessionInfo) {
+             Log.startSession(sessionInfo, SESSION_MERGE_CONFERENCE);
+@@ -979,6 +989,17 @@ public void loggedRun() {
+                     }
+                     break;
+                 }
++                case MSG_ADD_PARTICIPANT_WITH_CONFERENCE: {
++                    SomeArgs args = (SomeArgs) msg.obj;
++                    try {
++                        String callId = (String) args.arg1;
++                        String participant = (String) args.arg2;
++                        addParticipantWithConference(callId, participant);
++                    } finally {
++                        args.recycle();
++                    }
++                    break;
++                }
+                 case MSG_CONFERENCE: {
+                     SomeArgs args = (SomeArgs) msg.obj;
+                     try {
+@@ -1770,6 +1791,17 @@ private void splitFromConference(String callId) {
+         }
+     }
+ 
++    private void addParticipantWithConference(String callId, String participant) {
++        Log.d(this, "ConnectionService addParticipantWithConference(%s, %s)", participant, callId);
++        Conference conference = findConferenceForAction(callId, "addParticipantWithConference");
++        Connection connection = findConnectionForAction(callId, "addParticipantWithConnection");
++        if (connection != getNullConnection()) {
++            onAddParticipant(connection, participant);
++        } else if (conference != getNullConference()) {
++            conference.onAddParticipant(participant);
++        }
++    }
++
+     private void mergeConference(String callId) {
+         Log.d(this, "mergeConference(%s)", callId);
+         Conference conference = findConferenceForAction(callId, "mergeConference");
+@@ -2378,6 +2410,18 @@ public void onConferenceAdded(Conference conference) {}
+      */
+     public void onConferenceRemoved(Conference conference) {}
+ 
++    /** Add participant with connection. Invoked when user has made a request to add
++     * participant with specified connection. In response, the participant should add with
++     * the connection.
++     *
++     * @param connection A connection where participant need to add.
++     * @param participant Address of participant which will be added.
++     * @return
++     *
++     * @hide
++     */
++    public void onAddParticipant(Connection connection, String participant) {}
++
+     /**
+      * Indicates that a remote conference has been created for existing {@link RemoteConnection}s.
+      * When this method is invoked, this {@link ConnectionService} should create its own
+diff --git a/telecomm/java/com/android/internal/telecom/IConnectionService.aidl b/telecomm/java/com/android/internal/telecom/IConnectionService.aidl
+index e35093c9656..acb3e6f1275 100644
+--- a/telecomm/java/com/android/internal/telecom/IConnectionService.aidl
++++ b/telecomm/java/com/android/internal/telecom/IConnectionService.aidl
+@@ -104,6 +104,8 @@ oneway interface IConnectionService {
+     void respondToRttUpgradeRequest(String callId, in ParcelFileDescriptor fromInCall,
+     in ParcelFileDescriptor toInCall, in Session.Info sessionInfo);
+ 
++    void addParticipantWithConference(String callId, String recipients);
++
+     void connectionServiceFocusLost(in Session.Info sessionInfo);
+ 
+     void connectionServiceFocusGained(in Session.Info sessionInfo);
+diff --git a/telephony/java/com/android/internal/telephony/TelephonyProperties.java b/telephony/java/com/android/internal/telephony/TelephonyProperties.java
+index 6567ea764b5..1d142e7f9f5 100644
+--- a/telephony/java/com/android/internal/telephony/TelephonyProperties.java
++++ b/telephony/java/com/android/internal/telephony/TelephonyProperties.java
+@@ -218,4 +218,34 @@
+      */
+     static final String PROPERTY_VIDEOCALL_AUDIO_OUTPUT = "persist.radio.call.audio.output";
+ 
++    /**
++     * Used when Presence app sends Dial intent with specific schema
++     * If true: skip schema parsing and use Tel schema
++     * If false: parse schema
++     */
++    static final String EXTRA_SKIP_SCHEMA_PARSING =
++            "org.codeaurora.extra.SKIP_SCHEMA_PARSING";
++
++    /**
++     * For Group Conference Calling
++     * If true: isConferenceUri in Dial is set to true,
++     *          which indicates that Dial is for Conference Calling
++     * If false: above is set to false
++     */
++    static final String EXTRAS_IS_CONFERENCE_URI = "isConferenceUri";
++
++    /**
++     * For Group Conference Dialing Feature
++     * If true: Dial intent triggered from Group Conference Calling screen
++     * if false: normal dial
++     */
++    static final String EXTRA_DIAL_CONFERENCE_URI =
++            "org.codeaurora.extra.DIAL_CONFERENCE_URI";
++
++    /**
++     * For Add Participant Feature
++     * If true: Dial intent triggered from Dialpad is for AddParticipant
++     * if false: normal dial
++     */
++    static final String ADD_PARTICIPANT_KEY = "add_participant";
+ }
