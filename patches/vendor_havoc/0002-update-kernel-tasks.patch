@@ -1,12 +1,12 @@
-From f6f188c2f0e37e0ea4147f2c10047291729adc2e Mon Sep 17 00:00:00 2001
+From 40c877bff28a5c04a17a89bf830d5ff014c1bb3d Mon Sep 17 00:00:00 2001
 From: Kazakov Stepan <kazakov12stepan2012@live.ru>
 Date: Wed, 31 Oct 2018 19:25:08 +0300
 Subject: [PATCH 2/3] update kernel tasks
 
 ---
  build/tasks/dt_image.mk |  17 +--
- build/tasks/kernel.mk   | 321 ++--------------------------------------
- 2 files changed, 16 insertions(+), 322 deletions(-)
+ build/tasks/kernel.mk   | 323 ++--------------------------------------
+ 2 files changed, 16 insertions(+), 324 deletions(-)
 
 diff --git a/build/tasks/dt_image.mk b/build/tasks/dt_image.mk
 index 2e68bfb7..6d229801 100644
@@ -57,7 +57,7 @@ index 2e68bfb7..6d229801 100644
  endif
  endif
 diff --git a/build/tasks/kernel.mk b/build/tasks/kernel.mk
-index e6288e9c..8cbacccc 100644
+index a51df195..e5c4f336 100644
 --- a/build/tasks/kernel.mk
 +++ b/build/tasks/kernel.mk
 @@ -1,5 +1,5 @@
@@ -67,7 +67,7 @@ index e6288e9c..8cbacccc 100644
  #
  # Licensed under the Apache License, Version 2.0 (the "License");
  # you may not use this file except in compliance with the License.
-@@ -13,187 +13,12 @@
+@@ -13,188 +13,11 @@
  # See the License for the specific language governing permissions and
  # limitations under the License.
  
@@ -130,7 +130,7 @@ index e6288e9c..8cbacccc 100644
 +# Kernel variables are configured in vendor/syberia/build/core/BoardConfigKernel.mk
  
  ifneq ($(TARGET_NO_KERNEL),true)
- 
+-
 -TARGET_AUTO_KDIR := $(shell echo $(TARGET_DEVICE_DIR) | sed -e 's/^device/kernel/g')
 -
 -## Externally influenced variables
@@ -169,7 +169,8 @@ index e6288e9c..8cbacccc 100644
 -ifneq ($(TARGET_KERNEL_APPEND_DTB),)
 -$(error TARGET_KERNEL_APPEND_DTB is deprecated.)
 -endif
--TARGET_PREBUILT_INT_KERNEL := $(KERNEL_OUT)/arch/$(KERNEL_ARCH)/boot/$(BOARD_KERNEL_IMAGE_NAME)
+-#TARGET_PREBUILT_INT_KERNEL := $(KERNEL_OUT)/arch/$(KERNEL_ARCH)/boot/$(BOARD_KERNEL_IMAGE_NAME)
+-TARGET_PREBUILT_INT_KERNEL := $(KERNEL_SRC)/$(BOARD_KERNEL_IMAGE_NAME)
 -
 -# Clear this first to prevent accidental poisoning from env
 -MAKE_FLAGS := -j4
@@ -256,7 +257,7 @@ index e6288e9c..8cbacccc 100644
  ifeq ($(NEED_KERNEL_MODULE_ROOT),true)
  KERNEL_MODULES_INSTALL := root
  KERNEL_MODULES_OUT := $(TARGET_ROOT_OUT)/lib/modules
-@@ -211,83 +36,6 @@ KERNEL_DEPMOD_STAGING_DIR := $(call intermediates-dir-for,PACKAGING,depmod_vendo
+@@ -212,83 +35,6 @@ KERNEL_DEPMOD_STAGING_DIR := $(call intermediates-dir-for,PACKAGING,depmod_vendo
  KERNEL_MODULE_MOUNTPOINT := vendor
  endif
  
@@ -340,7 +341,7 @@ index e6288e9c..8cbacccc 100644
  .PHONY: force_additional_config
  $(KERNEL_ADDITIONAL_CONFIG_OUT): force_additional_config
  	$(hide) cmp -s $(KERNEL_ADDITIONAL_CONFIG_SRC) $@ || cp $(KERNEL_ADDITIONAL_CONFIG_SRC) $@;
-@@ -295,7 +43,7 @@ $(KERNEL_ADDITIONAL_CONFIG_OUT): force_additional_config
+@@ -296,7 +42,7 @@ $(KERNEL_ADDITIONAL_CONFIG_OUT): force_additional_config
  $(KERNEL_CONFIG): $(KERNEL_DEFCONFIG_SRC) $(KERNEL_ADDITIONAL_CONFIG_OUT)
  	@echo "Building Kernel Config"
  	$(hide) mkdir -p $(KERNEL_OUT)
@@ -349,7 +350,7 @@ index e6288e9c..8cbacccc 100644
  	$(hide) if [ ! -z "$(KERNEL_CONFIG_OVERRIDE)" ]; then \
  			echo "Overriding kernel config with '$(KERNEL_CONFIG_OVERRIDE)'"; \
  			echo $(KERNEL_CONFIG_OVERRIDE) >> $(KERNEL_OUT)/.config; \
-@@ -313,21 +61,21 @@ TARGET_KERNEL_BINARIES: $(KERNEL_CONFIG)
+@@ -314,21 +60,21 @@ TARGET_KERNEL_BINARIES: $(KERNEL_CONFIG)
  	$(hide) rm -rf $(KERNEL_MODULES_OUT)
  	$(hide) mkdir -p $(KERNEL_MODULES_OUT)
  	$(hide) rm -rf $(KERNEL_DEPMOD_STAGING_DIR)
@@ -375,7 +376,7 @@ index e6288e9c..8cbacccc 100644
  			mofile=$$(find $(KERNEL_MODULES_OUT) -type f -name modules.order) && \
  			mpath=$$(dirname $$mofile) && \
  			for f in $$(find $$mpath/kernel -type f -name '*.ko'); do \
-@@ -345,53 +93,6 @@ $(TARGET_KERNEL_MODULES): TARGET_KERNEL_BINARIES
+@@ -346,53 +92,6 @@ $(TARGET_KERNEL_MODULES): TARGET_KERNEL_BINARIES
  
  $(TARGET_PREBUILT_INT_KERNEL): $(TARGET_KERNEL_MODULES)
  
@@ -429,7 +430,7 @@ index e6288e9c..8cbacccc 100644
  .PHONY: kerneltags
  kerneltags: $(KERNEL_CONFIG)
  	$(hide) mkdir -p $(KERNEL_OUT)
-@@ -403,7 +104,7 @@ kernelconfig:  KERNELCONFIG_MODE := menuconfig
+@@ -404,7 +103,7 @@ kernelconfig:  KERNELCONFIG_MODE := menuconfig
  kernelxconfig: KERNELCONFIG_MODE := xconfig
  kernelxconfig kernelconfig:
  	$(hide) mkdir -p $(KERNEL_OUT)
@@ -438,7 +439,7 @@ index e6288e9c..8cbacccc 100644
  	env KCONFIG_NOTIMESTAMP=true \
  		 $(MAKE) -C $(KERNEL_SRC) O=$(KERNEL_OUT) ARCH=$(KERNEL_ARCH) $(KERNEL_CROSS_COMPILE) $(KERNEL_CLANG_TRIPLE) $(KERNEL_CC) $(KERNELCONFIG_MODE)
  	env KCONFIG_NOTIMESTAMP=true \
-@@ -412,7 +113,7 @@ kernelxconfig kernelconfig:
+@@ -413,7 +112,7 @@ kernelxconfig kernelconfig:
  
  kernelsavedefconfig:
  	$(hide) mkdir -p $(KERNEL_OUT)
@@ -447,7 +448,7 @@ index e6288e9c..8cbacccc 100644
  	env KCONFIG_NOTIMESTAMP=true \
  		 $(MAKE) -C $(KERNEL_SRC) O=$(KERNEL_OUT) ARCH=$(KERNEL_ARCH) $(KERNEL_CROSS_COMPILE) $(KERNEL_CLANG_TRIPLE) $(KERNEL_CC) savedefconfig
  	cp $(KERNEL_OUT)/defconfig $(KERNEL_DEFCONFIG_SRC)
-@@ -427,8 +128,8 @@ endif # FULL_KERNEL_BUILD
+@@ -428,8 +127,8 @@ endif # FULL_KERNEL_BUILD
  TARGET_PREBUILT_DTBO = $(PRODUCT_OUT)/dtbo/arch/$(KERNEL_ARCH)/boot/dtbo.img
  $(TARGET_PREBUILT_DTBO): $(AVBTOOL)
  	echo -e ${CL_GRN}"Building DTBO.img"${CL_RST}
