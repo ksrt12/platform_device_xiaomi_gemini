@@ -1,13 +1,12 @@
-From 372485396525ad77521cb445f286f2febcb1366d Mon Sep 17 00:00:00 2001
+From 2f60bf711c48d5ee3fa145d89514b8163592ce68 Mon Sep 17 00:00:00 2001
 From: Kazakov Stepan <ksrt12group@gmail.com>
 Date: Thu, 8 Nov 2018 00:44:57 +0300
-Subject: [PATCH] fix
+Subject: [PATCH] ru
 
 Signed-off-by: Kazakov Stepan <ksrt12group@gmail.com>
 ---
  res/values-ru/havoc_strings.xml | 1256 +++++++++++++++++++++++++++++++
- res/xml/doze_settings.xml       |    4 +-
- 2 files changed, 1258 insertions(+), 2 deletions(-)
+ 1 file changed, 1256 insertions(+)
  create mode 100644 res/values-ru/havoc_strings.xml
 
 diff --git a/res/values-ru/havoc_strings.xml b/res/values-ru/havoc_strings.xml
@@ -1272,21 +1271,6 @@ index 0000000..8fd08e6
 +    <string name="volte_icon_title">VoLTE icon</string>
 +    <string name="volte_icon_summary">Display VoLTE icon in statusbar</string>
 +</resources>
-diff --git a/res/xml/doze_settings.xml b/res/xml/doze_settings.xml
-index 7505d68..9f75ac7 100644
---- a/res/xml/doze_settings.xml
-+++ b/res/xml/doze_settings.xml
-@@ -21,8 +21,8 @@
- 
-     <Preference
-         android:key="ambient_play_cat"
--        android:title="@string/ambient_play_cat"
--        android:summary="@string/ambient_recognition_summary"
-+        android:title="@string/ambient_play_title"
-+        android:summary="@string/ambient_play_summary"
-         android:fragment="com.android.settings.AmbientPlaySettings" />
- 
-     <PreferenceCategory
 -- 
 2.19.1
 
