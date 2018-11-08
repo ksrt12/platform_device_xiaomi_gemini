@@ -1,17 +1,59 @@
-From 5829e1d2fff7de29f7390a4ba56e9352e5a363fc Mon Sep 17 00:00:00 2001
+From c8aa085a577a6e7146ba19a0f9a9575d63d8e380 Mon Sep 17 00:00:00 2001
 From: Kazakov Stepan <kazakov12stepan2012@live.ru>
 Date: Wed, 31 Oct 2018 16:54:56 +0300
 Subject: [PATCH 4/6] add soong-havoc-generator
 
 Signed-off-by: Kazakov Stepan <ksrt12group@gmail.com>
 ---
+ build/core/BoardConfigQcom.mk      |   1 +
+ build/core/BoardConfigSoong.mk     |  24 +++
  build/soong/Android.bp             |  38 ++++
  build/soong/generator/generator.go | 310 +++++++++++++++++++++++++++++
  build/soong/generator/variables.go |  28 +++
- 3 files changed, 376 insertions(+)
+ 5 files changed, 401 insertions(+)
+ create mode 100644 build/core/BoardConfigSoong.mk
  create mode 100644 build/soong/generator/generator.go
  create mode 100644 build/soong/generator/variables.go
 
+diff --git a/build/core/BoardConfigQcom.mk b/build/core/BoardConfigQcom.mk
+index 23782c22..81740342 100644
+--- a/build/core/BoardConfigQcom.mk
++++ b/build/core/BoardConfigQcom.mk
+@@ -65,3 +65,4 @@ PRODUCT_SOONG_NAMESPACES += \
+   hardware/qcom/media-caf/$(QCOM_HARDWARE_VARIANT)
+ 
+ include vendor/havoc/build/core/BoardConfigKernel.mk
++include vendor/havoc/build/core/BoardConfigSoong.mk
+diff --git a/build/core/BoardConfigSoong.mk b/build/core/BoardConfigSoong.mk
+new file mode 100644
+index 00000000..5b6308fd
+--- /dev/null
++++ b/build/core/BoardConfigSoong.mk
+@@ -0,0 +1,24 @@
++# Add variables that we wish to make available to soong here.
++EXPORT_TO_SOONG := \
++    KERNEL_ARCH \
++    KERNEL_CC \
++    KERNEL_CLANG_TRIPLE \
++    KERNEL_CROSS_COMPILE \
++    KERNEL_MAKE_FLAGS \
++    TARGET_KERNEL_CONFIG \
++    TARGET_KERNEL_SOURCE
++
++# Setup SOONG_CONFIG_* vars to export the vars listed above.
++# Documentation here:
++# https://github.com/LineageOS/android_build_soong/commit/8328367c44085b948c003116c0ed74a047237a69
++
++SOONG_CONFIG_NAMESPACES += havocVarsPlugin
++
++SOONG_CONFIG_havocVarsPlugin :=
++
++define addVar
++  SOONG_CONFIG_havocVarsPlugin += $(1)
++  SOONG_CONFIG_havocVarsPlugin_$(1) := $$(subst ",\",$$($1))
++endef
++
++$(foreach v,$(EXPORT_TO_SOONG),$(eval $(call addVar,$(v))))
 diff --git a/build/soong/Android.bp b/build/soong/Android.bp
 index b9a8cd94..d2482fc0 100644
 --- a/build/soong/Android.bp

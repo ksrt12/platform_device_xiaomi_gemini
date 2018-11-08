@@ -1,4 +1,4 @@
-From bcaf24769b59b85b149fe3ae7b89f9abe506d19b Mon Sep 17 00:00:00 2001
+From 22da1aad1ae11f2008c6eaa0b770ca414bfea913 Mon Sep 17 00:00:00 2001
 From: Rashed Abdel-Tawab <rashed@linux.com>
 Date: Thu, 20 Sep 2018 15:19:57 -0700
 Subject: [PATCH 3/6] Move kernel variable configuration to BoardConfigKernel
@@ -30,7 +30,7 @@ Signed-off-by: DennySPB <dennyspb@gmail.com>
 
 diff --git a/build/core/BoardConfigKernel.mk b/build/core/BoardConfigKernel.mk
 new file mode 100644
-index 00000000..97d922af
+index 00000000..a4b8c194
 --- /dev/null
 +++ b/build/core/BoardConfigKernel.mk
 @@ -0,0 +1,277 @@
