@@ -1,12 +1,16 @@
-From c7106fe650c23080e13430527f1c6f6a67869971 Mon Sep 17 00:00:00 2001
+From a677a5e7da4d299406bfb7ec8376473846630901 Mon Sep 17 00:00:00 2001
 From: Kazakov Stepan <kazakov12stepan2012@live.ru>
 Date: Thu, 1 Nov 2018 20:54:24 +0300
-Subject: [PATCH 3/3] fix perms
+Subject: [PATCH] fix perms
 
+Signed-off-by: Kazakov Stepan <ksrt12group@gmail.com>
 ---
  build/tasks/dtbo.mk                           | 37 -------------------
+ config/BoardConfigHavoc.mk                    |  2 +-
+ config/common.mk                              |  2 +-
+ config/version.mk                             |  1 -
  .../permissions/privapp-permissions-turbo.xml | 27 ++++++++++++++
- 2 files changed, 27 insertions(+), 37 deletions(-)
+ 5 files changed, 29 insertions(+), 40 deletions(-)
  delete mode 100644 build/tasks/dtbo.mk
 
 diff --git a/build/tasks/dtbo.mk b/build/tasks/dtbo.mk
@@ -52,6 +56,42 @@ index dc3a98ac..00000000
 -
 -endif # BOARD_KERNEL_SEPARATED_DTBO
 -endif # TARGET_NO_KERNEL
+diff --git a/config/BoardConfigHavoc.mk b/config/BoardConfigHavoc.mk
+index 33be6de4..1030d135 100644
+--- a/config/BoardConfigHavoc.mk
++++ b/config/BoardConfigHavoc.mk
+@@ -4,5 +4,5 @@ ifeq ($(WITH_HAVOC_CHARGER),true)
+ endif
+ 
+ ifeq ($(BOARD_USES_QCOM_HARDWARE),true)
+-include vendor/havoc/config/BoardConfigQcom.mk
++#include vendor/havoc/config/BoardConfigQcom.mk
+ endif
+diff --git a/config/common.mk b/config/common.mk
+index 59db4989..dcf30cbf 100644
+--- a/config/common.mk
++++ b/config/common.mk
+@@ -296,7 +296,7 @@ ifeq ($(HOST_OS),linux)
+ endif
+ 
+ # Bootanimation
+-include vendor/havoc/config/bootanimation.mk
++#include vendor/havoc/config/bootanimation.mk
+ 
+ # Version
+ include vendor/havoc/config/version.mk
+diff --git a/config/version.mk b/config/version.mk
+index d5c205a7..56d480c7 100644
+--- a/config/version.mk
++++ b/config/version.mk
+@@ -22,7 +22,6 @@ HAVOC_MOD_VERSION := Havoc-OS-$(HAVOC_BASE_VERSION)-$(HAVOC_BUILD_DATE)-$(HAVOC_
+ ROM_FINGERPRINT := Havoc-OS/$(HAVOC_BASE_VERSION)/$(PLATFORM_VERSION)/$(TARGET_PRODUCT_SHORT)/$(HAVOC_BUILD_DATE)
+ 
+ PRODUCT_PROPERTY_OVERRIDES += \
+-    BUILD_DISPLAY_ID=$(BUILD_ID) \
+     ro.havoc.build.version=$(HAVOC_BUILD_VERSION) \
+     ro.havoc.version=$(HAVOC_VERSION) \
+     ro.havoc.releasetype=$(HAVOC_BUILD_TYPE) \
 diff --git a/prebuilt/common/etc/permissions/privapp-permissions-turbo.xml b/prebuilt/common/etc/permissions/privapp-permissions-turbo.xml
 index 2be143b0..e4b4fe18 100644
 --- a/prebuilt/common/etc/permissions/privapp-permissions-turbo.xml

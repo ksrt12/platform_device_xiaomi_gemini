@@ -1,0 +1,33 @@
+From 7bdcf33ccfb06c044d6de9233ad2f9445f61b616 Mon Sep 17 00:00:00 2001
+From: Kazakov Stepan <ksrt12group@gmail.com>
+Date: Thu, 8 Nov 2018 14:03:49 +0300
+Subject: [PATCH 5/6] my clang
+
+Signed-off-by: Kazakov Stepan <ksrt12group@gmail.com>
+---
+ sdclang/vendorsetup.sh | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
+
+diff --git a/sdclang/vendorsetup.sh b/sdclang/vendorsetup.sh
+index 3fef9d61..1782ca8f 100644
+--- a/sdclang/vendorsetup.sh
++++ b/sdclang/vendorsetup.sh
+@@ -1,12 +1,10 @@
+ # Set SDClang defaults
+ export SDCLANG=false
+-export SDCLANG_PATH=vendor/qcom/dragontc/bin/
++#export SDCLANG_PATH=vendor/qcom/dragontc/bin/
+ export SDCLANG_LTO_DEFS=vendor/havoc/sdclang/sdllvm-lto-defs.mk
+-export SDCLANG_COMMON_FLAGS="-Ofast -g0 -mcpu=cortex-a57 -Wno-user-defined-warnings -Wno-vectorizer-no-neon -Wno-unknown-warning-option \
++export SDCLANG_COMMON_FLAGS="-O3 -fvectorize -Wno-user-defined-warnings -Wno-vectorizer-no-neon -Wno-unknown-warning-option \
+ -Wno-deprecated-register -Wno-tautological-type-limit-compare -Wno-sign-compare -Wno-gnu-folding-constant \
+--Wno-inline-asm -Wno-unused-command-line-argument -Wno-unused-variable \
+--mllvm -polly -mllvm -polly-process-unprofitable -ffp-contract=fast \
+--mllvm -polly-optimized-scops -mllvm -polly-tiling=false"
++-mllvm -arm-implicit-it=always -Wno-inline-asm -Wno-unused-command-line-argument -Wno-unused-variable";
+ 
+ # Enable based on host OS/availablitiy
+ case $(uname -s) in
+-- 
+2.19.1
+

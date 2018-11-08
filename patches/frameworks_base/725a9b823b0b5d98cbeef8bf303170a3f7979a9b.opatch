@@ -1,0 +1,99 @@
+From 725a9b823b0b5d98cbeef8bf303170a3f7979a9b Mon Sep 17 00:00:00 2001
+From: pengfeix <pengfeix@codeaurora.org>
+Date: Sat, 15 Apr 2017 23:16:12 +0800
+Subject: [PATCH] IMS: Add UT interface to query CF setting for service class.
+
+Current interface does not take any service class argument.
+Add a new API for querying call forward status based on service
+class.
+This can be useful to query call forwarding information for video
+calls differently from voice calls.
+
+Change-Id: I62904ba59ec2d9175f0e131582d758caec57cc0c
+CRs-Fixed: 2214326
+Signed-off-by: DennySPB <dennyspb@gmail.com>
+---
+ api/system-current.txt                             |  1 +
+ .../android/telephony/ims/stub/ImsUtImplBase.java  | 14 ++++++++++++++
+ telephony/java/com/android/ims/ImsUtInterface.java |  6 ++++++
+ .../java/com/android/ims/internal/IImsUt.aidl      |  8 ++++++++
+ 4 files changed, 29 insertions(+)
+
+diff --git a/api/system-current.txt b/api/system-current.txt
+index 3b4a0be6cd1..97c725646e2 100644
+--- a/api/system-current.txt
++++ b/api/system-current.txt
+@@ -6077,6 +6077,7 @@ package android.telephony.ims.stub {
+   public class ImsUtImplBase {
+     ctor public ImsUtImplBase();
+     method public void close();
++    method public int queryCFForServiceClass(int, java.lang.String, int);
+     method public int queryCallBarring(int);
+     method public int queryCallBarringForServiceClass(int, int);
+     method public int queryCallForward(int, java.lang.String);
+diff --git a/telephony/java/android/telephony/ims/stub/ImsUtImplBase.java b/telephony/java/android/telephony/ims/stub/ImsUtImplBase.java
+index fcd7faf73bb..85ab4090792 100644
+--- a/telephony/java/android/telephony/ims/stub/ImsUtImplBase.java
++++ b/telephony/java/android/telephony/ims/stub/ImsUtImplBase.java
+@@ -51,6 +51,12 @@ public int queryCallForward(int condition, String number) throws RemoteException
+             return ImsUtImplBase.this.queryCallForward(condition, number);
+         }
+ 
++        @Override
++        public int queryCFForServiceClass(int condition, String number, int serviceClass) throws
++                RemoteException {
++             return ImsUtImplBase.this.queryCFForServiceClass(condition, number, serviceClass);
++        }
++
+         @Override
+         public int queryCallWaiting() throws RemoteException {
+             return ImsUtImplBase.this.queryCallWaiting();
+@@ -168,6 +174,14 @@ public int queryCallForward(int condition, String number) {
+         return -1;
+     }
+ 
++    /**
++     * Retrieves the configuration of the call forward for specified service class.
++     */
++    public int queryCFForServiceClass(int condition, String number,
++            int serviceClass) {
++        return -1;
++    }
++
+     /**
+      * Retrieves the configuration of the call waiting.
+      */
+diff --git a/telephony/java/com/android/ims/ImsUtInterface.java b/telephony/java/com/android/ims/ImsUtInterface.java
+index c9d44055163..3abc7c6c508 100644
+--- a/telephony/java/com/android/ims/ImsUtInterface.java
++++ b/telephony/java/com/android/ims/ImsUtInterface.java
+@@ -123,6 +123,12 @@
+      */
+     public void queryCallForward(int condition, String number, Message result);
+ 
++    /**
++     * Retrieves the configuration of the call forward for the specified service class.
++     * The return value of ((AsyncResult)result.obj) is an array of {@link ImsCallForwardInfo}.
++     */
++    public void queryCallForward(int condition, String number,
++            int serviceClass, Message result);
+     /**
+      * Retrieves the configuration of the call waiting.
+      * The return value of ((AsyncResult)result.obj) is an array of {@link ImsSsInfo}.
+diff --git a/telephony/java/com/android/ims/internal/IImsUt.aidl b/telephony/java/com/android/ims/internal/IImsUt.aidl
+index 4f97cc5cfb2..ca10b2d1a34 100644
+--- a/telephony/java/com/android/ims/internal/IImsUt.aidl
++++ b/telephony/java/com/android/ims/internal/IImsUt.aidl
+@@ -122,4 +122,12 @@ interface IImsUt {
+      */
+     int updateCallBarringForServiceClass(int cbType, int action, in String[] barrList,
+             int serviceClass);
++
++    /**
++     * Retrieves the configuration of the call forward for specified service class.
++     * Returns an integer value to indicate the requestId of the UT request.
++     * -1 is returned if the "condition" is invalid for the queryCallForward,
++     * otherwise, integer greater than -1 will be returned.
++     */
++    int queryCFForServiceClass(int condition, String number, int serviceClass);
+ }
