@@ -1,7 +1,7 @@
-From 3e45207c4686f5dcc7fc797319be055a50df9a95 Mon Sep 17 00:00:00 2001
+From e1f6f700ff0aadc33131abc2d8c948133cee63d3 Mon Sep 17 00:00:00 2001
 From: Kazakov Stepan <ksrt12group@gmail.com>
 Date: Thu, 8 Nov 2018 21:45:09 +0300
-Subject: [PATCH 2/6] update qcom_target
+Subject: [PATCH 2/5] update qcom_target
 
 Signed-off-by: Kazakov Stepan <ksrt12group@gmail.com>
 ---

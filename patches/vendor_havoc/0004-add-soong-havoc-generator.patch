@@ -1,7 +1,7 @@
-From c8aa085a577a6e7146ba19a0f9a9575d63d8e380 Mon Sep 17 00:00:00 2001
+From e5f05d1d24a32d89de497b2786e8b4814a14476d Mon Sep 17 00:00:00 2001
 From: Kazakov Stepan <kazakov12stepan2012@live.ru>
 Date: Wed, 31 Oct 2018 16:54:56 +0300
-Subject: [PATCH 4/6] add soong-havoc-generator
+Subject: [PATCH 4/5] add soong-havoc-generator
 
 Signed-off-by: Kazakov Stepan <ksrt12group@gmail.com>
 ---
