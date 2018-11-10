@@ -1,0 +1,25 @@
+From fbcc546c6c238521eb0ca9bc0bed978767f44021 Mon Sep 17 00:00:00 2001
+From: Kazakov Stepan <ksrt12group@gmail.com>
+Date: Sat, 10 Nov 2018 18:16:14 +0300
+Subject: [PATCH] fix perms
+
+Signed-off-by: Kazakov Stepan <ksrt12group@gmail.com>
+---
+ data/etc/privapp-permissions-platform.xml | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/data/etc/privapp-permissions-platform.xml b/data/etc/privapp-permissions-platform.xml
+index bfe864ac480..7fd2e1a1bd3 100644
+--- a/data/etc/privapp-permissions-platform.xml
++++ b/data/etc/privapp-permissions-platform.xml
+@@ -359,6 +359,7 @@ applications that come with the platform
+         <permission name="android.permission.BIND_APPWIDGET"/>
+         <permission name="android.permission.BLUETOOTH_PRIVILEGED"/>
+         <permission name="android.permission.CHANGE_COMPONENT_ENABLED_STATE"/>
++        <permission name="android.permission.CHANGE_CONFIGURATION"/>
+         <permission name="android.permission.CHANGE_DEVICE_IDLE_TEMP_WHITELIST"/>
+         <permission name="android.permission.CHANGE_OVERLAY_PACKAGES"/>
+         <permission name="android.permission.CONNECTIVITY_INTERNAL"/>
+-- 
+2.19.1
+
