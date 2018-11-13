@@ -1,77 +1,20 @@
-From cfe234dc05139877a8b33b100ab3d8f4b7db4847 Mon Sep 17 00:00:00 2001
+From 9702353f3881e35f2f740be32b4152a2f13cdda3 Mon Sep 17 00:00:00 2001
 From: Kazakov Stepan <kazakov12stepan2012@live.ru>
 Date: Thu, 1 Nov 2018 20:54:24 +0300
-Subject: [PATCH 5/5] fix perms
+Subject: [PATCH 2/2] fix perms
 
 Signed-off-by: Kazakov Stepan <ksrt12group@gmail.com>
 ---
- build/tasks/dtbo.mk                           | 37 -------------------
- config/BoardConfigHavoc.mk                    |  2 +-
  config/common.mk                              |  2 +-
  config/version.mk                             |  1 -
- .../permissions/privapp-permissions-turbo.xml | 27 ++++++++++++++
- 5 files changed, 29 insertions(+), 40 deletions(-)
- delete mode 100644 build/tasks/dtbo.mk
+ .../permissions/privapp-permissions-turbo.xml | 27 +++++++++++++++++++
+ 3 files changed, 28 insertions(+), 2 deletions(-)
 
-diff --git a/build/tasks/dtbo.mk b/build/tasks/dtbo.mk
-deleted file mode 100644
-index dc3a98ac..00000000
---- a/build/tasks/dtbo.mk
-+++ /dev/null
-@@ -1,37 +0,0 @@
--ifneq ($(TARGET_NO_KERNEL),true)
--ifeq ($(strip $(BOARD_KERNEL_SEPARATED_DTBO)),true)
--
--MKDTIMG := $(HOST_OUT_EXECUTABLES)/mkdtimg$(HOST_EXECUTABLE_SUFFIX)
--
--INSTALLED_DTBOIMAGE_TARGET := $(PRODUCT_OUT)/dtbo.img
--
--# Most specific paths must come first in possible_dtbo_dirs
--possible_dtbo_dirs = $(KERNEL_OUT)/arch/$(KERNEL_ARCH)/boot/dts $(KERNEL_OUT)/arch/arm/boot/dts
--
--define build-dtboimage-target
--    $(call pretty,"Target dtbo image: $(INSTALLED_DTBOIMAGE_TARGET)")
--    $(hide) for dir in $(possible_dtbo_dirs); do \
--                if [ -d "$$dir" ]; then \
--                    dtbo_dir="$$dir"; \
--                    break; \
--                fi; \
--            done; \
--            $(MKDTIMG) create $@ --page_size=$(BOARD_KERNEL_PAGESIZE) $$(find "$$dtbo_dir" -name '*.dtbo')
--    $(hide) chmod a+r $@
--endef
--
--ifeq ($(BOARD_AVB_ENABLE),true)
--$(INSTALLED_DTBOIMAGE_TARGET): $(AVBTOOL) $(BOARD_AVB_DTBO_KEY_PATH) $(MKDTIMG) $(INSTALLED_KERNEL_TARGET)
--	$(build-dtboimage-target)
--	$(AVBTOOL) add_hash_footer \
--		--image $@ \
--		--partition_size $(BOARD_DTBOIMG_PARTITION_SIZE) \
--		--partition_name dtbo $(INTERNAL_AVB_DTBO_SIGNING_ARGS) \
--		$(BOARD_AVB_DTBO_ADD_HASH_FOOTER_ARGS)
--else
--$(INSTALLED_DTBOIMAGE_TARGET): $(MKDTIMG) $(INSTALLED_KERNEL_TARGET)
--	$(build-dtboimage-target)
--endif
--
--endif # BOARD_KERNEL_SEPARATED_DTBO
--endif # TARGET_NO_KERNEL
-diff --git a/config/BoardConfigHavoc.mk b/config/BoardConfigHavoc.mk
-index 33be6de4..1030d135 100644
---- a/config/BoardConfigHavoc.mk
-+++ b/config/BoardConfigHavoc.mk
-@@ -4,5 +4,5 @@ ifeq ($(WITH_HAVOC_CHARGER),true)
- endif
- 
- ifeq ($(BOARD_USES_QCOM_HARDWARE),true)
--include vendor/havoc/config/BoardConfigQcom.mk
-+#include vendor/havoc/config/BoardConfigQcom.mk
- endif
 diff --git a/config/common.mk b/config/common.mk
-index 7f03bff5..4449b4f4 100644
+index fd3dc572..d606b798 100644
 --- a/config/common.mk
 +++ b/config/common.mk
-@@ -289,7 +289,7 @@ PRODUCT_ENFORCE_RRO_EXCLUDED_OVERLAYS += vendor/havoc/overlay
+@@ -313,7 +313,7 @@ PRODUCT_ENFORCE_RRO_EXCLUDED_OVERLAYS += vendor/havoc/overlay
  DEVICE_PACKAGE_OVERLAYS += vendor/havoc/overlay/common
  
  # Bootanimation

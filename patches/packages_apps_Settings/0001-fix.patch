@@ -1,4 +1,4 @@
-From 3a823ee3773bc51de0310405e31248065554a266 Mon Sep 17 00:00:00 2001
+From 7f86024d2ff72be5d9834a5c0988e9086e75b294 Mon Sep 17 00:00:00 2001
 From: Kazakov Stepan <ksrt12group@gmail.com>
 Date: Thu, 8 Nov 2018 00:46:10 +0300
 Subject: [PATCH] fix
@@ -9,7 +9,7 @@ Signed-off-by: Kazakov Stepan <ksrt12group@gmail.com>
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/res/values/havoc_strings.xml b/res/values/havoc_strings.xml
-index 8bde6be881..bd3ff8cbe8 100644
+index 7e91a8c29c..006c6cc38b 100644
 --- a/res/values/havoc_strings.xml
 +++ b/res/values/havoc_strings.xml
 @@ -259,8 +259,8 @@
@@ -21,8 +21,8 @@ index 8bde6be881..bd3ff8cbe8 100644
 +    <string name="ambient_play_title" translatable="false">com.android.systemui:string/ambient_recognition_notification</string>
 +    <string name="ambient_play_recognition_information" translatable="false">com.android.systemui:string/ambient_recognition_information</string>
      <string name="ambient_play_summary">Show nearby songs</string>
-     <string name="ambient_play_lockscreen_title">Show songs on lock screen</string>
-     <string name="ambient_play_notifications_title">Notifications</string>
+     <string name="ambient_play_lockscreen_title">Show on Lockscreen</string>
+     <string name="ambient_play_lockscreen_summary">Shows an animation on lockscreen when a song is detected</string>
 -- 
 2.19.1
 
