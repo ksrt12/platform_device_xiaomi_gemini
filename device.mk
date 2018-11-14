@@ -400,7 +400,8 @@ PRODUCT_PROPERTY_OVERRIDES += ro.hardware.power=gemini
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/public.libraries.txt:$(TARGET_COPY_OUT_VENDOR)/etc/public.libraries.txt
 
-PRODUCT_COPY_FILES += $(LOCAL_PATH)/patches/bootanimation.zip:system/media/bootanimation.zip
+PRODUCT_COPY_FILES += vendor/havoc/prebuilt/common/bootanimation/1080.zip:system/media/bootanimation.zip
+#$(LOCAL_PATH)/patches/bootanimation.zip
 PRODUCT_PACKAGES += Phonograph TGX KiwiBrowser RootExplorer Launcher3
 PRODUCT_PACKAGES += nano htop
 
