@@ -1,20 +1,20 @@
-From 2f60bf711c48d5ee3fa145d89514b8163592ce68 Mon Sep 17 00:00:00 2001
+From 2eaee91808d9f9ccd6164c0968c15980c6cefd86 Mon Sep 17 00:00:00 2001
 From: Kazakov Stepan <ksrt12group@gmail.com>
 Date: Thu, 8 Nov 2018 00:44:57 +0300
 Subject: [PATCH] ru
 
 Signed-off-by: Kazakov Stepan <ksrt12group@gmail.com>
 ---
- res/values-ru/havoc_strings.xml | 1256 +++++++++++++++++++++++++++++++
- 1 file changed, 1256 insertions(+)
+ res/values-ru/havoc_strings.xml | 1259 +++++++++++++++++++++++++++++++
+ 1 file changed, 1259 insertions(+)
  create mode 100644 res/values-ru/havoc_strings.xml
 
 diff --git a/res/values-ru/havoc_strings.xml b/res/values-ru/havoc_strings.xml
 new file mode 100644
-index 0000000..8fd08e6
+index 0000000..d4936a2
 --- /dev/null
 +++ b/res/values-ru/havoc_strings.xml
-@@ -0,0 +1,1256 @@
+@@ -0,0 +1,1259 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<!-- Copyright (C) 2018 Havoc-OS
 +
@@ -1229,9 +1229,9 @@ index 0000000..8fd08e6
 +    <string name="pie_battery_text">Text only</string> 
 +    <string name="pie_battery_circle">Circle only</string> 
 +    <string name="pie_battery_both">Both</string> 
-+    <string name="pie_status_indicator">Network indicator</string> 
-+    <string name="pie_status_wifi">Wifi only</string> 
-+    <string name="pie_status_mobile">Mobile network only</string> 
++    <string name="pie_status_indicator">Индикаторы сети</string> 
++    <string name="pie_status_wifi">Только Wi-fi</string> 
++    <string name="pie_status_mobile">Только мобильная сеть</string> 
 +    <string name="pie_status_none">None</string> 
 +    <string name="pie_status_both">Both</string> 
 +    <string name="pa_pie_gravity_title">Pie Gravity</string> 
@@ -1268,8 +1268,11 @@ index 0000000..8fd08e6
 +    <string name="one_hand_mode_summary">Allow swiping across right or left on navbar to enable</string>
 +
 +    <!-- Show VoLTE icon on statusbar -->
-+    <string name="volte_icon_title">VoLTE icon</string>
-+    <string name="volte_icon_summary">Display VoLTE icon in statusbar</string>
++    <string name="volte_icon_title">VoLTE</string>
++    <string name="volte_icon_summary">Показывать иконку VoLTE в статусбаре</string>
++
++    <string name="statusbar_show_wifi_activity_title">Индикаторы данных Wi-Fi</string>
++    <string name="statusbar_show_wifi_activity_summary">Показывать индикаторы, когда Wi-Fi отправляет/принимает данные</string>
 +</resources>
 -- 
 2.19.1
