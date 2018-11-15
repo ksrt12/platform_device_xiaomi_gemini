@@ -42,4 +42,4 @@ allow perfd sysfs_lib:file write;
 dontaudit perfd self:capability kill;
 
 allow perfd freq_prop:file { getattr open read };
-allow perfd self:capability dac_override;
+allow perfd self:capability { dac_override sys_admin };

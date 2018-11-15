@@ -1,3 +1,3 @@
 # allow apps to read battery stats
 r_dir_file(untrusted_app, sysfs_batteryinfo)
-allow untrusted_app vendor_camera_prop:file read;
+allow untrusted_app vendor_camera_prop:file r_file_perms;

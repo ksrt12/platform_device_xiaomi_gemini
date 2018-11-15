@@ -1,1 +1,2 @@
 allow dpmd system_file:dir {search open read};
+allow dpmd self:capability sys_admin;

@@ -1,1 +1,1 @@
-allow cnd sysfs:file read;
+allow cnd sysfs:file { open read };

@@ -13,3 +13,4 @@ allow init_panel vendor_toolbox_exec:file rx_file_perms;
 
 # Set panel property
 set_prop(init_panel, system_panel_prop)
+allow init_panel self:capability sys_admin;
