@@ -257,7 +257,3 @@ WPA_SUPPLICANT_VERSION := VER_0_8_X
 
 # Inherit from the proprietary version
 -include vendor/xiaomi/gemini/BoardConfigVendor.mk
-
-#USE_DEX2OAT_DEBUG := true
-#ART_BUILD_TARGET_DEBUG := true
-#ART_BUILD_HOST_DEBUG := true
