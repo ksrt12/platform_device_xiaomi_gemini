@@ -1,3 +1,2 @@
 allow hal_gnss_qti location_data_file:sock_file rw_file_perms;
-allow hal_gnss_qti sysfs:file read;
-allow hal_gnss_qti sysfs:file open;
+allow hal_gnss_qti sysfs:file {open read};
