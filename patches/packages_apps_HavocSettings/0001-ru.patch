@@ -721,22 +721,22 @@ index 0000000..d4936a2
 +    <string name="media_scanner_on_boot_disabled">Do not scan media</string>	
 +	
 +    <!-- Custom carrier label and position -->
-+    <string name="carrier_label_category_title">Carrier Label</string>
-+    <string name="carrier_label_category_summary">Customize statusbar carrier label</string>
-+    <string name="carrier_label_settings_title">Carrier Label</string>
-+    <string name="carrier_label_settings_summary">Customize the carrier label</string>
-+    <string name="custom_carrier_label_title">Custom carrier label</string>
-+    <string name="custom_carrier_label_explain">Please enter a new label. Leave blank to revert to stock label.</string>
-+    <string name="custom_carrier_label_notset">Custom label currently not set</string>
-+    <string name="show_carrier_title">Carrier label</string>
-+    <string name="show_carrier_disabled">Disabled</string>
-+    <string name="show_carrier_keyguard">Lockscreen only</string>
-+    <string name="show_carrier_statusbar">Statusbar only</string>
-+    <string name="show_carrier_enabled">Lockscreen &amp; statusbar</string>
-+    <string name="status_bar_carrier_size">Carrier label size</string>
-+    <string name="status_bar_carrier_font_style_title">Carrier label font</string>
++    <string name="carrier_label_category_title">Имя оператора</string>
++    <string name="carrier_label_category_summary">Настроить имя оператора</string>
++    <string name="carrier_label_settings_title">Имя оператора</string>
++    <string name="carrier_label_settings_summary">Настроить имя оператора</string>
++    <string name="custom_carrier_label_title">Пользовательское имя оператора</string>
++    <string name="custom_carrier_label_explain">Пожалуйста, введите новое. Оставить пустым для отображения по умолчанию.</string>
++    <string name="custom_carrier_label_notset">Имя оператора в данный момент не установлено</string>
++    <string name="show_carrier_title">Имя оператора</string>
++    <string name="show_carrier_disabled">Выключено</string>
++    <string name="show_carrier_keyguard">Только на экране блокировки</string>
++    <string name="show_carrier_statusbar">Только в строке состояния</string>
++    <string name="show_carrier_enabled">На экране блокировки и в строке состояния</string>
++    <string name="status_bar_carrier_size">Размер шрифта имени оператора</string>
++    <string name="status_bar_carrier_font_style_title">Шрифт имени оператора</string>
 +    <string name="status_bar_carrier_font_style_summary">%1$s</string>
-+    <string name="status_bar_carrier_color">Carrier label color</string>
++    <string name="status_bar_carrier_color">Цвет шрифта имени оператора</string>
 +
 +    <!-- Screen Stabilization -->
 +    <string name="screen_stabilization_title">Screen Stabilization</string>
@@ -751,25 +751,25 @@ index 0000000..d4936a2
 +    <string name="lockscreen_visualizer_enable">Включить на экране блокировки</string>
 +    <string name="lockscreen_visualizer_enable_summary">Показывать визуализацию музыки на экране блокировки во время воспроизведения</string>
 +    <string name="lockscreen_visualizer_enable_custom">Настроить цвет</string>
-+    <string name="lockscreen_visualizer_enable_custom_summary">Use a preset color instead of the generated color</string>
-+    <string name="lockscreen_visualizer_custom_color">Цвет видуализации</string>
++    <string name="lockscreen_visualizer_enable_custom_summary">Использовать заданный цвет вместо сгенерированного</string>
++    <string name="lockscreen_visualizer_custom_color">Цвет визуализации</string>
 +
 +    <!-- The volume key answer -->
-+    <string name="volume_answer_call_title">Volume keys answer</string>
-+    <string name="volume_answer_call_summary">Answer the call when volume keys pressed</string>
++    <string name="volume_answer_call_title">Ответ на звонок</string>
++    <string name="volume_answer_call_summary">Отвечать на входящие вызовы нажатием кнопок громкости</string>
 +	
 +    <!-- Launch music player when headset is connected -->
 +    <string name="headset_connect_player_title">Запускать приложение музыки</string>
-+    <string name="headset_connect_player_summary">Launch the default music app when headset is connected</string>
++    <string name="headset_connect_player_summary">при подключении наушников</string>
 +	
 +    <!-- Quick settings tiles columns and rows config --> 
-+    <string name="qs_rows_portrait_title">Rows (Portrait)</string>
-+    <string name="qs_rows_landscape_title">Rows (Landscape)</string>
-+    <string name="qs_columns_portrait_title">Columns (Portrait)</string>
-+    <string name="qs_columns_landscape_title">Columns (Landscape)</string>
++    <string name="qs_rows_portrait_title">Строки (Portrait)</string>
++    <string name="qs_rows_landscape_title">Строки (Landscape)</string>
++    <string name="qs_columns_portrait_title">Столбцы (Portrait)</string>
++    <string name="qs_columns_landscape_title">Столбцы (Landscape)</string>
 +
-+    <string name="brightness_icon_title">Auto Brightness Icon</string>
-+    <string name="brightness_icon_summary">Show a brightness icon to the left of the brightness slider to adjust auto-brightness</string>
++    <string name="brightness_icon_title">Значок авто-яркости</string>
++    <string name="brightness_icon_summary">Показать значок включения авто-яркости слева от слайдера</string>
 +	
 +    <!-- Weather - OmniJaws Settings -->
 +    <string name="weather_config_title">Сервис погоды</string>

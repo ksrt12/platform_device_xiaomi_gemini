@@ -1,21 +1,28 @@
-From 2632cd5c31744f7b6a76fb867a2f7adca1d41069 Mon Sep 17 00:00:00 2001
+From 76e1af10360f09473c52e9d2a3da47ff24b1d5c0 Mon Sep 17 00:00:00 2001
 From: Kazakov Stepan <ksrt12group@gmail.com>
 Date: Sat, 17 Nov 2018 03:11:09 +0300
 Subject: [PATCH] ru
 
 Signed-off-by: Kazakov Stepan <ksrt12group@gmail.com>
 ---
- res/values-ru/havoc_strings.xml               | 318 ++++++++++++++++
+ res/values-ru/havoc_strings.xml               | 329 ++++++++++++++++++
  res/values-ru/strings.xml                     |  12 +-
- 4 files changed, 324 insertions(+), 414 deletions(-)
+ res/xml/display_settings.xml                  |   6 +
+ .../BatteryHealthPreferenceController.java    |   2 +-
+ .../BatteryStatusPreferenceController.java    |   2 +-
+ .../BatteryTechPreferenceController.java      |   2 +-
+ .../BatteryTempPreferenceController.java      |   5 +-
+ .../ChargeCyclePreferenceController.java      |   2 +-
+ .../ChargeFullDesignPreferenceController.java |   4 +-
+ 9 files changed, 349 insertions(+), 15 deletions(-)
  create mode 100644 res/values-ru/havoc_strings.xml
 
 diff --git a/res/values-ru/havoc_strings.xml b/res/values-ru/havoc_strings.xml
 new file mode 100644
-index 0000000000..8c4b4ebf2c
+index 0000000000..6f44f7bcb2
 --- /dev/null
 +++ b/res/values-ru/havoc_strings.xml
-@@ -0,0 +1,318 @@
+@@ -0,0 +1,329 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<!--
 +     Copyright (C) 2018 Havoc-OS
@@ -40,8 +47,8 @@ index 0000000000..8c4b4ebf2c
 +    <string name="havoc_version_default">Unknown</string>
 +
 +    <!-- Scramble PIN Layout on Lockscreen -->
-+    <string name="unlock_scramble_pin_layout_title">Scramble layout</string>
-+    <string name="unlock_scramble_pin_layout_summary">Scramble PIN layout when unlocking device</string>
++    <string name="unlock_scramble_pin_layout_title">Перемешивать кнопки</string>
++    <string name="unlock_scramble_pin_layout_summary">Переставлять кнопки ввода PIN-кода в случайном порядке</string>
 +
 +    <!-- Quick unlock -->
 +    <string name="unlock_quick_unlock_control_title">Быстрая разблокировка</string>
@@ -179,20 +186,20 @@ index 0000000000..8c4b4ebf2c
 +    <string name="screenshot_sound_title">Звук скриншота</string>
 +
 +    <!-- Android debugging -->
-+    <string name="adb_enable">Android debugging</string>
-+    <string name="adb_enable_summary">Enable the Android Debug Bridge (ADB) interface</string>
++    <string name="adb_enable">Режим отладки</string>
++    <string name="adb_enable_summary">Включить отладочный интерфейс Android Debug Bridge (ADB)</string>
 +
 +    <!-- Android debugging notification -->
-+    <string name="adb_notify">Debugging notify</string>
-+    <string name="adb_notify_summary">Display a notification when USB or network debugging is enabled</string>
++    <string name="adb_notify">Уведомление об отладке</string>
++    <string name="adb_notify_summary">Показывать уведомление о включённом режиме отладки по USB или по сети</string>
 +
 +    <!-- Lockscreen rotation -->
-+    <string name="lockscreen_rotation_title">Rotate LockScreen</string>
++    <string name="lockscreen_rotation_title">Автоповорот экрана блокировки</string>
 +
 +    <!-- Increasing ring tone volume -->
-+    <string name="increasing_ring_volume_option_title">Increasing ring volume</string>
-+    <string name="increasing_ring_min_volume_title">Start volume</string>
-+    <string name="increasing_ring_ramp_up_time_title">Ramp-up time</string>
++    <string name="increasing_ring_volume_option_title">Возрастающая громкость звонка</string>
++    <string name="increasing_ring_min_volume_title">Начальная громкость</string>
++    <string name="increasing_ring_ramp_up_time_title">Время увеличения</string>
 +
 +    <!-- Battery stats reset -->
 +    <string name="battery_stats_reset">Сбросить статистику</string>
@@ -206,18 +213,18 @@ index 0000000000..8c4b4ebf2c
 +    <string name="adb_over_network_disallowed_error">Ошибка: отладка по сети может быть активирована только при подключении к сети Wi-Fi или USB!</string>
 +
 +    <!-- Less Notification sounds -->
-+    <string name="less_notification_sounds_title">Less frequent notification sounds</string>
-+    <string name="less_notification_sounds_summary">Play the notification sound of each app only once per set time period</string>
-+    <string name="less_notification_sounds_default">Default Behaviour</string>
-+    <string name="less_notification_sounds_3s">Every 3 seconds</string>
-+    <string name="less_notification_sounds_5s">Every 5 seconds</string>
-+    <string name="less_notification_sounds_10s">Every 10 seconds</string>
-+    <string name="less_notification_sounds_15s">Every 15 seconds</string>
-+    <string name="less_notification_sounds_30s">Every 30 seconds</string>
-+    <string name="less_notification_sounds_45s">Every 45 seconds</string>
-+    <string name="less_notification_sounds_1m">Every 1 minute</string>
-+    <string name="less_notification_sounds_2m">Every 2 minutes</string>
-+    <string name="less_notification_sounds_5m">Every 5 minutes</string>
++    <string name="less_notification_sounds_title">Менее частые звуки уведомлениq</string>
++    <string name="less_notification_sounds_summary">Воспроизводить звук уведомления каждого приложения только один раз за установленный период времени</string>
++    <string name="less_notification_sounds_default">Обычное поведение</string>
++    <string name="less_notification_sounds_3s">Каждые 3 секунды</string>
++    <string name="less_notification_sounds_5s">Каждые 5 секунд</string>
++    <string name="less_notification_sounds_10s">Каждые 10 секунд</string>
++    <string name="less_notification_sounds_15s">Каждые 15 секунд</string>
++    <string name="less_notification_sounds_30s">Каждые 30 секунд</string>
++    <string name="less_notification_sounds_45s">Каждые 45 секунд</string>
++    <string name="less_notification_sounds_1m">Каждую 1 минуту</string>
++    <string name="less_notification_sounds_2m">Каждые 2 минуты</string>
++    <string name="less_notification_sounds_5m">Каждые 5 минуты</string>
 +
 +    <!-- Hostname setting -->
 +    <string name="device_hostname">Сетевое имя устройства</string>
@@ -238,23 +245,23 @@ index 0000000000..8c4b4ebf2c
 +    <string name="lock_pattern_size_5" translatable="false">5 \u00d7 5</string>
 +    <string name="lock_pattern_size_6" translatable="false">6 \u00d7 6</string>
 +
-+    <string name="lock_settings_picker_pattern_size_message">Choose a pattern size</string>
++    <string name="lock_settings_picker_pattern_size_message">Выберите размер граф. ключа</string>
 +    <!-- Whether a visible red line will be drawn after the user has drawn the unlock pattern incorrectly -->
-+    <string name="lockpattern_settings_enable_error_path_title">Show pattern error</string>
++    <string name="lockpattern_settings_enable_error_path_title">Показывать неверный ввод</string>
 +    <!-- Whether the dots will be drawn when using the lockscreen pattern -->
-+    <string name="lockpattern_settings_enable_dots_title">Show pattern dots</string>
++    <string name="lockpattern_settings_enable_dots_title">Показывать точки</string>
 +
 +    <!-- Lock screen vibrate settings -->
-+    <string name="lockscreen_vibrate_enabled_title">Vibrate</string>
-+    <string name="lockscreen_vibrate_enabled_head">Vibrate when unlocking</string>
++    <string name="lockscreen_vibrate_enabled_title">Вибрация</string>
++    <string name="lockscreen_vibrate_enabled_head">Вибрировать при разблокировке</string>
 +
 +    <!-- Running services -->
-+    <string name="background_processes_settings_title">Background processes</string>
++    <string name="background_processes_settings_title">Фоновые процессы</string>
 +
 +    <!-- MSIM Manual provisioning -->
-+    <string name="sim_enabler_summary"><xliff:g id="displayName">%1$s</xliff:g> is <xliff:g id="status" example="disabled">%2$s</xliff:g></string>
++    <string name="sim_enabler_summary"><xliff:g id="displayName">%1$s</xliff:g> — <xliff:g id="status" example="disabled">%2$s</xliff:g></string>
 +    <string name="sim_enabled">включена</string>
-+    <string name="sim_disabled">выключена</string>
++    <string name="sim_disabled">отключена</string>
 +    <string name="sim_missing">отсутствует или неисправна</string>
 +    <string name="sim_enabler_need_disable_sim">SIM-карта будет деактивирована. Хотите продолжить?</string>
 +    <string name="sim_enabler_will_disable_sim_title">Внимание</string>
@@ -271,44 +278,44 @@ index 0000000000..8c4b4ebf2c
 +    <string name="available_sims_title">Доступные SIM-карты</string>
 +
 +    <!-- Density category -->
-+    <string name="density_category">Density options</string>
++    <string name="density_category">Масштабирование</string>
 +
 +    <!-- Volume settings - Volume adjustment sound -->
-+    <string name="volume_adjust_sounds_title">Volume key sounds</string>
++    <string name="volume_adjust_sounds_title">Звук при регулировке громкости</string>
 +
 +    <!-- Ambient Play -->
 +    <string name="ambient_play_title" translatable="false">@*android:string/ambient_recognition_notification</string>
 +    <string name="ambient_play_recognition_information" translatable="false">@*android:string/ambient_recognition_information</string>
-+    <string name="ambient_play_summary">Show nearby songs</string>
-+    <string name="ambient_play_lockscreen_title">Show on Lockscreen</string>
-+    <string name="ambient_play_lockscreen_summary">Shows an animation on lockscreen when a song is detected</string>
-+    <string name="ambient_play_notifications_title">Show Notifications</string>
-+    <string name="ambient_play_notifications_summary">Shows notification in statusbar when a song is detected</string>
-+    <string name="ambient_play_switch_bar_on">On</string>
-+    <string name="ambient_play_switch_bar_off">Off</string>
-+    <string name="ambient_play_help_text">When music is playing nearby, you can see the song name and artist. Battery life and data usage may be affected if this is enabled.</string>
-+    <string name="ambient_play_history">Now Playing History</string>
-+    <string name="ambient_play_loading_data">Loading data…</string>
-+    <string name="ambient_play_history_today">Today</string>
-+    <string name="ambient_play_history_yesterday">Yesterday</string>
-+    <string name="ambient_play_history_dialog_play">Play now</string>
-+    <string name="ambient_play_history_dialog_search">Search on web</string>
-+    <string name="ambient_play_history_dialog_remove">Remove</string>
-+    <string name="ambient_play_history_empty">Music history is empty</string>
-+    <string name="ambient_play_history_menu_remove_all">Remove all</string>
-+    <string name="ambient_play_history_menu_add_to_home">Add to Home Screen</string>
-+    <string name="ambient_play_history_dialog_remove_all_confirmation">Are you sure?</string>
++    <string name="ambient_play_summary">Сейчас играет</string>
++    <string name="ambient_play_lockscreen_title">На экране блокировки</string>
++    <string name="ambient_play_lockscreen_summary">Показывать анимацию на заблокированном экране</string>
++    <string name="ambient_play_notifications_title">Уведомления</string>
++    <string name="ambient_play_notifications_summary">Показывать уведомление в строке состояния при обнаружении песни</string>
++    <string name="ambient_play_switch_bar_on">Вкл</string>
++    <string name="ambient_play_switch_bar_off">Выкл</string>
++    <string name="ambient_play_help_text">Когда музыка играет поблизости, вы можете увидеть название песни и исполнителя. Эта функция требует включенной передачи данных. Возможно увеличение расхода батареи.</string> 
++    <string name="ambient_play_history">История</string>
++    <string name="ambient_play_loading_data">Загружаю данные…</string>
++    <string name="ambient_play_history_today">Сегодня</string>
++    <string name="ambient_play_history_yesterday">Вчера</string>
++    <string name="ambient_play_history_dialog_play">Проиграть</string>
++    <string name="ambient_play_history_dialog_search">Искать в сети</string>
++    <string name="ambient_play_history_dialog_remove">Удалить</string>
++    <string name="ambient_play_history_empty">История пуста</string>
++    <string name="ambient_play_history_menu_remove_all">Удалить всё</string>
++    <string name="ambient_play_history_menu_add_to_home">Добавить на домашний экран</string>
++    <string name="ambient_play_history_dialog_remove_all_confirmation">Вы уверены?</string>
 +
 +    <!-- Proximity wake -->
-+    <string name="proximity_wake_title">Prevent accidental wake-up</string>
-+    <string name="proximity_wake_summary">Check the proximity sensor prior to waking up screen</string>
++    <string name="proximity_wake_title">Предотвращать случайное включение</string>
++    <string name="proximity_wake_summary">Проверка датчика приближения перед включением экрана</string>
 +
 +	<string name="system_update_settings_summary">Проверить обновления Havoc-OS</string>
 +
-+    <string name="full_gesture_mode_title">Enable full gesture mode</string>
-+    <string name="full_gesture_mode_summary">This mode will disable also the back button and you will be able to trigger a back button action by a left swipe on navbar. Right swipe will still trigger the last-app action and left swipe will move apps. To go home you will be able to tap on any navbar empty space, not only the home button.</string>
-+    <string name="full_gesture_mode_dt2s_title">Enable double tap to sleep</string>
-+    <string name="full_gesture_mode_dt2s_summary">Tap on an empty navbar space but not the home button to switch the screen off.</string>
++    <string name="full_gesture_mode_title">Включить полный режим жестов</string>
++    <string name="full_gesture_mode_summary">Этот режим отключит кнопку «Назад», и вы сможете активировать действие кнопки «Назад» с помощью свайпа слева на панели навигации. Свайп справа по-прежнему будет запускать последнее приложение, а свайп слева будет перемещать приложения. Чтобы вернуться домой, вы сможете использовать любое свободное место на навигационной панели, а не только кнопку «Домой»</string>
++    <string name="full_gesture_mode_dt2s_title">Включить двойное касание для сна</string>
++    <string name="full_gesture_mode_dt2s_summary">Нажмите на пустое пространство на навигационной панели, но не кнопку «Домой», чтобы выключить экран</string>
 +
 +    <!-- Per-app data restrictions -->
 +    <string name="data_usage_app_restrict_data">Мобильные данные</string>
@@ -323,16 +330,27 @@ index 0000000000..8c4b4ebf2c
 +    <string name="selinux_status_enforcing">Enforcing</string>
 +
 +    <!-- Fingerprint swipe sideways -->
-+    <string name="fp_swipe_to_dismiss_notifications_title">Swipe fingerprint to dismiss notifications</string>
-+    <string name="fp_swipe_to_dismiss_notifications_summary">To dismiss your notifications, swipe left or right on the fingerprint sensor.</string>
++    <string name="fp_swipe_to_dismiss_notifications_title">Отклонять уведомления свайпом</string>
++    <string name="fp_swipe_to_dismiss_notifications_summary">Чтобы отклонить уведомления, проведите пальцем по сканеру отпечатков пальца влево или вправо</string>
 +
 +    <!-- Battery saver night mode toggle -->
-+    <string name="battery_saver_night_mode_title">Battery saver dark mode</string>
-+    <string name="battery_saver_night_mode_summary">Switch SystemUI theme to dark mode when battery saver is enabled.</string>
++    <string name="battery_saver_night_mode_title">Режим экономии заряда батареи</string>
++    <string name="battery_saver_night_mode_summary">Включение тёмной темы SystemUI, когда включена функция экономии заряда батареи</string>
 +
 +    <!-- Whether the keyguard will directly show the lock entry -->
 +    <string name="directly_show_lock">Direct unlock</string>
-+    <string name="directly_show_lock_summary">Skip the swipe to unlock screen and immediately begin key entry</string>
++    <string name="directly_show_lock_summary">Пропустить свайп, чтобы разблокировать экран и сразу же начать ввод ключа</string>
++
++    <!-- Battery info -->
++    <string name="battery_info_title">Информация о батарее</string>
++    <string name="battery_info_summary">Больше информации</string>
++    <string name="charge_full_design">Ёмкость</string>
++    <string name="charge_cycle">Циклы зарядки</string>
++    <string name="battery_temp">Температура</string>
++    <string name="battery_tech">Технология</string>
++    <string name="battery_status">Статус</string>
++    <string name="battery_voltage">Напряжение</string>
++    <string name="battery_health">Состояние</string>
 +</resources>
 diff --git a/res/values-ru/strings.xml b/res/values-ru/strings.xml
 index c6096b0b81..f9c6b5d72a 100644
@@ -373,6 +391,120 @@ index c6096b0b81..f9c6b5d72a 100644
      <string name="battery_auto_restriction_summary" msgid="8561335400991281062">"Выявлять приложения, быстро расходующие заряд батареи"</string>
      <string name="battery_manager_on" msgid="8643310865054362396">"Включена функция выявления приложений, быстро расходующих заряд батареи"</string>
      <string name="battery_manager_off" msgid="5473135235710343576">"Отключено"</string>
+diff --git a/res/xml/display_settings.xml b/res/xml/display_settings.xml
+index 8d1a1627ac..c242f7f752 100644
+--- a/res/xml/display_settings.xml
++++ b/res/xml/display_settings.xml
+@@ -86,6 +86,12 @@
+         android:title="@string/screensaver_settings_title"
+         android:fragment="com.android.settings.dream.DreamSettings" />
+ 
++    <com.android.settingslib.RestrictedPreference
++        android:key="ambient_display"
++        android:title="@string/ambient_display_screen_title"
++        android:fragment="com.android.settings.display.AmbientDisplaySettings"
++        settings:userRestriction="no_ambient_display" />
++
+     <!-- Hide night mode for now
+     <ListPreference
+         android:key="night_mode"
+diff --git a/src/com/android/settings/battery/BatteryHealthPreferenceController.java b/src/com/android/settings/battery/BatteryHealthPreferenceController.java
+index aa70bbb1bb..643a44463a 100644
+--- a/src/com/android/settings/battery/BatteryHealthPreferenceController.java
++++ b/src/com/android/settings/battery/BatteryHealthPreferenceController.java
+@@ -28,7 +28,7 @@ public class BatteryHealthPreferenceController extends AbstractPreferenceControl
+         PreferenceControllerMixin {
+ 
+     private static final String KEY_BATTERY_HEALTH = "battery_health";
+-    private static final String BATTERY_HEALTH_PATH = "sys/class/power_supply/battery/health";
++    private static final String BATTERY_HEALTH_PATH = "/sys/class/power_supply/battery/health";
+ 
+     public BatteryHealthPreferenceController(Context context) {
+         super(context);
+diff --git a/src/com/android/settings/battery/BatteryStatusPreferenceController.java b/src/com/android/settings/battery/BatteryStatusPreferenceController.java
+index 0f050326b4..5136e81d46 100644
+--- a/src/com/android/settings/battery/BatteryStatusPreferenceController.java
++++ b/src/com/android/settings/battery/BatteryStatusPreferenceController.java
+@@ -28,7 +28,7 @@ public class BatteryStatusPreferenceController extends AbstractPreferenceControl
+         PreferenceControllerMixin {
+ 
+     private static final String KEY_BATTERY_STATUS = "battery_status";
+-    private static final String BATTERY_STATUS_PATH = "sys/class/power_supply/battery/status";
++    private static final String BATTERY_STATUS_PATH = "/sys/class/power_supply/battery/status";
+ 
+     public BatteryStatusPreferenceController(Context context) {
+         super(context);
+diff --git a/src/com/android/settings/battery/BatteryTechPreferenceController.java b/src/com/android/settings/battery/BatteryTechPreferenceController.java
+index 3aff8ee11b..a68cd5d55b 100644
+--- a/src/com/android/settings/battery/BatteryTechPreferenceController.java
++++ b/src/com/android/settings/battery/BatteryTechPreferenceController.java
+@@ -28,7 +28,7 @@ public class BatteryTechPreferenceController extends AbstractPreferenceControlle
+         PreferenceControllerMixin {
+ 
+     private static final String KEY_BATTERY_TECH = "battery_tech";
+-    private static final String BATTERY_TECH_PATH = "sys/class/power_supply/battery/technology";
++    private static final String BATTERY_TECH_PATH = "/sys/class/power_supply/battery/technology";
+ 
+     public BatteryTechPreferenceController(Context context) {
+         super(context);
+diff --git a/src/com/android/settings/battery/BatteryTempPreferenceController.java b/src/com/android/settings/battery/BatteryTempPreferenceController.java
+index be3439f95e..222e143fc8 100644
+--- a/src/com/android/settings/battery/BatteryTempPreferenceController.java
++++ b/src/com/android/settings/battery/BatteryTempPreferenceController.java
+@@ -28,8 +28,7 @@ public class BatteryTempPreferenceController extends AbstractPreferenceControlle
+         PreferenceControllerMixin {
+ 
+     private static final String KEY_BATTERY_TEMP = "battery_temp";
+-    private static final String BATTERY_TEMP_PATH = "sys/class/power_supply/battery/temp";
+-    private int BATTERY_TEMP_DIVIDER = 10;
++    private static final String BATTERY_TEMP_PATH = "/sys/class/power_supply/battery/temp";
+ 
+     public BatteryTempPreferenceController(Context context) {
+         super(context);
+@@ -64,7 +63,7 @@ public class BatteryTempPreferenceController extends AbstractPreferenceControlle
+ 
+     private String getBatteryTemp() {
+         String value = readOneLine(BATTERY_TEMP_PATH);
+-        return String.format("%s", Integer.parseInt(value) / BATTERY_TEMP_DIVIDER) + "\u2103";
++        return String.format("%s", Integer.parseInt(value) / 10) + "\u2103";
+     }
+ 
+     @Override
+diff --git a/src/com/android/settings/battery/ChargeCyclePreferenceController.java b/src/com/android/settings/battery/ChargeCyclePreferenceController.java
+index 21d64a5876..5406fbd400 100644
+--- a/src/com/android/settings/battery/ChargeCyclePreferenceController.java
++++ b/src/com/android/settings/battery/ChargeCyclePreferenceController.java
+@@ -28,7 +28,7 @@ public class ChargeCyclePreferenceController extends AbstractPreferenceControlle
+         PreferenceControllerMixin {
+ 
+     private static final String KEY_CHARGE_CYCLE = "charge_cycle";
+-    private static final String CYCLE_COUNT_PATH = "sys/class/power_supply/battery/cycle_count";
++    private static final String CYCLE_COUNT_PATH = "/sys/class/power_supply/battery/cycle_count";
+ 
+     public ChargeCyclePreferenceController(Context context) {
+         super(context);
+diff --git a/src/com/android/settings/battery/ChargeFullDesignPreferenceController.java b/src/com/android/settings/battery/ChargeFullDesignPreferenceController.java
+index 910856bc8f..751bec3ae8 100644
+--- a/src/com/android/settings/battery/ChargeFullDesignPreferenceController.java
++++ b/src/com/android/settings/battery/ChargeFullDesignPreferenceController.java
+@@ -28,7 +28,7 @@ public class ChargeFullDesignPreferenceController extends AbstractPreferenceCont
+         PreferenceControllerMixin {
+ 
+     private static final String KEY_CHARGE_FULL_DESIGN = "charge_full_design";
+-    private static final String CHARGE_FULL_DESIGN_PATH = "sys/class/power_supply/battery/charge_full_design";
++    private static final String CHARGE_FULL_DESIGN_PATH = "/sys/class/power_supply/battery/charge_full";
+ 
+     public ChargeFullDesignPreferenceController(Context context) {
+         super(context);
+@@ -63,7 +63,7 @@ public class ChargeFullDesignPreferenceController extends AbstractPreferenceCont
+ 
+     String getChargeFullDesign() {
+         String value = readOneLine(CHARGE_FULL_DESIGN_PATH);
+-        return value + "mAh";
++        return String.format("%s", Integer.parseInt(value) / 1000) + " mAh";
+     }
+ 
+     @Override
 -- 
 2.19.1
 
