@@ -2,3 +2,5 @@
 *.orig
 *~
 patches/apply
+changelog.sh
+Changelog.txt
