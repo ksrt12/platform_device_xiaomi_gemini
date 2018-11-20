@@ -24,9 +24,6 @@ $(call inherit-product, device/xiaomi/gemini/device.mk)
 HAVOC_BUILD_TYPE := ksrt12
 VENDOR_SECURITY_PATCH := 2018-08-01
 
-# Inherit some common Havoc stuff.
-$(call inherit-product, vendor/havoc/config/common.mk)
-
 # Device identifier. This must come after all inclusions.
 PRODUCT_NAME := havoc_gemini
 PRODUCT_DEVICE := gemini
@@ -47,3 +44,6 @@ BUILD_FINGERPRINT := "Xiaomi/gemini/gemini:8.0.0/OPR1.170623.032/V9.6.1.0.OAAMIF
 TARGET_VENDOR := Xiaomi
 
 TARGET_BOOT_ANIMATION_RES := 1080
+
+# Inherit some common Havoc stuff.
+$(call inherit-product, vendor/havoc/config/common.mk)

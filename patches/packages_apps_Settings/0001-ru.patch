@@ -1,28 +1,29 @@
-From 76e1af10360f09473c52e9d2a3da47ff24b1d5c0 Mon Sep 17 00:00:00 2001
+From c657be5247dca804d85bf48047912c804476eb5d Mon Sep 17 00:00:00 2001
 From: Kazakov Stepan <ksrt12group@gmail.com>
 Date: Sat, 17 Nov 2018 03:11:09 +0300
 Subject: [PATCH] ru
 
 Signed-off-by: Kazakov Stepan <ksrt12group@gmail.com>
 ---
- res/values-ru/havoc_strings.xml               | 329 ++++++++++++++++++
+ res/values-ru/havoc_strings.xml               | 330 ++++++++++++++++++
  res/values-ru/strings.xml                     |  12 +-
- res/xml/display_settings.xml                  |   6 +
+ res/values/havoc_strings.xml                  |   3 +-
+ res/xml/my_device_info.xml                    |   8 +
  .../BatteryHealthPreferenceController.java    |   2 +-
  .../BatteryStatusPreferenceController.java    |   2 +-
  .../BatteryTechPreferenceController.java      |   2 +-
  .../BatteryTempPreferenceController.java      |   5 +-
  .../ChargeCyclePreferenceController.java      |   2 +-
  .../ChargeFullDesignPreferenceController.java |   4 +-
- 9 files changed, 349 insertions(+), 15 deletions(-)
+ 10 files changed, 354 insertions(+), 16 deletions(-)
  create mode 100644 res/values-ru/havoc_strings.xml
 
 diff --git a/res/values-ru/havoc_strings.xml b/res/values-ru/havoc_strings.xml
 new file mode 100644
-index 0000000000..6f44f7bcb2
+index 0000000000..6b2940fb62
 --- /dev/null
 +++ b/res/values-ru/havoc_strings.xml
-@@ -0,0 +1,329 @@
+@@ -0,0 +1,330 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<!--
 +     Copyright (C) 2018 Havoc-OS
@@ -313,9 +314,9 @@ index 0000000000..6f44f7bcb2
 +	<string name="system_update_settings_summary">Проверить обновления Havoc-OS</string>
 +
 +    <string name="full_gesture_mode_title">Включить полный режим жестов</string>
-+    <string name="full_gesture_mode_summary">Этот режим отключит кнопку «Назад», и вы сможете активировать действие кнопки «Назад» с помощью свайпа слева на панели навигации. Свайп справа по-прежнему будет запускать последнее приложение, а свайп слева будет перемещать приложения. Чтобы вернуться домой, вы сможете использовать любое свободное место на навигационной панели, а не только кнопку «Домой»</string>
++    <string name="full_gesture_mode_summary">Этот режим отключает кнопку Назад. Вы можете активировать действие кнопки Назад с помощью свайпа влево на навбаре. Свайп вправо открывает последнее приложение и обзор недавних приложений. Чтобы вернуться на домашний экран вы можете использовать любое свободное место на навбаре, а не только домашнюю кнопку. Когда откыта клавиатура, длительное нажатие на навбаре передвигает курсор.</string>
 +    <string name="full_gesture_mode_dt2s_title">Включить двойное касание для сна</string>
-+    <string name="full_gesture_mode_dt2s_summary">Нажмите на пустое пространство на навигационной панели, но не кнопку «Домой», чтобы выключить экран</string>
++    <string name="full_gesture_mode_dt2s_summary">Дважды нажмите на свободном месте навбара, чтобы выключить экран</string>
 +
 +    <!-- Per-app data restrictions -->
 +    <string name="data_usage_app_restrict_data">Мобильные данные</string>
@@ -351,6 +352,7 @@ index 0000000000..6f44f7bcb2
 +    <string name="battery_status">Статус</string>
 +    <string name="battery_voltage">Напряжение</string>
 +    <string name="battery_health">Состояние</string>
++    <string name="caf_tag">CAF тэг</string>
 +</resources>
 diff --git a/res/values-ru/strings.xml b/res/values-ru/strings.xml
 index c6096b0b81..f9c6b5d72a 100644
@@ -391,23 +393,37 @@ index c6096b0b81..f9c6b5d72a 100644
      <string name="battery_auto_restriction_summary" msgid="8561335400991281062">"Выявлять приложения, быстро расходующие заряд батареи"</string>
      <string name="battery_manager_on" msgid="8643310865054362396">"Включена функция выявления приложений, быстро расходующих заряд батареи"</string>
      <string name="battery_manager_off" msgid="5473135235710343576">"Отключено"</string>
-diff --git a/res/xml/display_settings.xml b/res/xml/display_settings.xml
-index 8d1a1627ac..c242f7f752 100644
---- a/res/xml/display_settings.xml
-+++ b/res/xml/display_settings.xml
-@@ -86,6 +86,12 @@
-         android:title="@string/screensaver_settings_title"
-         android:fragment="com.android.settings.dream.DreamSettings" />
+diff --git a/res/values/havoc_strings.xml b/res/values/havoc_strings.xml
+index ae547d8e63..4d975d6038 100644
+--- a/res/values/havoc_strings.xml
++++ b/res/values/havoc_strings.xml
+@@ -453,4 +453,5 @@
+     <string name="battery_status">Status</string>
+     <string name="battery_voltage">Voltage</string>
+     <string name="battery_health">Health</string>
+-</resources>
+\ No newline at end of file
++    <string name="caf_tag">CAF tag</string>
++</resources>
+diff --git a/res/xml/my_device_info.xml b/res/xml/my_device_info.xml
+index 4e584371d3..58cc019856 100644
+--- a/res/xml/my_device_info.xml
++++ b/res/xml/my_device_info.xml
+@@ -150,6 +150,14 @@
+         android:summary="@string/summary_placeholder"
+         settings:allowDividerAbove="true"/>
  
-+    <com.android.settingslib.RestrictedPreference
-+        android:key="ambient_display"
-+        android:title="@string/ambient_display_screen_title"
-+        android:fragment="com.android.settings.display.AmbientDisplaySettings"
-+        settings:userRestriction="no_ambient_display" />
++    <!-- CAF tag information -->
++    <Preference
++        android:key="caf_tag"
++        android:order="98"
++        android:title="@string/caf_tag"
++        android:summary="LA.UM.7.6.2.r1-04200-89xx.0"
++        android:selectable="false"/>
 +
-     <!-- Hide night mode for now
-     <ListPreference
-         android:key="night_mode"
+     <!-- SELinux status information -->
+     <Preference
+         android:key="selinux_status"
 diff --git a/src/com/android/settings/battery/BatteryHealthPreferenceController.java b/src/com/android/settings/battery/BatteryHealthPreferenceController.java
 index aa70bbb1bb..643a44463a 100644
 --- a/src/com/android/settings/battery/BatteryHealthPreferenceController.java
@@ -484,7 +500,7 @@ index 21d64a5876..5406fbd400 100644
      public ChargeCyclePreferenceController(Context context) {
          super(context);
 diff --git a/src/com/android/settings/battery/ChargeFullDesignPreferenceController.java b/src/com/android/settings/battery/ChargeFullDesignPreferenceController.java
-index 910856bc8f..751bec3ae8 100644
+index 910856bc8f..a0c119b985 100644
 --- a/src/com/android/settings/battery/ChargeFullDesignPreferenceController.java
 +++ b/src/com/android/settings/battery/ChargeFullDesignPreferenceController.java
 @@ -28,7 +28,7 @@ public class ChargeFullDesignPreferenceController extends AbstractPreferenceCont
