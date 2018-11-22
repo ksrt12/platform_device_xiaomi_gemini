@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright (C) 2018 ksrt12
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+          http://www.apache.org/licenses/LICENSE-2.0
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <!-- Havoc Settings -->
+    <string name="havoc_settings_title">Настройки Havoc</string>
+    <string name="havoc_settings_summary">Wreak some Havoc...</string>
+
+    <!-- Havoc-OS version -->
+    <string name="havoc_version">Версия прошивки</string>
+    <string name="havoc_version_default">Unknown</string>
+
+    <!-- Scramble PIN Layout on Lockscreen -->
+    <string name="unlock_scramble_pin_layout_title">Перемешивать кнопки</string>
+    <string name="unlock_scramble_pin_layout_summary">Переставлять кнопки ввода PIN-кода в случайном порядке</string>
+
+    <!-- Quick unlock -->
+    <string name="unlock_quick_unlock_control_title">Быстрая разблокировка</string>
+    <string name="unlock_quick_unlock_control_summary">Автоматическая разблокировка при вводе правильного PIN/пароля</string>
+	
+    <!-- Manage applications, package string displayed in app snippet -->
+    <string name="packagename_text"><xliff:g id="package_name">%1$s</xliff:g></string>
+
+    <!-- App Ops Categories -->
+    <string name="app_ops_cat_location">Местоположение</string>
+    <string name="app_ops_cat_personal">Личные данные</string>
+    <string name="app_ops_cat_messaging">SMS/MMS</string>
+    <string name="app_ops_cat_media">Мультимедиа</string>
+    <string name="app_ops_cat_device">Устройство</string>
+    <string name="app_ops_cat_bootup">Загрузка</string>
+
+    <!-- App ops labels -->
+    <string name="app_ops_access_camera">Камера</string>
+    <string name="app_ops_access_location">Местоположение</string>
+    <string name="app_ops_access_notifications">Уведомления</string>
+    <string name="app_ops_activate_vpn">Активация VPN</string>
+    <string name="app_ops_auto_start">Автозагрузка</string>
+    <string name="app_ops_delete_call_log">Удаление истории вызовов</string>
+    <string name="app_ops_delete_contacts">Удаление контактов</string>
+    <string name="app_ops_delete_mms">Удаление MMS</string>
+    <string name="app_ops_delete_sms">Удаление SMS</string>
+    <string name="app_ops_draw_on_top">Отображение поверх других элементов</string>
+    <string name="app_ops_get_usage_stats">Получение статистики использования</string>
+    <string name="app_ops_keep_device_awake">Активный режим</string>
+    <string name="app_ops_make_phone_call">Совершать звонки</string>
+    <string name="app_ops_modify_calendar">Изменение календаря</string>
+    <string name="app_ops_modify_call_log">Изменение журнала вызовов</string>
+    <string name="app_ops_modify_clipboard">Изменение буфера обмена</string>
+    <string name="app_ops_modify_contacts">Изменение контактов</string>
+    <string name="app_ops_modify_settings">Изменение настроек</string>
+    <string name="app_ops_mute_unmute_microphone">Включать/выключать микрофон</string>
+    <string name="app_ops_play_audio">Воспроизведение аудио</string>
+    <string name="app_ops_post_notification">Разрешение на уведомления</string>
+    <string name="app_ops_project_media">Трансляция контента</string>
+    <string name="app_ops_read_calendar">Чтение календаря</string>
+    <string name="app_ops_read_call_log">Чтение истории вызовов</string>
+    <string name="app_ops_read_clipboard">Чтение буфера обмена</string>
+    <string name="app_ops_read_contacts">Чтение контактов</string>
+    <string name="app_ops_read_mms">Чтение MMS</string>
+    <string name="app_ops_read_sms">Чтение SMS</string>
+    <string name="app_ops_receive_sms">Получение SMS</string>
+    <string name="app_ops_record_audio">Запись аудио</string>
+    <string name="app_ops_send_mms">Отправку MMS</string>
+    <string name="app_ops_send_sms">Отправку SMS</string>
+    <string name="app_ops_toast_window">Отображать всплывающие уведомления</string>
+    <string name="app_ops_use_alarm_volume">Громкость будильника</string>
+    <string name="app_ops_use_audio_focus">Аудиофокус</string>
+    <string name="app_ops_use_bluetooth_volume">Громкость Bluetooth-устройств</string>
+    <string name="app_ops_use_master_volume">Общая громкость</string>
+    <string name="app_ops_use_media_buttons">Кнопки мультимедиа</string>
+    <string name="app_ops_use_media_volume">Громкость мультимедиа</string>
+    <string name="app_ops_use_notification_volume">Громкость уведомлений</string>
+    <string name="app_ops_use_ring_volume">Громкость рингтона</string>
+    <string name="app_ops_use_vibrate">Виброотклик</string>
+    <string name="app_ops_use_voice_volume">Громкость при разговоре</string>
+    <string name="app_ops_write_mms">Создание MMS</string>
+    <string name="app_ops_write_sms">Создание SMS</string>
+    <string name="app_ops_use_fingerprint">Использовать отпечаток пальца</string>
+    <string name="app_ops_add_voicemail">Добавить голосовую почту</string>
+    <string name="app_ops_read_phone_state">Чтение состояние телефона</string>
+    <string name="app_ops_scan_wifi">Сканирование WiFi сетей</string>
+    <string name="app_ops_change_wallpaper">Изменение обоев рабочего стола</string>
+    <string name="app_ops_assist_structure">Структура ассистента</string>
+    <string name="app_ops_assist_screenshot">Использовать скриншот</string>
+    <string name="app_ops_use_body_sensors">Использовать нательные датчики</string>
+    <string name="app_ops_read_cell_broadcasts">Прочитать сообщения оповещения населения</string>
+    <string name="app_ops_mock_location">Предоставить фиктивное местоположение</string>
+    <string name="app_ops_read_external_storage">Чтение с внешнего накопителя</string>
+    <string name="app_ops_write_external_storage">Запись на внешний накопитель</string>
+    <string name="app_ops_turn_on_screen">Включение экрана</string>
+    <string name="app_ops_get_accounts">Получение аккаунтов</string>
+    <string name="app_ops_run_in_background">Запуск в фоне</string>
+    <string name="app_ops_accessibility_volume">Доступ к изменению громкости</string>
+    <string name="app_ops_read_phone_numbers">Читать телефонные номера</string>
+    <string name="app_ops_request_install_packages">Устанавливать приложения</string>
+    <string name="app_ops_picture_in_picture">Использование картинки в картинке</string>
+    <string name="app_ops_app_start_foreground">Запуск приложений с мгновенным запуском</string>
+    <string name="app_ops_answer_phone_calls">Ответ на телефонные звонки</string>
+    <string name="app_ops_run_any_in_background">Работать в фоновом режиме</string>
+    <string name="app_ops_change_wifi_state">Изменять состояния WIFI</string>
+    <string name="app_ops_request_delete_packages">Удалять прилежения</string>
+    <string name="app_ops_bind_accessibility_service">Служба доступа</string>
+    <string name="app_ops_accept_handover">Разрешить передачу</string>
+    <string name="app_ops_manage_ipsec_tunnels">Управлять IP-туннелями</string>
+    <string name="app_ops_start_foreground">Запуск приложений с мгновенным запуском</string>
+    <string name="app_ops_bluetooth_scan">Сканирование bluetooth</string>
+    <string name="app_ops_boot_completed">Автостарт</string>
+
+    <!-- App ops detail -->
+    <string name="app_ops_entry_summary"><xliff:g id="op">%1$s</xliff:g> (used <xliff:g id="count">%2$s</xliff:g>)</string>
+    <string name="app_ops_allowed_count">Разрешено <xliff:g id="count" example="2 times">%s</xliff:g></string>
+    <string name="app_ops_ignored_count">Отказано <xliff:g id="count" example="2 times">%s</xliff:g></string>
+    <string name="app_ops_both_count">Разрешено <xliff:g id="count">%1$s</xliff:g>, denied <xliff:g id="count">%2$s</xliff:g></string>
+    <!-- App ops menu options -->
+    <string name="app_ops_show_user_apps">Показать пользовательские приложения</string>
+    <string name="app_ops_show_system_apps">Показать встроенные приложения</string>
+    <string name="app_ops_reset_counters">Сброс счетчиков</string>
+    <string name="app_ops_reset_confirm_title">Подтвердить сброс счетчиков</string>
+    <string name="app_ops_reset_confirm_mesg">Вы уверены, что хотите сбросить счетчики?</string>
+
+    <!-- Advanced night mode brightness -->
+    <string name="night_brightness_category">Яркость</string>
+    <string name="night_brightness_value_title">Яркость в ночном режиме</string>
+    <string name="night_bright_disabled">Отключено</string>
+    <string name="night_bright_minimum">Минимальная яркость</string>
+    <string name="night_bright_low">Низкая яркость</string>
+    <string name="night_bright_medium">Средняя яркость</string>
+
+    <!-- Display : Rotation -->
+    <string name="display_rotation_title">Поворот экрана</string>
+    <string name="display_rotation_disabled">Выключен</string>
+    <string name="display_rotation_unit">градусов</string>
+    <string name="display_rotation_category_title">Режимы вращения</string>
+    <string name="display_rotation_0_title">0 градусов</string>
+    <string name="display_rotation_90_title">90 градусов</string>
+    <string name="display_rotation_180_title">180 градусов</string>
+    <string name="display_rotation_270_title">270 градусов</string>
+
+    <!-- Custom light color -->
+    <string name="custom_light_title">Цвет светодиода</string>
+    <string name="custom_light_on_time_title">Длительность свечения светодиода (мс)</string>
+    <string name="custom_light_off_time_title">Длительность затухания светодиода (мс)</string>
+    <string name="value_equals_default">по умолч.</string>
+    <string name="show_light_on_zen_title">Включить светодиод в режиме «Не беспокоить»</string>
+
+    <!-- Charging vibration -->
+    <string name="charging_vibro_title">Вибрация при зарядке</string>
+
+    <!-- Screenshot sound -->
+    <string name="screenshot_sound_title">Звук скриншота</string>
+
+    <!-- Android debugging -->
+    <string name="adb_enable">Режим отладки</string>
+    <string name="adb_enable_summary">Включить отладочный интерфейс Android Debug Bridge (ADB)</string>
+
+    <!-- Android debugging notification -->
+    <string name="adb_notify">Уведомление об отладке</string>
+    <string name="adb_notify_summary">Показывать уведомление о включённом режиме отладки по USB или по сети</string>
+
+    <!-- Lockscreen rotation -->
+    <string name="lockscreen_rotation_title">Автоповорот экрана блокировки</string>
+
+    <!-- Increasing ring tone volume -->
+    <string name="increasing_ring_volume_option_title">Возрастающая громкость звонка</string>
+    <string name="increasing_ring_min_volume_title">Начальная громкость</string>
+    <string name="increasing_ring_ramp_up_time_title">Время увеличения</string>
+
+    <!-- Battery stats reset -->
+    <string name="battery_stats_reset">Сбросить статистику</string>
+    <string name="battery_stats_message">Статистика батареи будет сброшена</string>
+    <string name="ok_string">Ok</string>
+
+    <!-- Android debugging over network -->
+    <string name="adb_over_network">Отладка по сети</string>
+    <string name="adb_over_network_summary">Включить режим отладки через сетевые интерфейсы (Wi-Fi и USB-сети). Отладка отключается при перезагрузке устройства.</string>
+    <string name="adb_over_network_warning">ВНИМАНИЕ: когда включена отладка по сети, устройство открыто для неконтролируемого доступа из всех подключенных сетей!\n\nИспользуйте эту функцию только при подключении к доверенным сетям.\n\nДействительно включить эту функцию?</string>
+    <string name="adb_over_network_disallowed_error">Ошибка: отладка по сети может быть активирована только при подключении к сети Wi-Fi или USB!</string>
+
+    <!-- Less Notification sounds -->
+    <string name="less_notification_sounds_title">Менее частые звуки уведомлениq</string>
+    <string name="less_notification_sounds_summary">Воспроизводить звук уведомления каждого приложения только один раз за установленный период времени</string>
+    <string name="less_notification_sounds_default">Обычное поведение</string>
+    <string name="less_notification_sounds_3s">Каждые 3 секунды</string>
+    <string name="less_notification_sounds_5s">Каждые 5 секунд</string>
+    <string name="less_notification_sounds_10s">Каждые 10 секунд</string>
+    <string name="less_notification_sounds_15s">Каждые 15 секунд</string>
+    <string name="less_notification_sounds_30s">Каждые 30 секунд</string>
+    <string name="less_notification_sounds_45s">Каждые 45 секунд</string>
+    <string name="less_notification_sounds_1m">Каждую 1 минуту</string>
+    <string name="less_notification_sounds_2m">Каждые 2 минуты</string>
+    <string name="less_notification_sounds_5m">Каждые 5 минуты</string>
+
+    <!-- Hostname setting -->
+    <string name="device_hostname">Сетевое имя устройства</string>
+
+    <!-- SystemUI theme -->
+    <string name="systemui_theme_style_title">Тема SystemUI</string>
+    <string name="systemui_theme_style_auto">Автоматически (на основе обоев)</string>
+    <string name="systemui_theme_style_light">Светлая</string>
+    <string name="systemui_theme_style_dark">Темная</string>
+    <string name="system_theme_style_black">Черная</string>
+
+    <string name="applying_theme_toast">Применение темы, пожалуйста подождите...</string>
+    <string name="theme_applied_toast">Тема применена!</string>
+
+    <!-- Sizes for pattern lockscreen -->
+    <string name="lock_pattern_size_3" translatable="false">3 \u00d7 3</string>
+    <string name="lock_pattern_size_4" translatable="false">4 \u00d7 4</string>
+    <string name="lock_pattern_size_5" translatable="false">5 \u00d7 5</string>
+    <string name="lock_pattern_size_6" translatable="false">6 \u00d7 6</string>
+
+    <string name="lock_settings_picker_pattern_size_message">Выберите размер граф. ключа</string>
+    <!-- Whether a visible red line will be drawn after the user has drawn the unlock pattern incorrectly -->
+    <string name="lockpattern_settings_enable_error_path_title">Показывать неверный ввод</string>
+    <!-- Whether the dots will be drawn when using the lockscreen pattern -->
+    <string name="lockpattern_settings_enable_dots_title">Показывать точки</string>
+
+    <!-- Lock screen vibrate settings -->
+    <string name="lockscreen_vibrate_enabled_title">Вибрация</string>
+    <string name="lockscreen_vibrate_enabled_head">Вибрировать при разблокировке</string>
+
+    <!-- Running services -->
+    <string name="background_processes_settings_title">Фоновые процессы</string>
+
+    <!-- MSIM Manual provisioning -->
+    <string name="sim_enabler_summary"><xliff:g id="displayName">%1$s</xliff:g> — <xliff:g id="status" example="disabled">%2$s</xliff:g></string>
+    <string name="sim_enabled">включена</string>
+    <string name="sim_disabled">отключена</string>
+    <string name="sim_missing">отсутствует или неисправна</string>
+    <string name="sim_enabler_need_disable_sim">SIM-карта будет деактивирована. Хотите продолжить?</string>
+    <string name="sim_enabler_will_disable_sim_title">Внимание</string>
+    <string name="sim_enabler_need_switch_data_service">Эта SIM-карта будет отключена и SIM-карта <xliff:g id="slotid">%1$s</xliff:g> будет использоваться для передачи данных. Хотите продолжить?</string>
+    <string name="sim_enabler_airplane_on">Невозможно выполнить операцию, когда включен режим полета.</string>
+    <string name="sim_enabler_in_call">Невозможно выполнить операцию во время вызова.</string>
+    <string name="sim_enabler_both_inactive">Невозможно отключить все SIM-карты</string>
+    <string name="sim_enabler_enabling">Активация\u2026</string>
+    <string name="sim_enabler_disabling">Деактивация\u2026</string>
+    <string name="sub_activate_success">SIM-карта активирована.</string>
+    <string name="sub_activate_failed">Активация не удалась.</string>
+    <string name="sub_deactivate_success">SIM-карта деактивирована.</string>
+    <string name="sub_deactivate_failed">Деактивация не удалась.</string>
+    <string name="available_sims_title">Доступные SIM-карты</string>
+
+    <!-- Density category -->
+    <string name="density_category">Масштабирование</string>
+
+    <!-- Volume settings - Volume adjustment sound -->
+    <string name="volume_adjust_sounds_title">Звук при регулировке громкости</string>
+
+    <!-- Ambient Play -->
+    <string name="ambient_play_title" translatable="false">@*android:string/ambient_recognition_notification</string>
+    <string name="ambient_play_recognition_information" translatable="false">@*android:string/ambient_recognition_information</string>
+    <string name="ambient_play_summary">Сейчас играет</string>
+    <string name="ambient_play_lockscreen_title">На экране блокировки</string>
+    <string name="ambient_play_lockscreen_summary">Показывать анимацию на заблокированном экране</string>
+    <string name="ambient_play_notifications_title">Уведомления</string>
+    <string name="ambient_play_notifications_summary">Показывать уведомление в строке состояния при обнаружении песни</string>
+    <string name="ambient_play_switch_bar_on">Вкл</string>
+    <string name="ambient_play_switch_bar_off">Выкл</string>
+    <string name="ambient_play_help_text">Когда музыка играет поблизости, вы можете увидеть название песни и исполнителя. Эта функция требует включенной передачи данных. Возможно увеличение расхода батареи.</string> 
+    <string name="ambient_play_history">История</string>
+    <string name="ambient_play_loading_data">Загружаю данные…</string>
+    <string name="ambient_play_history_today">Сегодня</string>
+    <string name="ambient_play_history_yesterday">Вчера</string>
+    <string name="ambient_play_history_dialog_play">Проиграть</string>
+    <string name="ambient_play_history_dialog_search">Искать в сети</string>
+    <string name="ambient_play_history_dialog_remove">Удалить</string>
+    <string name="ambient_play_history_empty">История пуста</string>
+    <string name="ambient_play_history_menu_remove_all">Удалить всё</string>
+    <string name="ambient_play_history_menu_add_to_home">Добавить на домашний экран</string>
+    <string name="ambient_play_history_dialog_remove_all_confirmation">Вы уверены?</string>
+
+    <!-- Proximity wake -->
+    <string name="proximity_wake_title">Предотвращать случайное включение</string>
+    <string name="proximity_wake_summary">Проверка датчика приближения перед включением экрана</string>
+
+	<string name="system_update_settings_summary">Проверить обновления Havoc-OS</string>
+
+    <string name="full_gesture_mode_title">Включить полный режим жестов</string>
+    <string name="full_gesture_mode_summary">Этот режим отключает кнопку Назад. Вы можете активировать действие кнопки Назад с помощью свайпа влево на навбаре. Свайп вправо открывает последнее приложение и обзор недавних приложений. Чтобы вернуться на домашний экран вы можете использовать любое свободное место на навбаре, а не только домашнюю кнопку. Когда откыта клавиатура, длительное нажатие на навбаре передвигает курсор.</string>
+    <string name="full_gesture_mode_dt2s_title">Включить двойное касание для сна</string>
+    <string name="full_gesture_mode_dt2s_summary">Дважды нажмите на свободном месте навбара, чтобы выключить экран</string>
+
+    <!-- Per-app data restrictions -->
+    <string name="data_usage_app_restrict_data">Мобильные данные</string>
+    <string name="data_usage_app_restrict_data_summary">Включить использование мобильных данных</string>
+    <string name="data_usage_app_restrict_wifi">Данные Wi\u2011Fi</string>
+    <string name="data_usage_app_restrict_wifi_summary">Включить использование данных Wi\u2011Fi</string>
+
+    <!-- Selinux -->
+    <string name="selinux_status">Статус SELinux</string>
+    <string name="selinux_status_disabled">Отключен</string>
+    <string name="selinux_status_permissive">Permissive</string>
+    <string name="selinux_status_enforcing">Enforcing</string>
+
+    <!-- Fingerprint swipe sideways -->
+    <string name="fp_swipe_to_dismiss_notifications_title">Отклонять уведомления свайпом</string>
+    <string name="fp_swipe_to_dismiss_notifications_summary">Чтобы отклонить уведомления, проведите пальцем по сканеру отпечатков пальца влево или вправо</string>
+
+    <!-- Battery saver night mode toggle -->
+    <string name="battery_saver_night_mode_title">Режим экономии заряда батареи</string>
+    <string name="battery_saver_night_mode_summary">Включение тёмной темы SystemUI, когда включена функция экономии заряда батареи</string>
+
+    <!-- Whether the keyguard will directly show the lock entry -->
+    <string name="directly_show_lock">Direct unlock</string>
+    <string name="directly_show_lock_summary">Пропустить свайп, чтобы разблокировать экран и сразу же начать ввод ключа</string>
+
+    <!-- Battery info -->
+    <string name="battery_info_title">Информация о батарее</string>
+    <string name="battery_info_summary">Больше информации</string>
+    <string name="charge_full_design">Ёмкость</string>
+    <string name="charge_cycle">Циклы зарядки</string>
+    <string name="battery_temp">Температура</string>
+    <string name="battery_tech">Технология</string>
+    <string name="battery_status">Статус</string>
+    <string name="battery_voltage">Напряжение</string>
+    <string name="battery_health">Состояние</string>
+    <string name="caf_tag">CAF тэг</string>
+</resources>

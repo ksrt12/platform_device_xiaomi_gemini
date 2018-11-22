@@ -1,0 +1,148 @@
+From 60f6866e0efefb34366bfea5e90290fe7bcbe30f Mon Sep 17 00:00:00 2001
+From: Kazakov Stepan <ksrt12group@gmail.com>
+Date: Sat, 17 Nov 2018 03:11:09 +0300
+Subject: [PATCH] add caf tag string change battery path to full
+
+Signed-off-by: Kazakov Stepan <ksrt12group@gmail.com>
+---
+ res/values/havoc_strings.xml                              | 3 ++-
+ res/xml/my_device_info.xml                                | 8 ++++++++
+ .../battery/BatteryHealthPreferenceController.java        | 2 +-
+ .../battery/BatteryStatusPreferenceController.java        | 2 +-
+ .../settings/battery/BatteryTechPreferenceController.java | 2 +-
+ .../settings/battery/BatteryTempPreferenceController.java | 5 ++---
+ .../settings/battery/ChargeCyclePreferenceController.java | 2 +-
+ .../battery/ChargeFullDesignPreferenceController.java     | 4 ++--
+ 8 files changed, 18 insertions(+), 10 deletions(-)
+
+diff --git a/res/values/havoc_strings.xml b/res/values/havoc_strings.xml
+index ae547d8e63..4d975d6038 100644
+--- a/res/values/havoc_strings.xml
++++ b/res/values/havoc_strings.xml
+@@ -453,4 +453,5 @@
+     <string name="battery_status">Status</string>
+     <string name="battery_voltage">Voltage</string>
+     <string name="battery_health">Health</string>
+-</resources>
+\ No newline at end of file
++    <string name="caf_tag">CAF tag</string>
++</resources>
+diff --git a/res/xml/my_device_info.xml b/res/xml/my_device_info.xml
+index 4e584371d3..58cc019856 100644
+--- a/res/xml/my_device_info.xml
++++ b/res/xml/my_device_info.xml
+@@ -150,6 +150,14 @@
+         android:summary="@string/summary_placeholder"
+         settings:allowDividerAbove="true"/>
+ 
++    <!-- CAF tag information -->
++    <Preference
++        android:key="caf_tag"
++        android:order="98"
++        android:title="@string/caf_tag"
++        android:summary="LA.UM.7.6.2.r1-04200-89xx.0"
++        android:selectable="false"/>
++
+     <!-- SELinux status information -->
+     <Preference
+         android:key="selinux_status"
+diff --git a/src/com/android/settings/battery/BatteryHealthPreferenceController.java b/src/com/android/settings/battery/BatteryHealthPreferenceController.java
+index aa70bbb1bb..643a44463a 100644
+--- a/src/com/android/settings/battery/BatteryHealthPreferenceController.java
++++ b/src/com/android/settings/battery/BatteryHealthPreferenceController.java
+@@ -28,7 +28,7 @@ public class BatteryHealthPreferenceController extends AbstractPreferenceControl
+         PreferenceControllerMixin {
+ 
+     private static final String KEY_BATTERY_HEALTH = "battery_health";
+-    private static final String BATTERY_HEALTH_PATH = "sys/class/power_supply/battery/health";
++    private static final String BATTERY_HEALTH_PATH = "/sys/class/power_supply/battery/health";
+ 
+     public BatteryHealthPreferenceController(Context context) {
+         super(context);
+diff --git a/src/com/android/settings/battery/BatteryStatusPreferenceController.java b/src/com/android/settings/battery/BatteryStatusPreferenceController.java
+index 0f050326b4..5136e81d46 100644
+--- a/src/com/android/settings/battery/BatteryStatusPreferenceController.java
++++ b/src/com/android/settings/battery/BatteryStatusPreferenceController.java
+@@ -28,7 +28,7 @@ public class BatteryStatusPreferenceController extends AbstractPreferenceControl
+         PreferenceControllerMixin {
+ 
+     private static final String KEY_BATTERY_STATUS = "battery_status";
+-    private static final String BATTERY_STATUS_PATH = "sys/class/power_supply/battery/status";
++    private static final String BATTERY_STATUS_PATH = "/sys/class/power_supply/battery/status";
+ 
+     public BatteryStatusPreferenceController(Context context) {
+         super(context);
+diff --git a/src/com/android/settings/battery/BatteryTechPreferenceController.java b/src/com/android/settings/battery/BatteryTechPreferenceController.java
+index 3aff8ee11b..a68cd5d55b 100644
+--- a/src/com/android/settings/battery/BatteryTechPreferenceController.java
++++ b/src/com/android/settings/battery/BatteryTechPreferenceController.java
+@@ -28,7 +28,7 @@ public class BatteryTechPreferenceController extends AbstractPreferenceControlle
+         PreferenceControllerMixin {
+ 
+     private static final String KEY_BATTERY_TECH = "battery_tech";
+-    private static final String BATTERY_TECH_PATH = "sys/class/power_supply/battery/technology";
++    private static final String BATTERY_TECH_PATH = "/sys/class/power_supply/battery/technology";
+ 
+     public BatteryTechPreferenceController(Context context) {
+         super(context);
+diff --git a/src/com/android/settings/battery/BatteryTempPreferenceController.java b/src/com/android/settings/battery/BatteryTempPreferenceController.java
+index be3439f95e..222e143fc8 100644
+--- a/src/com/android/settings/battery/BatteryTempPreferenceController.java
++++ b/src/com/android/settings/battery/BatteryTempPreferenceController.java
+@@ -28,8 +28,7 @@ public class BatteryTempPreferenceController extends AbstractPreferenceControlle
+         PreferenceControllerMixin {
+ 
+     private static final String KEY_BATTERY_TEMP = "battery_temp";
+-    private static final String BATTERY_TEMP_PATH = "sys/class/power_supply/battery/temp";
+-    private int BATTERY_TEMP_DIVIDER = 10;
++    private static final String BATTERY_TEMP_PATH = "/sys/class/power_supply/battery/temp";
+ 
+     public BatteryTempPreferenceController(Context context) {
+         super(context);
+@@ -64,7 +63,7 @@ public class BatteryTempPreferenceController extends AbstractPreferenceControlle
+ 
+     private String getBatteryTemp() {
+         String value = readOneLine(BATTERY_TEMP_PATH);
+-        return String.format("%s", Integer.parseInt(value) / BATTERY_TEMP_DIVIDER) + "\u2103";
++        return String.format("%s", Integer.parseInt(value) / 10) + "\u2103";
+     }
+ 
+     @Override
+diff --git a/src/com/android/settings/battery/ChargeCyclePreferenceController.java b/src/com/android/settings/battery/ChargeCyclePreferenceController.java
+index 21d64a5876..5406fbd400 100644
+--- a/src/com/android/settings/battery/ChargeCyclePreferenceController.java
++++ b/src/com/android/settings/battery/ChargeCyclePreferenceController.java
+@@ -28,7 +28,7 @@ public class ChargeCyclePreferenceController extends AbstractPreferenceControlle
+         PreferenceControllerMixin {
+ 
+     private static final String KEY_CHARGE_CYCLE = "charge_cycle";
+-    private static final String CYCLE_COUNT_PATH = "sys/class/power_supply/battery/cycle_count";
++    private static final String CYCLE_COUNT_PATH = "/sys/class/power_supply/battery/cycle_count";
+ 
+     public ChargeCyclePreferenceController(Context context) {
+         super(context);
+diff --git a/src/com/android/settings/battery/ChargeFullDesignPreferenceController.java b/src/com/android/settings/battery/ChargeFullDesignPreferenceController.java
+index 910856bc8f..a0c119b985 100644
+--- a/src/com/android/settings/battery/ChargeFullDesignPreferenceController.java
++++ b/src/com/android/settings/battery/ChargeFullDesignPreferenceController.java
+@@ -28,7 +28,7 @@ public class ChargeFullDesignPreferenceController extends AbstractPreferenceCont
+         PreferenceControllerMixin {
+ 
+     private static final String KEY_CHARGE_FULL_DESIGN = "charge_full_design";
+-    private static final String CHARGE_FULL_DESIGN_PATH = "sys/class/power_supply/battery/charge_full_design";
++    private static final String CHARGE_FULL_DESIGN_PATH = "/sys/class/power_supply/battery/charge_full";
+ 
+     public ChargeFullDesignPreferenceController(Context context) {
+         super(context);
+@@ -63,7 +63,7 @@ public class ChargeFullDesignPreferenceController extends AbstractPreferenceCont
+ 
+     String getChargeFullDesign() {
+         String value = readOneLine(CHARGE_FULL_DESIGN_PATH);
+-        return value + "mAh";
++        return String.format("%s", Integer.parseInt(value) / 1000) + " mAh";
+     }
+ 
+     @Override
+-- 
+2.19.1
+
