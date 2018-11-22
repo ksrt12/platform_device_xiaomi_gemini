@@ -211,6 +211,7 @@ BOARD_HAL_STATIC_LIBRARIES := libdumpstate.gemini
 
 # QCOM
 BOARD_USES_QCOM_HARDWARE := true
+TARGET_PROVIDES_QTI_TELEPHONY_JAR := true
 
 # Recovery
 TARGET_RECOVERY_FSTAB := $(VENDOR_PATH)/rootdir/etc/fstab.qcom
