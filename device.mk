@@ -390,7 +390,7 @@ PRODUCT_COPY_FILES += \
 
 PRODUCT_COPY_FILES += vendor/havoc/prebuilt/common/bootanimation/1080.zip:system/media/bootanimation.zip
 #$(LOCAL_PATH)/patches/bootanimation.zip
-PRODUCT_PACKAGES += Phonograph TGX KiwiBrowser RootExplorer Launcher3
+PRODUCT_PACKAGES += Phonograph KiwiBrowser
 PRODUCT_PACKAGES += nano htop
 
 PRODUCT_COPY_FILES += \
