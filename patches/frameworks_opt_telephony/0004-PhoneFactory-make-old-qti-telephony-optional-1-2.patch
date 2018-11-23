@@ -1,0 +1,35 @@
+From 83ca4820d1f4bc7b1f91b8fd91b531ae948a110e Mon Sep 17 00:00:00 2001
+From: Vol Zhdanov <wight554@gmail.com>
+Date: Thu, 15 Nov 2018 15:44:00 +0000
+Subject: [PATCH 4/4] PhoneFactory: make old qti telephony optional [2/2]
+
+* breaks pie qti telephony
+
+Change-Id: Ifc64467780526a88ce650e97cf0e15c5502e637d
+Signed-off-by: DennySPB <dennyspb@gmail.com>
+Signed-off-by: Kazakov Stepan <ksrt12group@gmail.com>
+---
+ src/java/com/android/internal/telephony/PhoneFactory.java | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
+
+diff --git a/src/java/com/android/internal/telephony/PhoneFactory.java b/src/java/com/android/internal/telephony/PhoneFactory.java
+index 53fe74539..50627fe40 100644
+--- a/src/java/com/android/internal/telephony/PhoneFactory.java
++++ b/src/java/com/android/internal/telephony/PhoneFactory.java
+@@ -227,8 +227,11 @@ public class PhoneFactory {
+                 sMadeDefaults = true;
+ 
+                 Rlog.i(LOG_TAG, "Creating SubInfoRecordUpdater ");
+-                sSubInfoRecordUpdater = telephonyComponentFactory.makeSubscriptionInfoUpdater(
+-                        context, sPhones, sCommandsInterfaces);
++                sSubInfoRecordUpdater = sContext.getResources().getBoolean(com.android.internal.R.bool.config_oldQtiTelephony)
++                        ? telephonyComponentFactory.makeSubscriptionInfoUpdater(
++                                context, sPhones, sCommandsInterfaces)
++                        : telephonyComponentFactory.makeSubscriptionInfoUpdater(
++                                BackgroundThread.get().getLooper(), context, sPhones, sCommandsInterfaces);
+                 SubscriptionController.getInstance().updatePhonesAvailability(sPhones);
+ 
+                 // Start monitoring after defaults have been made.
+-- 
+2.19.1
+

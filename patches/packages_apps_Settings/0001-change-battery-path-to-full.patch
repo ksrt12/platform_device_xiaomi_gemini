@@ -1,51 +1,18 @@
-From 60f6866e0efefb34366bfea5e90290fe7bcbe30f Mon Sep 17 00:00:00 2001
+From e0d4e46a49a360b8f297e611e1f0d5214f43d1e8 Mon Sep 17 00:00:00 2001
 From: Kazakov Stepan <ksrt12group@gmail.com>
 Date: Sat, 17 Nov 2018 03:11:09 +0300
-Subject: [PATCH] add caf tag string change battery path to full
+Subject: [PATCH 1/2] change battery path to full
 
 Signed-off-by: Kazakov Stepan <ksrt12group@gmail.com>
 ---
- res/values/havoc_strings.xml                              | 3 ++-
- res/xml/my_device_info.xml                                | 8 ++++++++
- .../battery/BatteryHealthPreferenceController.java        | 2 +-
- .../battery/BatteryStatusPreferenceController.java        | 2 +-
- .../settings/battery/BatteryTechPreferenceController.java | 2 +-
- .../settings/battery/BatteryTempPreferenceController.java | 5 ++---
- .../settings/battery/ChargeCyclePreferenceController.java | 2 +-
- .../battery/ChargeFullDesignPreferenceController.java     | 4 ++--
- 8 files changed, 18 insertions(+), 10 deletions(-)
+ .../settings/battery/BatteryHealthPreferenceController.java  | 2 +-
+ .../settings/battery/BatteryStatusPreferenceController.java  | 2 +-
+ .../settings/battery/BatteryTechPreferenceController.java    | 2 +-
+ .../settings/battery/BatteryTempPreferenceController.java    | 5 ++---
+ .../settings/battery/ChargeCyclePreferenceController.java    | 2 +-
+ .../battery/ChargeFullDesignPreferenceController.java        | 4 ++--
+ 6 files changed, 8 insertions(+), 9 deletions(-)
 
-diff --git a/res/values/havoc_strings.xml b/res/values/havoc_strings.xml
-index ae547d8e63..4d975d6038 100644
---- a/res/values/havoc_strings.xml
-+++ b/res/values/havoc_strings.xml
-@@ -453,4 +453,5 @@
-     <string name="battery_status">Status</string>
-     <string name="battery_voltage">Voltage</string>
-     <string name="battery_health">Health</string>
--</resources>
-\ No newline at end of file
-+    <string name="caf_tag">CAF tag</string>
-+</resources>
-diff --git a/res/xml/my_device_info.xml b/res/xml/my_device_info.xml
-index 4e584371d3..58cc019856 100644
---- a/res/xml/my_device_info.xml
-+++ b/res/xml/my_device_info.xml
-@@ -150,6 +150,14 @@
-         android:summary="@string/summary_placeholder"
-         settings:allowDividerAbove="true"/>
- 
-+    <!-- CAF tag information -->
-+    <Preference
-+        android:key="caf_tag"
-+        android:order="98"
-+        android:title="@string/caf_tag"
-+        android:summary="LA.UM.7.6.2.r1-04200-89xx.0"
-+        android:selectable="false"/>
-+
-     <!-- SELinux status information -->
-     <Preference
-         android:key="selinux_status"
 diff --git a/src/com/android/settings/battery/BatteryHealthPreferenceController.java b/src/com/android/settings/battery/BatteryHealthPreferenceController.java
 index aa70bbb1bb..643a44463a 100644
 --- a/src/com/android/settings/battery/BatteryHealthPreferenceController.java

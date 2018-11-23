@@ -142,6 +142,10 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.vendor.extension_library=libqti-perfd-client.so \
     ro.vendor.qti.sys.fw.bg_apps_limit=60
 
+# Power
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.hardware.power=gemini
+
 # Priv-app permissions whitelist
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.control_privapp_permissions=enforce
@@ -241,4 +245,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 # network location provider is not functional
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.location.osnlp.package=com.google.android.gms \
-    ro.location.osnlp.region.package=
+    ro.location.osnlp.region.package=none
+
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.mod.romtags=droid=9.0.0_r16,caf=LA.UM.7.6.2.r1-04200-89xx.0

@@ -1,0 +1,39 @@
+From 084b0b61cc1af132adefe82e663a97a79e22b77c Mon Sep 17 00:00:00 2001
+From: Vol Zhdanov <wight554@gmail.com>
+Date: Thu, 15 Nov 2018 15:47:19 +0000
+Subject: [PATCH] base: make old qti telephony optional [1/2]
+
+* enable by default to satisfy most devices
+
+Signed-off-by: Kazakov Stepan <ksrt12group@gmail.com>
+---
+ core/res/res/values/havoc_config.xml  | 3 +++
+ core/res/res/values/havoc_symbols.xml | 2 ++
+ 2 files changed, 5 insertions(+)
+
+diff --git a/core/res/res/values/havoc_config.xml b/core/res/res/values/havoc_config.xml
+index e221c31e71d..bf3ac37c9bd 100644
+--- a/core/res/res/values/havoc_config.xml
++++ b/core/res/res/values/havoc_config.xml
+@@ -202,4 +202,7 @@
+ 
+     <!-- Whether to cleanup fingerprints upon connection to the daemon and when user switches -->
+     <bool name="config_cleanupUnusedFingerprints">true</bool>
++
++    <!-- Whether the device has outdated qti-telephony-common.jar -->
++    <bool name="config_oldQtiTelephony">true</bool>
+ </resources>
+diff --git a/core/res/res/values/havoc_symbols.xml b/core/res/res/values/havoc_symbols.xml
+index 44ecfab8f06..f3f3fd1943a 100644
+--- a/core/res/res/values/havoc_symbols.xml
++++ b/core/res/res/values/havoc_symbols.xml
+@@ -254,4 +254,6 @@
+   <java-symbol type="string" name="deny" />
+   <java-symbol type="layout" name="permission_confirmation_dialog" />
+   <java-symbol type="array" name="app_ops_labels" />
++
++  <java-symbol type="bool" name="config_oldQtiTelephony" />
+ </resources>
+-- 
+2.19.1
+

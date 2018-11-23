@@ -430,5 +430,6 @@
     <string name="battery_status">Статус</string>
     <string name="battery_voltage">Напряжение</string>
     <string name="battery_health">Состояние</string>
-    <string name="caf_tag">CAF тэг</string>
+    <string name="rom_tags_title">Тэги</string>
+
 </resources>

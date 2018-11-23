@@ -1,4 +1,4 @@
-From 594d0728735925f9bb65d3eb486b504d3affbd3e Mon Sep 17 00:00:00 2001
+From 8a638eaa3f1baefc3f5bd88f091c3ae5171139f3 Mon Sep 17 00:00:00 2001
 From: Kazakov Stepan <ksrt12group@gmail.com>
 Date: Tue, 13 Nov 2018 22:48:21 +0300
 Subject: [PATCH 1/2] update kernel task
@@ -8,8 +8,8 @@ Signed-off-by: Kazakov Stepan <ksrt12group@gmail.com>
  build/core/qcom_target.mk   |  20 ++-
  build/tasks/kernel.mk       | 246 +++++++++++-------------------------
  config/BoardConfigKernel.mk | 212 +++++++++++++++++++++++++++----
- config/BoardConfigSoong.mk  |   4 +-
- 4 files changed, 276 insertions(+), 206 deletions(-)
+ config/BoardConfigSoong.mk  |   2 +
+ 4 files changed, 275 insertions(+), 205 deletions(-)
 
 diff --git a/build/core/qcom_target.mk b/build/core/qcom_target.mk
 index 2244c38d..62c3eb87 100644
@@ -671,7 +671,7 @@ index 74f3413b..a4b8c194 100644
 +
 +endif # TARGET_NO_KERNEL
 diff --git a/config/BoardConfigSoong.mk b/config/BoardConfigSoong.mk
-index b7167d13..5b6308fd 100644
+index b7167d13..d8ea95a3 100644
 --- a/config/BoardConfigSoong.mk
 +++ b/config/BoardConfigSoong.mk
 @@ -1,6 +1,8 @@
@@ -683,15 +683,6 @@ index b7167d13..5b6308fd 100644
      KERNEL_CROSS_COMPILE \
      KERNEL_MAKE_FLAGS \
      TARGET_KERNEL_CONFIG \
-@@ -8,7 +10,7 @@ EXPORT_TO_SOONG := \
- 
- # Setup SOONG_CONFIG_* vars to export the vars listed above.
- # Documentation here:
--# https://github.com/Havoc-OS/android_build_soong/commit/8328367c44085b948c003116c0ed74a047237a69
-+# https://github.com/LineageOS/android_build_soong/commit/8328367c44085b948c003116c0ed74a047237a69
- 
- SOONG_CONFIG_NAMESPACES += havocVarsPlugin
- 
 -- 
 2.19.1
 
