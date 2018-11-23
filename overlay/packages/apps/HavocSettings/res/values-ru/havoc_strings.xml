@@ -166,7 +166,6 @@
     <string name="screen_off_animation_title">Анимация выключения экрана</string>
     <string name="screen_off_animation_summary">%1$s</string>
     <string name="screen_off_animation_fade">Градиент</string>
-    <string name="screen_off_animation_default">По умолчанию</string>
     <string name="screen_off_animation_crt">Старый телевизор</string>
     <string name="screen_off_animation_scale">Масштабирование</string>
 
@@ -333,7 +332,6 @@
     <string name="hardware_keys_single_tap_title">Действие при одиночном нажатии</string>
     <string name="hardware_keys_long_press_title">Действие при долгом нажатии</string>
     <string name="hardware_keys_double_tap_title">Действие по двойному нажатию</string>
-    <string name="hardware_keys_wake_title">Пробудить устройство</string>
     <string name="hardware_keys_disable_title">Отключить аппаратные кнопки</string>
 
     <!-- ANBI -->
@@ -384,7 +382,7 @@
     <string name="onthego_alpha_title">\"На ходу\" прозрачность</string>
     <string name="onthego_alpha_summary">Значение прозрачности</string>
 	
-    <string name="app_ops_settings_title">App Ops</string>
+    <string name="app_ops_settings_title">Защищённый режим</string>
     <string name="app_ops_settings_summary">Блокировать разрешения приложений</string>
 	
     <!-- Volume key cursor control -->
@@ -758,19 +756,6 @@
 
     <string name="brightness_icon_title">Значок авто-яркости</string>
     <string name="brightness_icon_summary">Показать значок включения авто-яркости слева от слайдера</string>
-	
-    <!-- Weather - OmniJaws Settings -->
-    <string name="weather_config_title">Сервис погоды</string>
-    <string name="weather_config_summary">Настройки системного сервиса</string>
-    <string name="header_weather_title">Погода в заголовке панели уведомлений</string>
-    <string name="header_weather_summary">Включить отображение погоды в заголовке панели уведомлений</string>
-    <string name="weather_icon_pack_title">Стиль значков</string>
-    <string name="weather_icon_pack_note">Примечание\u003a Вы можете установить новые наборы значков из Play Маркет, введя в строке поиска \"Chronus icons\"</string>
-
-    <!-- Lockscreen weather settings -->
-    <string name="lockscreen_weather_title">Отображать на экране блокировки</string>
-    <string name="lockscreen_weather_summary">Показывать информацию о погоде на экране блокировки</string>
-    <string name="lockscreen_items_aod_info_title">Эта конфигурация также будет применена к ambient display</string>
 
     <!-- Battery Bar -->
     <string name="battery_bar_title">Полоса заряда батареи</string>
@@ -946,17 +931,6 @@
     <string name="swap_navigation_keys_title">Поменять местами</string>
     <string name="swap_navigation_keys_title_summary">кнопки \"назад"\ и \"меню\"</string>
 
-    <!-- StatusBar weather settings -->
-    <string name="statusbar_weather_title">Погода в строке состояния</string>
-    <string name="statusbar_weather_summary">Отключена</string>
-    <string name="statusbar_weather_dialog_title">Погода в строке состояния</string>
-    <string name="status_bar_weather_hidden">Отключена</string>
-    <string name="status_bar_temperature_image_show_scale">Показывать температуру с единицами измерения и изображением</string>
-    <string name="status_bar_temperature_image_hide_scale">Показывать температуру с изображением без единиц измерения</string>
-    <string name="status_bar_temperature_show_scale_hide_image">Показывать температуру с единицами измерения</string>
-    <string name="status_bar_temperature_hide_scale_hide_image">Показывать температуру без единиц измерения</string>
-    <string name="status_bar_show_image">Показывать изображение</string>
-
     <!-- 4G icon -->
     <string name="show_fourg_icon_title">Иконка 4G</string>
     <string name="show_fourg_icon_summary">Показывать 4G вместо LTE в значках сети</string>
@@ -980,21 +954,21 @@
 
     <!-- Doze: switches -->
     <string name="doze_display_summary">Конфигурация настроек для ambient display</string>
-    <string name="tilt_sensor_title">Tilt sensor</string>
-    <string name="pickup_sensor_title">Pick up sensor</string>
-    <string name="proximity_sensor_title">Proximity sensor</string>
-    <string name="tilt_title">Tilt</string>
-    <string name="tilt_summary">Pulse notifications on tilt</string>
-    <string name="pickup_title">Pick up</string>
-    <string name="pickup_summary">Pulse notifications on pick up</string>
-    <string name="handwave_title">Hand wave</string>
-    <string name="handwave_summary">Pulse notifications on hand wave</string>
-    <string name="pocket_title">Pocket</string>
-    <string name="pocket_summary">Pulse notifications on removal from pocket</string>
-    <string name="doze_vibrate">Vibrate</string>
-    <string name="doze_vibrate_summary">Duration to vibrate when pulsing notifications</string>
-    <string name="sensor_warning_title">Caution</string>
-    <string name="sensor_warning_message">Settings based on sensors are subject to hardware compatibility. Enabling sensors for ambient display may increase power drain.</string>
+    <string name="tilt_sensor_title">Датчик наклона</string>
+    <string name="pickup_sensor_title">Датчик поднятия</string>
+    <string name="proximity_sensor_title">Датчик приближения</string>
+    <string name="tilt_title">Наклон</string>
+    <string name="tilt_summary">Отображать уведомления при наклоне устройства</string>
+    <string name="pickup_title">Поднятие</string>
+    <string name="pickup_summary">Отображать уведомления при поднятии устройства</string>
+    <string name="handwave_title">Взмах рукой</string>
+    <string name="handwave_summary">Проведите ладонью над экраном для просмотра уведомлений</string>
+    <string name="pocket_title">Карман</string>
+    <string name="pocket_summary">Отображать уведомления при извлечении устройства из кармана</string>
+    <string name="doze_vibrate">Вибрация</string>
+    <string name="doze_vibrate_summary">Длительность вибрации</string>
+    <string name="sensor_warning_title">Предупреждение</string>
+    <string name="sensor_warning_message">Данные настройки зависят от аппаратной совместимости. Включение датчиков для ambient display может ускорить разряд батареи</string>
 
     <!-- Quick pull down-->
     <string name="quick_pulldown_title">Быстрый доступ</string>
@@ -1204,7 +1178,7 @@
     <string name="pie_enable_title">Включить панель PIE</string>
     <string name="pa_pie_control_title">Панель PIE</string>
     <string name="pie_settings">Настройки Pie</string>
-    <string name="pie_settings_summary">Adjust pie to your liking</string>
+    <string name="pie_settings_summary">Настройте Pie по своему вкусу</string>
     <string name="pie_theme_mode_title">Тема</string>
     <string name="pie_auto">Автоматически</string>
     <string name="pie_white">Белая</string>
