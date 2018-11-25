@@ -1,18 +1,26 @@
-From 3ddc7d1d3e53b1691ce97b7af482b20338f25abd Mon Sep 17 00:00:00 2001
+From da4ebeec32936c2b4862afed7196a2516679ac6a Mon Sep 17 00:00:00 2001
 From: Kazakov Stepan <ksrt12group@gmail.com>
 Date: Sat, 10 Nov 2018 18:16:14 +0300
-Subject: [PATCH 1/2] fix perms
+Subject: [PATCH 2/3] fix perms
 
 Signed-off-by: Kazakov Stepan <ksrt12group@gmail.com>
 ---
- data/etc/privapp-permissions-platform.xml | 1 +
- 1 file changed, 1 insertion(+)
+ data/etc/privapp-permissions-platform.xml | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/data/etc/privapp-permissions-platform.xml b/data/etc/privapp-permissions-platform.xml
-index bfe864ac480..7fd2e1a1bd3 100644
+index bfe864ac480..4f41f8540cf 100644
 --- a/data/etc/privapp-permissions-platform.xml
 +++ b/data/etc/privapp-permissions-platform.xml
-@@ -359,6 +359,7 @@ applications that come with the platform
+@@ -242,6 +242,7 @@ applications that come with the platform
+ 
+     <privapp-permissions package="com.android.settings">
+         <permission name="android.permission.ACCESS_CHECKIN_PROPERTIES"/>
++        <permission name="android.permission.ACCESS_FONT_MANAGER"/>
+         <permission name="android.permission.ACCESS_NOTIFICATIONS"/>
+         <permission name="android.permission.BACKUP"/>
+         <permission name="android.permission.BATTERY_STATS"/>
+@@ -359,6 +360,7 @@ applications that come with the platform
          <permission name="android.permission.BIND_APPWIDGET"/>
          <permission name="android.permission.BLUETOOTH_PRIVILEGED"/>
          <permission name="android.permission.CHANGE_COMPONENT_ENABLED_STATE"/>

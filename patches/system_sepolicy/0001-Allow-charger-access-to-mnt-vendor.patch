@@ -3,7 +3,7 @@ From: DennySPB <dennyspb@gmail.com>
 Date: Fri, 16 Nov 2018 14:00:03 +0300
 Subject: [PATCH] Allow charger access to /mnt/vendor
 
-needed for offlne xiaomi charger
+needed for offline xiaomi charger
 
 Change-Id: I2bf1e7d27504c1121eb1371ea5b4de25938684ad
 Signed-off-by: DennySPB <dennyspb@gmail.com>

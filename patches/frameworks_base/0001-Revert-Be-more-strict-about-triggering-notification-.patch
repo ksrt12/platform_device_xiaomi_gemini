@@ -1,7 +1,8 @@
-From cbde033a986bc06bfc372dc2e60e660c8cfabd99 Mon Sep 17 00:00:00 2001
+From 34bc233e7f0fd69a310fee5972c638f45f10e723 Mon Sep 17 00:00:00 2001
 From: Kazakov Stepan <ksrt12group@gmail.com>
 Date: Thu, 22 Nov 2018 00:25:34 +0300
-Subject: [PATCH] Revert "Be more strict about triggering notification lights"
+Subject: [PATCH 1/3] Revert "Be more strict about triggering notification
+ lights"
 
 This reverts commit 543692372b0bcfba1f04bd650cfd69a3df8ceb34.
 
@@ -12,7 +13,7 @@ Signed-off-by: Kazakov Stepan <ksrt12group@gmail.com>
  2 files changed, 10 insertions(+), 236 deletions(-)
 
 diff --git a/services/core/java/com/android/server/notification/NotificationManagerService.java b/services/core/java/com/android/server/notification/NotificationManagerService.java
-index b9bcc269782..0e27840b53b 100644
+index ea44342054f..e12aa1b49b4 100644
 --- a/services/core/java/com/android/server/notification/NotificationManagerService.java
 +++ b/services/core/java/com/android/server/notification/NotificationManagerService.java
 @@ -334,8 +334,6 @@ public class NotificationManagerService extends SystemService {
@@ -36,7 +37,7 @@ index b9bcc269782..0e27840b53b 100644
  
      private boolean mSoundVibScreenOn;
  
-@@ -1225,7 +1223,7 @@ public class NotificationManagerService extends SystemService {
+@@ -1245,7 +1243,7 @@ public class NotificationManagerService extends SystemService {
              ContentResolver resolver = getContext().getContentResolver();
              if (uri == null || NOTIFICATION_LIGHT_PULSE_URI.equals(uri)) {
                  boolean pulseEnabled = Settings.System.getIntForUser(resolver,
@@ -45,7 +46,7 @@ index b9bcc269782..0e27840b53b 100644
                  if (mNotificationPulseEnabled != pulseEnabled) {
                      mNotificationPulseEnabled = pulseEnabled;
                      updateNotificationPulse();
-@@ -1505,8 +1503,6 @@ public class NotificationManagerService extends SystemService {
+@@ -1525,8 +1523,6 @@ public class NotificationManagerService extends SystemService {
          mInCallNotificationVolume = resources.getFloat(R.dimen.config_inCallNotificationVolume);
  
          mUseAttentionLight = resources.getBoolean(R.bool.config_useAttentionLight);
@@ -54,7 +55,7 @@ index b9bcc269782..0e27840b53b 100644
  
          // Don't start allowing notifications until the setup wizard has run once.
          // After that, including subsequent boots, init with notifications turned on.
-@@ -3890,7 +3886,6 @@ public class NotificationManagerService extends SystemService {
+@@ -3910,7 +3906,6 @@ public class NotificationManagerService extends SystemService {
                          pw.println("  ");
                      }
                      pw.println("  mUseAttentionLight=" + mUseAttentionLight);
@@ -62,7 +63,7 @@ index b9bcc269782..0e27840b53b 100644
                      pw.println("  mNotificationPulseEnabled=" + mNotificationPulseEnabled);
                      pw.println("  mSoundNotificationKey=" + mSoundNotificationKey);
                      pw.println("  mVibrateNotificationKey=" + mVibrateNotificationKey);
-@@ -4904,7 +4899,8 @@ public class NotificationManagerService extends SystemService {
+@@ -4925,7 +4920,8 @@ public class NotificationManagerService extends SystemService {
          // light
          // release the light
          boolean wasShowLights = mLights.remove(key);
@@ -72,7 +73,7 @@ index b9bcc269782..0e27840b53b 100644
              mLights.add(key);
              updateLightsLocked();
              if (mUseAttentionLight) {
-@@ -4915,19 +4911,7 @@ public class NotificationManagerService extends SystemService {
+@@ -4936,19 +4932,7 @@ public class NotificationManagerService extends SystemService {
              updateLightsLocked();
          }
          if (buzz || beep || blink) {
@@ -93,7 +94,7 @@ index b9bcc269782..0e27840b53b 100644
              MetricsLogger.action(record.getLogMaker()
                      .setCategory(MetricsEvent.NOTIFICATION_ALERT)
                      .setType(MetricsEvent.TYPE_OPEN)
-@@ -4954,51 +4938,12 @@ public class NotificationManagerService extends SystemService {
+@@ -4975,51 +4959,12 @@ public class NotificationManagerService extends SystemService {
          }
      }
  

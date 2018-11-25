@@ -21,4 +21,14 @@
     <string name="smart_battery_footer" product="tablet" msgid="5555604955956219544">"Менеджер батареи определяет, какие приложения быстрее всего расходуют заряд батареи, и предлагает ограничить их работу. Ограничение фоновых процессов может привести к нарушениям функциональности приложений и задержке поступающих от них уведомлений."</string>
     <string name="smart_battery_footer" product="device" msgid="5555604955956219544">"Менеджер батареи определяет, какие приложения быстрее всего расходуют заряд батареи, и предлагает ограничить их работу. Ограничение фоновых процессов может привести к нарушениям функциональности приложений и задержке поступающих от них уведомлений."</string>
     <string name="battery_auto_restriction_title" msgid="6553271897488963709">"Использовать менеджер батареи"</string>
+
+    <!-- Accent picker -->
+    <string name="theme_category_title">Тема системы</string>
+    <string name="systemui_theme_style_title">Цвет фона</string>
+    <string name="accent_picker_dialog_title">Выбрать цвет акцента</string>
+    <string name="theme_accent_picker_title">Акцент</string>
+    <string name="theme_accent_picker_summary">Выбрать цвет акцента для системы</string>
+    <string name="theme_accent_picker_default">По умолчанию</string>
+    <string name="accent_picker_material_colors">Палитра Material</string>
+    <string name="accent_picker_custom_colors">Пользовательские</string>
 </resources>

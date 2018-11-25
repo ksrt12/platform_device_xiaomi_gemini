@@ -1,4 +1,4 @@
-From 7f737e28b271df7dfecc757234778655d5320468 Mon Sep 17 00:00:00 2001
+From ad30148af7744e75a9d2e3405e33a2bb7ec61bfe Mon Sep 17 00:00:00 2001
 From: Harsh Shandilya <msfjarvis@gmail.com>
 Date: Thu, 24 Aug 2017 13:34:12 +0000
 Subject: [PATCH 2/2] DeviceInfoSettings: Bring back CAF/AOSP tags
@@ -8,15 +8,15 @@ Signed-off-by: Simao Gomes Viana <xdevs23@outlook.com>
 Signed-off-by: Harsh Shandilya <harsh@prjkt.io>
 Signed-off-by: Kazakov Stepan <ksrt12group@gmail.com>
 ---
- res/values/havoc_strings.xml                  |  5 +-
+ res/values/havoc_strings.xml                  |  6 +-
  res/xml/my_device_info.xml                    |  8 +++
  .../RomTagsPreferenceController.java          | 68 +++++++++++++++++++
  .../aboutphone/MyDeviceInfoFragment.java      |  2 +
- 4 files changed, 82 insertions(+), 1 deletion(-)
+ 4 files changed, 82 insertions(+), 2 deletions(-)
  create mode 100644 src/com/android/settings/deviceinfo/RomTagsPreferenceController.java
 
 diff --git a/res/values/havoc_strings.xml b/res/values/havoc_strings.xml
-index ae547d8e63..70c5f1931d 100644
+index 4d97be82b9..8987b7c74a 100644
 --- a/res/values/havoc_strings.xml
 +++ b/res/values/havoc_strings.xml
 @@ -425,6 +425,9 @@
@@ -29,10 +29,14 @@ index ae547d8e63..70c5f1931d 100644
      <!-- Selinux -->
      <string name="selinux_status">SELinux status</string>
      <string name="selinux_status_disabled">Disabled</string>
-@@ -453,4 +456,4 @@
+@@ -453,8 +456,7 @@
      <string name="battery_status">Status</string>
      <string name="battery_voltage">Voltage</string>
      <string name="battery_health">Health</string>
+-
+     <string name="font_picker_title">Font Manager</string>
+     <string name="disable_fonts_installed_title">Font picker is unavailable to avoid conflicts with Substratum. Uninstall it if you wish to use the font picker.</string>
+     <string name="font_picker_progress">Applying new font\u2026</string>
 -</resources>
 \ No newline at end of file
 +</resources>
