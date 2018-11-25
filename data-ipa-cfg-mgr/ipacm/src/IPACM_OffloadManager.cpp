@@ -318,17 +318,6 @@ RET IPACM_OffloadManager::removeDownstream(const char * downstream_name, const P
 		IPACMERR("iface is not present in list.\n");
 		return FAIL_HARDWARE;
 	}
-	if (std::find(valid_ifaces.begin(), valid_ifaces.end(), std::string(downstream_name)) == valid_ifaces.end())
-	{
-		IPACMERR("iface is not present in list.\n");
-		return FAIL_HARDWARE;
-	}
-
-	if(ipa_get_if_index(downstream_name, &index))
-	{
-		IPACMERR("netdev(%s) already removed, ignored\n", downstream_name);
-		return SUCCESS;
-	}
 
 	if(ipa_get_if_index(downstream_name, &index))
 	{
