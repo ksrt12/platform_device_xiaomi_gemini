@@ -362,6 +362,8 @@ PRODUCT_COPY_FILES += \
 
 # Telephony
 PRODUCT_PACKAGES += \
+    qti-telephony-utils \
+    qti_telephony_utils.xml \
     telephony-ext
 
 #PRODUCT_BOOT_JARS += \
