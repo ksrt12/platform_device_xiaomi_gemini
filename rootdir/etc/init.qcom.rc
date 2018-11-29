@@ -110,6 +110,7 @@ on fs
     mkdir /mnt/vendor/persist/data 0700 system system
     mkdir /mnt/vendor/persist/display 0770 system graphics
     mkdir /mnt/vendor/persist/hvdcp_opti 0770 root system
+    mkdir /mnt/vendor/persist/secnvm 0770 system system
     mkdir /mnt/vendor/persist/time 0770 system system
     restorecon_recursive /mnt/vendor/persist
 
@@ -139,6 +140,11 @@ on late-fs
 
 on post-fs-data
     mkdir /data/vendor/misc 01771 system system
+
+    # Create directory used for dump collection
+    mkdir /data/vendor/ssrdump 0770 root system
+
+    mkdir /data/vendor/oemnvitems  0771 radio radio
 
     # Create directory used by display clients
     mkdir /data/vendor/display 0770 system graphics
@@ -202,20 +208,20 @@ on post-fs-data
     mkdir /dev/socket/location/xtra 0770 gps gps
 
     # for android.hardware.health@2.0-service.gemini cycle count backup
-    mkdir /persist/battery 0700 system system
+    mkdir /mnt/vendor/persist/battery 0700 system system
 
     # SSC/SLPI sensors
-    mkdir /persist/sensors
-    chown root system /persist/sensors
-    chmod 0775 /persist/sensors
-    chown root system /persist/sensors/sensors_settings
-    chmod 0664 /persist/sensors/sensors_settings
-    chown root system /persist/sensors/sns.reg
-    chmod 0664 /persist/sensors/sns.reg
-    chown root system /persist/PRSensorData.txt
-    chmod 0660 /persist/PRSensorData.txt
-    chown root system /persist/PSensor3cm_ct.txt
-    chmod 0660 /persist/PSensor3cm_ct.txt
+    mkdir /mnt/vendor/persist/sensors
+    chown root system /mnt/vendor/persist/sensors
+    chmod 0775 /mnt/vendor/persist/sensors
+    chown root system /mnt/vendor/persist/sensors/sensors_settings
+    chmod 0664 /mnt/vendor/persist/sensors/sensors_settings
+    chown root system /mnt/vendor/persist/sensors/sns.reg
+    chmod 0664 /mnt/vendor/persist/sensors/sns.reg
+    chown root system /mnt/vendor/persist/PRSensorData.txt
+    chmod 0660 /mnt/vendor/persist/PRSensorData.txt
+    chown root system /mnt/vendor/persist/PSensor3cm_ct.txt
+    chmod 0660 /mnt/vendor/persist/PSensor3cm_ct.txt
 
     # /dev/sensors only supports an ioctl to get the current SLPI timestamp;
     # allow the sensors daemon to perform this as non-root
@@ -227,16 +233,13 @@ on post-fs-data
 
     setprop vold.post_fs_data_done 1
 
-    # Create PERFD deamon related dirs
-    setprop ro.min_freq_0 384000
-    mkdir /data/misc/perfd 0755 root system
-    chmod 2755 /data/misc/perfd
-    mkdir /data/system/perfd 0770 root system
-    rm /data/system/perfd/default_values
-    chmod 2770 /data/system/perfd
+    #Create PERFD deamon related dirs
+    mkdir /data/vendor/perfd 0770 root system
+    chmod 2770 /data/vendor/perfd
+    rm /data/vendor/perfd/default_values
 
-    # Create IOP deamon related dirs
-    mkdir /data/misc/iop 0770 root system
+    #Create IOP  deamon related dirs
+    mkdir /data/vendor/iop 0700 root system
 
     # NFC local data and nfcee xml storage
     mkdir /data/nfc 0770 nfc nfc
@@ -373,14 +376,14 @@ on boot
     mkdir /dev/socket/qmux_gps 0770 gps gps
     chmod 2770 /dev/socket/qmux_gps
 
-    mkdir /persist/drm 0770 system system
-    mkdir /persist/misc 0770 system system
-    mkdir /persist/alarm 0770 system system
-    mkdir /persist/data/sfs 0700 system system
-    mkdir /persist/data/tz 0700 system system
-    mkdir /persist/qc_senseid 0700 system system
-    mkdir /persist/wlan_bt 0770 system system
-    mkdir /persist/audio 0777 media audio
+    mkdir /mnt/vendor/persist/drm 0770 system system
+    mkdir /mnt/vendor/persist/misc 0770 system system
+    mkdir /mnt/vendor/persist/alarm 0770 system system
+    mkdir /mnt/vendor/persist/data/sfs 0700 system system
+    mkdir /mnt/vendor/persist/data/tz 0700 system system
+    mkdir /mnt/vendor/persist/qc_senseid 0700 system system
+    mkdir /mnt/vendor/persist/wlan_bt 0770 system system
+    mkdir /mnt/vendor/persist/audio 0777 media audio
 
     # Create NETMGR daemon socket area
     mkdir /dev/socket/netmgr 0750 radio radio
@@ -423,6 +426,9 @@ on boot
 
     # Wifi firmware reload path
     chown wifi wifi /sys/module/wlan/parameters/fwpath
+
+    # Create vpp directory
+    mkdir /mnt/vendor/persist/vpp 0770 media media
 
     setprop ro.boot.wificountrycode VE
 
@@ -507,7 +513,7 @@ service vendor.dataqti /vendor/bin/qti
     group radio oem_2901 diag usb
     writepid /dev/cpuset/system-background/tasks
 
-service vendor.sensors /vendor/bin/sensors.qcom
+service vendor.sensors /vendor/bin/sensors.qti
     class core
     user system
     group system
@@ -551,6 +557,7 @@ service loc_launcher /vendor/bin/loc_launcher
 service qcom-sh /vendor/bin/init.qcom.sh
     class late_start
     user root
+    group root system radio
     oneshot
 
 on property:ro.vendor.ril.mbn_copy_completed=1
@@ -591,24 +598,24 @@ service qcamerasvr /vendor/bin/mm-qcamera-daemon
     writepid /dev/cpuset/system-background/tasks
 
 # Start up peripheral manager
-service per_mgr /vendor/bin/pm-service
+service vendor.per_mgr /vendor/bin/pm-service
     class core
     user system
     group system
     writepid /dev/cpuset/system-background/tasks
 
-service per_proxy /vendor/bin/pm-proxy
+service vendor.per_proxy /vendor/bin/pm-proxy
     class core
     user system
     group system
     writepid /dev/cpuset/system-background/tasks
     disabled
 
-on property:init.svc.per_mgr=running
-    start per_proxy
+on property:init.svc.vendor.per_mgr=running
+    start vendor.per_proxy
 
 on property:sys.shutdown.requested=*
-    stop per_proxy
+    stop vendor.per_proxy
 
 service readfem /vendor/bin/readfem
     class main
@@ -684,13 +691,6 @@ service tfa-sh /vendor/bin/init.tfa.sh /vendor/etc/silence_short.wav 15 1
     group system
     disabled
     oneshot
-
-service perfd /vendor/bin/perfd
-   class main
-   user root
-   group root system
-   writepid /dev/cpuset/system-background/tasks
-   disabled
 
 on property:sys.post_boot.parsed=1
     start perfd

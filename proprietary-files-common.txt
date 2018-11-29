@@ -71,18 +71,14 @@ vendor/lib/libaudioalsa.so
 vendor/lib/libmdsprpc.so
 vendor/lib/libqtigef.so
 
-# Bluetooth - from Mi A2 jasmine_sprout 9 PKQ1.180904.001 V10.0.1.0.PDIMIFJ release-keys
-vendor/bin/btnvtool|957c5c3b8379b02085ee04ba39e67536361e368d
-vendor/bin/hci_qcomm_init|9c5b2e1a278b5dd5bce92bc66037c751a239e141
-vendor/bin/hw/android.hardware.bluetooth@1.0-service-qti|2db80f84068e915ec91fb33a79d26956acae4c21
+# Bluetooth - from enchilada PKQ1.180716.001
+vendor/bin/hw/android.hardware.bluetooth@1.0-service-qti|d269f76a32c840827f17cc4b6b4f2d03683a7341
+vendor/bin/wcnss_filter|65c276e8ed95b55d337534411add48806e034a84
 vendor/etc/init/android.hardware.bluetooth@1.0-service-qti.rc|a979981c55f3dcaf6cf2212e71b901ca4d58b959
-vendor/lib/hw/android.hardware.bluetooth@1.0-impl-qti.so|20e2710ca70bb550700971b32b27223a29984103
-vendor/lib/libbt-hidlclient.so|9630dd8ba424e8c6cbff071d798326804396ece4
-vendor/lib/libbtnv.so|655bda3c8b28b7dd4a453b88bdf51e251ab0d2fa
-vendor/lib64/hw/android.hardware.bluetooth@1.0-impl-qti.so|c7a0f1936f7d9ec64d8f9c8d1921b28eca434109
-vendor/lib64/libbt-hidlclient.so|cd3513edb12f5e9ef1825c13a290d42e05b7a69b
-vendor/lib64/libbtnv.so|d567d41d60b98703f93ab15b2f8a894f0ebdc1fc
-vendor/lib64/vendor.qti.hardware.fm@1.0.so|061ebea5b94f63fdc25ce67869dde08dbd969cca
+vendor/lib64/hw/android.hardware.bluetooth@1.0-impl-qti.so|d6753f625bec4d3cd49e429a2bb16f5755e3f642
+vendor/lib64/libbtnv.so|0dfa39bd4f70e39d0ff7c789b2958edd8e3463dd
+vendor/lib64/libbt-hidlclient.so|d44900db10a43a46cdb50dced28c191c6a08c486
+vendor/lib64/vendor.qti.hardware.fm@1.0.so|1c643a855c99d18be368d57142e04d5d2f032b9f
 
 # Bluetooth (aptX) - from marlin - OPM1.171019.011
 lib64/libaptX_encoder.so|0cebad28afcf29f931bdc2d24fce2730dc882ecf
@@ -551,9 +547,48 @@ vendor/lib64/libvpphvx.so|e4bc7b7e5b9f3e40b24a2bb498883e9bff55622c
 vendor/lib64/libvpptestutils.so|533bc95dec31bd3fb5bc8603672954bb2be674f2
 vendor/lib64/vendor.qti.hardware.vpp@1.1.so|3957155b6fe6f818156d661f32809611b9b6b21d
 
-# Perf from - Marlin - PPR2.180905.006
-vendor/etc/perf-profile0.conf
-vendor/bin/perfd
+# Perf from - echilafa
+lib/vendor.qti.hardware.iop@1.0.so
+lib/vendor.qti.hardware.iop@2.0.so
+lib/vendor.qti.hardware.perf@1.0.so
+lib64/vendor.qti.hardware.iop@1.0.so
+lib64/vendor.qti.hardware.iop@2.0.so
+lib64/vendor.qti.hardware.perf@1.0.so
+vendor/bin/hw/vendor.qti.hardware.iop@2.0-service
+vendor/bin/hw/vendor.qti.hardware.perf@1.0-service
+vendor/etc/init/vendor.qti.hardware.iop@2.0-service.rc
+vendor/etc/init/vendor.qti.hardware.perf@1.0-service.rc
+vendor/etc/perf/commonresourceconfigs.xml
+vendor/etc/perf/targetresourceconfigs.xml
+vendor/etc/perf/perf-profile0.conf
+vendor/etc/perf/perf-profile5.conf
+vendor/etc/perf/targetconfig.xml
+vendor/etc/perf/perf-profile6.conf
+vendor/etc/perf/perf-profile2.conf
+vendor/etc/perf/perf-profile1.conf
+vendor/etc/perf/perf-profile4.conf
+vendor/etc/perf/perfboostsconfig.xml
+vendor/etc/perf/perf-profile3.conf
+vendor/lib/hw/vendor.qti.hardware.iop@2.0-impl.so
+vendor/lib/libfeedbackhandler.so
+vendor/lib/libperfgluelayer.so
+vendor/lib/libqti-iopd-client.so
+vendor/lib/libqti-iopd.so
+vendor/lib/libqti-perfd.so
+vendor/lib/libqti-util.so
+vendor/lib/vendor.qti.hardware.iop@1.0.so
+vendor/lib/vendor.qti.hardware.iop@2.0.so
+vendor/lib/vendor.qti.hardware.perf@1.0.so
+vendor/lib64/hw/vendor.qti.hardware.iop@2.0-impl.so
+vendor/lib64/libfeedbackhandler.so
+vendor/lib64/libperfgluelayer.so
+vendor/lib64/libqti-iopd-client.so
+vendor/lib64/libqti-iopd.so
+vendor/lib64/libqti-perfd.so
+vendor/lib64/libqti-util.so
+vendor/lib64/vendor.qti.hardware.iop@1.0.so
+vendor/lib64/vendor.qti.hardware.iop@2.0.so
+vendor/lib64/vendor.qti.hardware.perf@1.0.so
 vendor/lib/libqti-perfd-client.so
 vendor/lib64/libqti-perfd-client.so
 
@@ -683,24 +718,23 @@ vendor/lib64/vendor.qti.hardware.radio.uim_remote_server@1.0_vendor.so
 vendor/lib/libmdmdetect.so
 vendor/radio/qcril_database/qcril.db
 
-# Sensors
-vendor/bin/sensors.qcom
-vendor/lib64/hw/activity_recognition.msm8996.so
-vendor/lib64/libsensor1.so
-vendor/lib64/libsensor_reg.so
-vendor/lib64/libsensor_user_cal.so
-vendor/lib64/sensors.ssc.so
-vendor/lib/hw/activity_recognition.msm8996.so
-vendor/lib/libsensor1.so
-vendor/lib/libsensor_reg.so
-vendor/lib/libsensor_user_cal.so
-vendor/lib/sensors.ssc.so
+# Sensors - from jasmine PKQ1.180904.001
+vendor/bin/sensors.qti|b30ad4fdc8ecab0f7e3b9ede664dbecf204241b7
+vendor/lib/libsdsprpc.so|979a7a2a7bb5622d0ff404d0151536437c0c381b
+vendor/lib/libsensor1.so|a34ac1e81a8eb93efe434829d74809a5aa307d3c
+vendor/lib/libsensor_reg.so|af6296fe9495b370300634c008c02d356ce38092
+vendor/lib64/libsdsprpc.so|fc1325b8e76a125f6608a0086712dba894151c11
+vendor/lib64/libsensor1.so|322bd23852df0a0d6bfebf854e76f0181aa5ca7b
+vendor/lib64/libsensor_reg.so|fc339a65dafb44a629e6d83c13e8af71c293c53b
+vendor/lib/sensors.ssc.so|c89ba6bdc8867f1a43314d76022328e38d01dc5c
+vendor/lib64/sensors.ssc.so|0414a81cee2ca081479b97814d0b973f73e0577e
 
-# Thermal - from tissot - OPR1.170623.026
-vendor/bin/thermal-engine|10089a9b451069e67264533ba680a9ab48e78689
--vendor/lib64/libthermalclient.so|5b5dcfc714a31a65e1757ef786e697b1a69e012e
-vendor/lib64/libthermalioctl.so|ddd3d6bfcc6c8ef1122c6565365221c0d9fa208d
--vendor/lib/libthermalclient.so|a516e6f9c8000f5a2dabc6b9a1e8d69e9d2d1374
+# Thermal - from jasmine PKQ1.180904.001
+vendor/bin/thermal-engine|f750e90af4a73df3dd51ccb87e150d971c5bef7d
+vendor/lib64/libthermalclient.so|54121e31e4a5170f8c50e36ddb57685b6c538a21
+vendor/lib64/libthermalioctl.so|0edca2e89fbd872d8595517254669ea7feb1e0b0
+vendor/lib64/libthermalfeature.so|655a4b39b45a80069d7d8706a921ee0ace3a4865
+vendor/lib/libthermalclient.so|4579096edb376b06827f8e90a49480cf121030f0
 
 # Time services - from B2N_sprout - PPR1.180610.011
 -vendor/app/TimeService/TimeService.apk|25337e4160093a998c0e4cfced1c1a6c51177dff
@@ -714,6 +748,7 @@ vendor/bin/cnss-daemon|01ce2fa8f4852305bea2af33f59e41e7f05f44ad
 bin/wfdservice|edeb291221024401cbae69c2fa4e58733b7efc4c
 etc/wfdconfig.xml|60a210d323f3f65dd1424cfd517295c522824b7b
 etc/wfdconfigsink.xml|f180a45f69fa2ff01dbaf98c905cff1e9eba903e
+etc/init/wfdservice.rc|311bfdd1675e56499662f39455536b75b78477bb
 -framework/WfdCommon.jar|b2159eb253236ceba5a7ce0f8c140252116c738d
 lib/com.qualcomm.qti.wifidisplayhal@1.0.so|93487a83a35f0fa3fe37445edd3ff22fcc52e4fc
 lib/extractors/libmmparser.so|158f0c92a7edacb06b954f8bdc7a855f933eb9e7
@@ -758,6 +793,20 @@ vendor/lib/libwfdmmservice.so|1da47f32b690c527aea72d291270e38d472c359e
 vendor/lib/libwfdmodulehdcpsession.so|539e378b536abcda0f9d4da068b50e7cd5c020d1
 vendor/lib64/libwfdhdcpcp.so|cd7c9b49b094918d202edc50746b266a6761c585
 
+#QTI Performance libs - from enchilada PKQ1.180716.001
+-framework/QPerformance.jar|21ab94a7a256ee41b2cedcef49b0febea960416f
+-framework/UxPerformance.jar|04b863479431b267c5b05375382174b1b643af7f
+bin/perfservice|c584edf133dd2c0120365bf30d08034eb2ecc54c
+etc/init/perfservice.rc|67144c3f1800f976cb58463c4370882d2d820947
+etc/perf/whitelistedapps.xml|019e8b114d1befe6f8f476dbc5c8be0d84a91627
+lib/libqti-at.so|71dbc61597cf470d5c64c32875fa7ad738bfbc96
+lib/libqti-perfd-client_system.so|fdc85399bb9a9e5c4bf34e000b2f3567c248e8db
+lib/libqti-util_system.so|083aa59b199edf21150623874adb28b2a315a6cc
+lib/libqti_performance.so|89ad01747faa787ecdcb68841fa9b379bf6a6b90
+lib64/libqti-at.so|1d0ed08faaa4baef919c56c95ef4f22e8456c3aa
+lib64/libqti-perfd-client_system.so|a88a554815a6257d4c4aba4a967e7910368e575b
+lib64/libqti-util_system.so|92f53167fafb35bea4abec8a758b24e00b08db0d
+lib64/libqti_performance.so|792b8a13a85b6d432be41599f03c3455e7414381
 
 #Hexagon controller
 vendor/lib64/libhexagon_nn_controller.so
