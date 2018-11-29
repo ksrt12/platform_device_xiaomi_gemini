@@ -49,10 +49,10 @@
 #endif
 
 char scaling_gov_path[4][80] ={
-    "sys/devices/system/cpu/cpu0/cpufreq/scaling_governor",
-    "sys/devices/system/cpu/cpu1/cpufreq/scaling_governor",
-    "sys/devices/system/cpu/cpu2/cpufreq/scaling_governor",
-    "sys/devices/system/cpu/cpu3/cpufreq/scaling_governor"
+    "/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor",
+    "/sys/devices/system/cpu/cpu1/cpufreq/scaling_governor",
+    "/sys/devices/system/cpu/cpu2/cpufreq/scaling_governor",
+    "/sys/devices/system/cpu/cpu3/cpufreq/scaling_governor"
 };
 
 static void *qcopt_handle;

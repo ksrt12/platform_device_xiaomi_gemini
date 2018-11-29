@@ -21,7 +21,7 @@ namespace xiaomi {
 namespace gemini {
 namespace health {
 
-static constexpr char kChgFullFile[] = "sys/class/power_supply/bms/charge_full";
+static constexpr char kChgFullFile[] = "/sys/class/power_supply/bms/charge_full";
 static constexpr char kSysCFPersistFile[] = "/mnt/vendor/persist/battery/qcom_charge_full";
 static constexpr int kBuffSize = 256;
 

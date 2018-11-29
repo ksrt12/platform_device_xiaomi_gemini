@@ -1,3 +1,7 @@
 allow untrusted_app_27 { proc_zoneinfo proc_tty_drivers vold_exec }:file { getattr open read };
 allow untrusted_app_27 theme_data_file:dir { getattr search open read };
-allow untrusted_app_27 vendor_camera_prop:file read;
+allow untrusted_app_27 vendor_camera_prop:file r_file_perms;
+
+#allow untrusted_app_27 { hal_memtrack_hwservice hal_perf_hwservice }:hwservice_manager find;
+allow untrusted_app_27 sysfs_kgsl_proc:dir search;
+
