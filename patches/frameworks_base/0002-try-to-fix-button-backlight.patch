@@ -1,0 +1,810 @@
+From fab3479943bf4d0a75289c6bc1b6062a9648cb3d Mon Sep 17 00:00:00 2001
+From: Kazakov Stepan <ksrt12group@gmail.com>
+Date: Mon, 3 Dec 2018 00:03:51 +0300
+Subject: [PATCH 2/5] try to fix button backlight
+
+Signed-off-by: Kazakov Stepan <ksrt12group@gmail.com>
+---
+ core/java/android/os/IPowerManager.aidl       |   4 +
+ core/java/android/os/PowerManager.java        |  17 -
+ .../java/android/os/PowerManagerInternal.java |  10 -
+ core/java/android/provider/Settings.java      |  57 ++--
+ core/res/res/values/havoc_config.xml          |   6 +-
+ core/res/res/values/havoc_symbols.xml         |   7 +-
+ .../NotificationManagerService.java           |   2 +-
+ .../server/power/PowerManagerService.java     | 315 +++++++++++-------
+ ...droid_server_input_InputManagerService.cpp |   6 +-
+ ...droid_server_power_PowerManagerService.cpp |  11 +-
+ ...android_server_power_PowerManagerService.h |   3 +-
+ 11 files changed, 253 insertions(+), 185 deletions(-)
+
+diff --git a/core/java/android/os/IPowerManager.aidl b/core/java/android/os/IPowerManager.aidl
+index 626abe7d487..4092863f62f 100644
+--- a/core/java/android/os/IPowerManager.aidl
++++ b/core/java/android/os/IPowerManager.aidl
+@@ -71,6 +71,10 @@ interface IPowerManager
+ 
+     void wakeUpWithProximityCheck(long time, String reason, String opPackageName);
+ 
++    // temporarily overrides the button brightness settings to allow the user to
++    // see the effect of a settings change without applying it immediately
++    void setTemporaryButtonBrightnessSettingOverride(int brightness);
++
+     // update the uids being synchronized by network socket request manager
+     void updateBlockedUids(int uid, boolean isBlocked);
+ 
+diff --git a/core/java/android/os/PowerManager.java b/core/java/android/os/PowerManager.java
+index 29e557b27b2..f6978cb794d 100644
+--- a/core/java/android/os/PowerManager.java
++++ b/core/java/android/os/PowerManager.java
+@@ -347,14 +347,6 @@ public final class PowerManager {
+     @SystemApi
+     public static final int USER_ACTIVITY_FLAG_INDIRECT = 1 << 1;
+ 
+-    /**
+-     * User activity flag: Certain hardware buttons are not supposed to
+-     * activate hardware button illumination.  This flag indicates a
+-     * button event from one of those buttons.
+-     * @hide
+-     */
+-    public static final int USER_ACTIVITY_FLAG_NO_BUTTON_LIGHTS = 1 << 2;
+-
+     /**
+      * Go to sleep reason code: Going to sleep due by application request.
+      * @hide
+@@ -1733,15 +1725,6 @@ public final class PowerManager {
+         }
+     }
+ 
+-    /**
+-     * Gets the default button brightness value.
+-     * @hide
+-     */
+-    public int getDefaultButtonBrightness() {
+-        return mContext.getResources().getInteger(
+-                com.android.internal.R.integer.config_buttonBrightnessSettingDefault);
+-    }
+-
+     /**
+      * @hide
+      */
+diff --git a/core/java/android/os/PowerManagerInternal.java b/core/java/android/os/PowerManagerInternal.java
+index d4e7ca13a7f..2cb5aeeeb2e 100644
+--- a/core/java/android/os/PowerManagerInternal.java
++++ b/core/java/android/os/PowerManagerInternal.java
+@@ -106,16 +106,6 @@ public abstract class PowerManagerInternal {
+      */
+     public abstract void setScreenBrightnessOverrideFromWindowManager(int brightness);
+ 
+-    /**
+-     * Used by the window manager to override the button brightness based on the
+-     * current foreground activity.
+-     *
+-     * This method must only be called by the window manager.
+-     *
+-     * @param brightness The overridden brightness, or -1 to disable the override.
+-     */
+-    public abstract void setButtonBrightnessOverrideFromWindowManager(int brightness);
+-
+     /**
+      * Used by the window manager to override the user activity timeout based on the
+      * current foreground activity.  It can only be used to make the timeout shorter
+diff --git a/core/java/android/provider/Settings.java b/core/java/android/provider/Settings.java
+index 2f4d3f886b6..128eb2956c9 100644
+--- a/core/java/android/provider/Settings.java
++++ b/core/java/android/provider/Settings.java
+@@ -3322,26 +3322,6 @@ public final class Settings {
+          */
+         public static final int SCREEN_BRIGHTNESS_MODE_AUTOMATIC = 1;
+ 
+-        /**
+-         * The button brightness to be used while the screen is on or after a button press,
+-         * depending on the value of {@link BUTTON_BACKLIGHT_TIMEOUT}.
+-         * Valid value range is between 0 and {@link PowerManager#getMaximumButtonBrightness()}
+-         * @hide
+-         */
+-        public static final String BUTTON_BRIGHTNESS = "button_brightness";
+-
+-        /**
+-         * The time in ms to keep the button backlight on after pressing a button.
+-         * A value of 0 will keep the buttons on for as long as the screen is on.
+-         * @hide
+-         */
+-        public static final String BUTTON_BACKLIGHT_TIMEOUT = "button_backlight_timeout";
+-
+-        /**
+-         * @hide
+-         */
+-        public static final String BUTTON_BACKLIGHT_ON_TOUCH_ONLY = "button_backlight_on_touch_only";
+-
+         /**
+          * Whether to show the IME switcher in the status bar
+          * @hide
+@@ -4285,6 +4265,38 @@ public final class Settings {
+         public static final Validator SHOW_BATTERY_PERCENT_VALIDATOR =
+                 new SettingsValidators.InclusiveIntegerRangeValidator(0, 2);
+ 
++        /**
++         * Custom button brightness value for manual mode
++         *
++         * @hide
++         */
++        public static final String CUSTOM_BUTTON_BRIGHTNESS = "custom_button_brightness";
++
++        /**
++         * use same value for buttons as for screen (manual and auto mode)
++         *
++         * @hide
++         */
++        public static final String CUSTOM_BUTTON_USE_SCREEN_BRIGHTNESS = "custom_button_use_screen_brightness";
++
++        /**
++         * disable all button brightness (manual and auto mode)
++         *
++         * @hide
++         */
++        public static final String BUTTON_BACKLIGHT_ENABLE = "button_backlight_enable";
++
++        /**
++         * Timeout value for button lights. 0 = disabled
++         * @hide
++         */
++        public static final String BUTTON_BACKLIGHT_TIMEOUT = "button_backlight_timeout";
++
++        /**
++         * @hide
++         */
++        public static final String BUTTON_BACKLIGHT_ON_TOUCH_ONLY = "button_backlight_on_touch_only";
++
+         /** 
+          * Screen stabilization parameters
+          * @hide
+@@ -6149,6 +6161,11 @@ public final class Settings {
+             PRIVATE_SETTINGS.add(GLOBAL_ACTIONS_SCREENRECORD);
+             PRIVATE_SETTINGS.add(VOLUME_KEYS_CONTROL_RING_TONE);
+             PRIVATE_SETTINGS.add(THEMING_SETTINGS_DASHBOARD_ICONS);
++            PRIVATE_SETTINGS.add(CUSTOM_BUTTON_BRIGHTNESS);
++            PRIVATE_SETTINGS.add(CUSTOM_BUTTON_USE_SCREEN_BRIGHTNESS);
++            PRIVATE_SETTINGS.add(BUTTON_BACKLIGHT_ENABLE);
++            PRIVATE_SETTINGS.add(BUTTON_BACKLIGHT_TIMEOUT);
++            PRIVATE_SETTINGS.add(BUTTON_BACKLIGHT_ON_TOUCH_ONLY);
+         }
+ 
+         /**
+diff --git a/core/res/res/values/havoc_config.xml b/core/res/res/values/havoc_config.xml
+index 86759345717..9e80ce87aa6 100644
+--- a/core/res/res/values/havoc_config.xml
++++ b/core/res/res/values/havoc_config.xml
+@@ -39,9 +39,6 @@
+     <string-array name="config_forceEnabledComponents" translatable="false">
+     </string-array>
+ 
+-    <integer name="config_buttonBrightnessSettingDefault">255</integer>
+-    <bool name="config_deviceHasVariableButtonBrightness">false</bool>
+-
+     <!-- Whether notify fingerprint client of successful cancelled authentication -->
+     <bool name="config_notifyClientOnFingerprintCancelSuccess">false</bool>
+ 
+@@ -198,4 +195,7 @@
+ 
+     <!-- Whether to cleanup fingerprints upon connection to the daemon and when user switches -->
+     <bool name="config_cleanupUnusedFingerprints">true</bool>
++
++    <bool name="config_button_brightness_support">false</bool>
++    <integer name="config_button_brightness_default">128</integer>
+ </resources>
+diff --git a/core/res/res/values/havoc_symbols.xml b/core/res/res/values/havoc_symbols.xml
+index 9853c2569b8..7d3ae6ac70a 100644
+--- a/core/res/res/values/havoc_symbols.xml
++++ b/core/res/res/values/havoc_symbols.xml
+@@ -27,9 +27,6 @@
+   <!-- System update service -->
+   <java-symbol type="array" name="config_forceEnabledComponents" />
+ 
+-  <java-symbol type="integer" name="config_buttonBrightnessSettingDefault" />
+-  <java-symbol type="bool" name="config_deviceHasVariableButtonBrightness" />
+-
+   <!-- Whether notify fingerprint client of successful cancelled authentication -->
+   <java-symbol type="bool" name="config_notifyClientOnFingerprintCancelSuccess" />
+ 
+@@ -271,4 +268,8 @@
+ 
+   <!-- Power menu -->
+   <java-symbol type="drawable" name="ic_lock_screenrecord" />
++
++  <!-- Button brightness -->
++  <java-symbol type="bool" name="config_button_brightness_support" />
++  <java-symbol type="integer" name="config_button_brightness_default" />
+ </resources>
+diff --git a/services/core/java/com/android/server/notification/NotificationManagerService.java b/services/core/java/com/android/server/notification/NotificationManagerService.java
+index d9dac902cd2..10b4ade2cdc 100644
+--- a/services/core/java/com/android/server/notification/NotificationManagerService.java
++++ b/services/core/java/com/android/server/notification/NotificationManagerService.java
+@@ -1243,7 +1243,7 @@ public class NotificationManagerService extends SystemService {
+             ContentResolver resolver = getContext().getContentResolver();
+             if (uri == null || NOTIFICATION_LIGHT_PULSE_URI.equals(uri)) {
+                 boolean pulseEnabled = Settings.System.getIntForUser(resolver,
+-                            Settings.System.NOTIFICATION_LIGHT_PULSE, 1, UserHandle.USER_CURRENT) != 0;
++                            Settings.System.NOTIFICATION_LIGHT_PULSE, 0, UserHandle.USER_CURRENT) != 0;
+                 if (mNotificationPulseEnabled != pulseEnabled) {
+                     mNotificationPulseEnabled = pulseEnabled;
+                     updateNotificationPulse();
+diff --git a/services/core/java/com/android/server/power/PowerManagerService.java b/services/core/java/com/android/server/power/PowerManagerService.java
+index 9cd9c210f28..c9dbc3a553c 100755
+--- a/services/core/java/com/android/server/power/PowerManagerService.java
++++ b/services/core/java/com/android/server/power/PowerManagerService.java
+@@ -141,6 +141,8 @@ public final class PowerManagerService extends SystemService
+     private static final int MSG_CHECK_FOR_LONG_WAKELOCKS = 4;
+     private static final int MSG_WAKE_UP = 5;
+ 
++    private static final int MSG_BUTTON_TIMEOUT = 6;
++
+     // Dirty bit: mWakeLocks changed
+     protected static final int DIRTY_WAKE_LOCKS = 1 << 0;
+     // Dirty bit: mWakefulness changed
+@@ -201,8 +203,6 @@ public final class PowerManagerService extends SystemService
+     // Power features defined in hardware/libhardware/include/hardware/power.h.
+     private static final int POWER_FEATURE_DOUBLE_TAP_TO_WAKE = 1;
+ 
+-    private static final int DEFAULT_BUTTON_ON_DURATION = 1 * 1000;
+-
+     // Default setting for double tap to wake.
+     private static final int DEFAULT_DOUBLE_TAP_TO_WAKE = 0;
+ 
+@@ -261,13 +261,6 @@ public final class PowerManagerService extends SystemService
+     private Light mAttentionLight;
+     private Light mButtonsLight;
+ 
+-    private int mButtonTimeout;
+-    private int mButtonBrightness;
+-    private int mButtonBrightnessSettingDefault;
+-    private boolean mButtonPressed = false;
+-    private boolean mButtonOn = false;
+-
+-    private int mEvent;
+     private final Object mLock = LockGuard.installNewLock(LockGuard.INDEX_POWER);
+ 
+     // A bitfield that indicates what parts of the power state have
+@@ -513,11 +506,6 @@ public final class PowerManagerService extends SystemService
+     // Set to -1 when not told the user is inactive since the last period spent dozing or asleep.
+     private long mOverriddenTimeout = -1;
+ 
+-    // The button brightness setting override from the window manager
+-    // to allow the current foreground activity to override the button brightness.
+-    // Use -1 to disable.
+-    private int mButtonBrightnessOverrideFromWindowManager = -1;
+-
+     // The user activity timeout override from the window manager
+     // to allow the current foreground activity to override the user activity timeout.
+     // Use -1 to disable.
+@@ -544,12 +532,6 @@ public final class PowerManagerService extends SystemService
+     // True if we are currently in light device idle mode.
+     private boolean mLightDeviceIdleMode;
+ 
+-    // button on touch
+-    private boolean mButtonBacklightOnTouchOnly;
+-
+-    // overrule and disable brightness for buttons
+-    private boolean mHardwareKeysDisable = false;
+-
+     // Set of app ids that we will always respect the wake locks for.
+     int[] mDeviceIdleWhitelist = new int[0];
+ 
+@@ -618,6 +600,24 @@ public final class PowerManagerService extends SystemService
+         }
+     }
+ 
++    // button brightness suppport enablement
++    private boolean mButtonBrightnessSupport = false;
++    private int mCurrentButtonBrightness = 0;
++    // value to use in manual mode
++    // if -1 screen brightness will be used
++    private int mCustomButtonBrightness = -1;
++    // always use screen brightness also for buttons
++    private boolean mButtonUseScreenBrightness = true;
++    // overrule and disable brightness for buttons
++    private boolean mButtonBacklightEnable = true;
++    // button on touch
++    private boolean mButtonBacklightOnTouchOnly;
++    // timeout for button backlight automatic turning off
++    private boolean mButtonPressed = false;
++    private int mButtonTimeout;
++    private boolean mButtonTimeoutEnabled;
++    private int mEvent;
++
+     /**
+      * All times are in milliseconds. These constants are kept synchronized with the system
+      * global Settings. Any access to this class or its fields should be done while
+@@ -813,7 +813,6 @@ public final class PowerManagerService extends SystemService
+             mScreenBrightnessSettingMinimum = pm.getMinimumScreenBrightnessSetting();
+             mScreenBrightnessSettingMaximum = pm.getMaximumScreenBrightnessSetting();
+             mScreenBrightnessSettingDefault = pm.getDefaultScreenBrightnessSetting();
+-            mButtonBrightnessSettingDefault = pm.getDefaultButtonBrightness();
+ 
+             SensorManager sensorManager = new SystemSensorManager(mContext, mHandler.getLooper());
+ 
+@@ -899,21 +898,31 @@ public final class PowerManagerService extends SystemService
+         resolver.registerContentObserver(Settings.Global.getUriFor(
+                 Settings.Global.DEVICE_DEMO_MODE),
+                 false, mSettingsObserver, UserHandle.USER_SYSTEM);
+-        resolver.registerContentObserver(Settings.System.getUriFor(
+-                Settings.System.BUTTON_BRIGHTNESS),
+-                false, mSettingsObserver, UserHandle.USER_ALL);
+-        resolver.registerContentObserver(Settings.System.getUriFor(
+-                Settings.System.BUTTON_BACKLIGHT_TIMEOUT),
+-                false, mSettingsObserver, UserHandle.USER_ALL);
++
++        if (mButtonBrightnessSupport){
++            resolver.registerContentObserver(
++                    Settings.System.getUriFor(Settings.System.CUSTOM_BUTTON_BRIGHTNESS),
++                    false, mSettingsObserver, UserHandle.USER_ALL);
++            resolver.registerContentObserver(
++                    Settings.System.getUriFor(Settings.System.CUSTOM_BUTTON_USE_SCREEN_BRIGHTNESS),
++                    false, mSettingsObserver, UserHandle.USER_ALL);
++            resolver.registerContentObserver(
++                    Settings.System.getUriFor(Settings.System.BUTTON_BACKLIGHT_ENABLE),
++                    false, mSettingsObserver, UserHandle.USER_ALL);
++            resolver.registerContentObserver(
++                    Settings.Secure.getUriFor(Settings.Secure.HARDWARE_KEYS_DISABLE),
++                    false, mSettingsObserver, UserHandle.USER_ALL);
++            resolver.registerContentObserver(Settings.System.getUriFor(
++                    Settings.System.BUTTON_BACKLIGHT_TIMEOUT),
++                    false, mSettingsObserver, UserHandle.USER_ALL);
++            resolver.registerContentObserver(
++                    Settings.System.getUriFor(Settings.System.BUTTON_BACKLIGHT_ON_TOUCH_ONLY),
++                    false, mSettingsObserver, UserHandle.USER_ALL);
++        }
++
+         resolver.registerContentObserver(Settings.Global.getUriFor(
+                 Settings.Global.WAKE_WHEN_PLUGGED_OR_UNPLUGGED),
+                 false, mSettingsObserver, UserHandle.USER_ALL);
+-        resolver.registerContentObserver(
+-                Settings.System.getUriFor(Settings.System.BUTTON_BACKLIGHT_ON_TOUCH_ONLY),
+-                false, mSettingsObserver, UserHandle.USER_ALL);
+-        resolver.registerContentObserver(Settings.Secure.getUriFor(
+-                Settings.Secure.HARDWARE_KEYS_DISABLE),
+-                false, mSettingsObserver, UserHandle.USER_ALL);
+         resolver.registerContentObserver(Settings.System.getUriFor(
+                 Settings.System.WAKELOCK_BLOCKING_ENABLED),
+                 false, mSettingsObserver, UserHandle.USER_ALL);
+@@ -1002,6 +1011,10 @@ public final class PowerManagerService extends SystemService
+             mProximityWakeLock = ((PowerManager) mContext.getSystemService(Context.POWER_SERVICE))
+                     .newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "ProximityWakeLock");
+         }
++        mButtonBrightnessSupport = resources.getBoolean(
++                com.android.internal.R.bool.config_button_brightness_support);
++        mCustomButtonBrightness = resources.getInteger(
++                com.android.internal.R.integer.config_button_brightness_default);
+     }
+ 
+     private void updateSettingsLocked() {
+@@ -1061,26 +1074,11 @@ public final class PowerManagerService extends SystemService
+                 Settings.System.SCREEN_BRIGHTNESS_MODE,
+                 Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL, UserHandle.USER_CURRENT);
+ 
+-        mButtonTimeout = Settings.System.getIntForUser(resolver,
+-                Settings.System.BUTTON_BACKLIGHT_TIMEOUT,
+-                DEFAULT_BUTTON_ON_DURATION, UserHandle.USER_CURRENT);
+-
+-        mButtonBrightness = Settings.System.getIntForUser(resolver,
+-                Settings.System.BUTTON_BRIGHTNESS, mButtonBrightnessSettingDefault,
+-                UserHandle.USER_CURRENT);
+-
+-        mButtonBacklightOnTouchOnly = Settings.System.getIntForUser(
+-                mContext.getContentResolver(), Settings.System.BUTTON_BACKLIGHT_ON_TOUCH_ONLY,
+-                0, UserHandle.USER_CURRENT) != 0;
+-
+-        mHardwareKeysDisable = Settings.Secure.getIntForUser(resolver,
+-                Settings.Secure.HARDWARE_KEYS_DISABLE, 0,
+-                UserHandle.USER_CURRENT) != 0;
+-
+         mProximityWakeEnabled = Settings.System.getInt(resolver,
+                 Settings.System.PROXIMITY_ON_WAKE,
+                 mProximityWakeEnabledByDefaultConfig ? 1 : 0) == 1;
+ 
++        updateButtonLightSettings();
+         mDirty |= DIRTY_SETTINGS;
+     }
+ 
+@@ -1429,6 +1427,7 @@ public final class PowerManagerService extends SystemService
+ 
+         Trace.traceBegin(Trace.TRACE_TAG_POWER, "userActivity");
+         try {
++            mEvent = event;
+             if (eventTime > mLastInteractivePowerHintTime) {
+                 powerHintInternal(PowerHint.INTERACTION, 0);
+                 mLastInteractivePowerHintTime = eventTime;
+@@ -1462,13 +1461,6 @@ public final class PowerManagerService extends SystemService
+                 }
+             } else {
+                 if (eventTime > mLastUserActivityTime) {
+-                    mButtonPressed = event == PowerManager.USER_ACTIVITY_EVENT_BUTTON;
+-                    if ((mButtonBacklightOnTouchOnly && mButtonPressed &&
+-                        (flags & PowerManager.USER_ACTIVITY_FLAG_NO_BUTTON_LIGHTS) == 0)
+-                            || eventTime == mLastWakeTime) {
+-                        mButtonPressed = true;
+-                        mLastButtonActivityTime = eventTime;
+-                    }
+                     mLastUserActivityTime = eventTime;
+                     mDirty |= DIRTY_USER_ACTIVITY;
+                     if (event == PowerManager.USER_ACTIVITY_EVENT_BUTTON) {
+@@ -2149,6 +2141,14 @@ public final class PowerManagerService extends SystemService
+                 | DIRTY_WAKEFULNESS | DIRTY_SETTINGS)) != 0) {
+             mHandler.removeMessages(MSG_USER_ACTIVITY_TIMEOUT);
+ 
++            boolean wakeLocksValue = (dirty & DIRTY_WAKE_LOCKS) != 0;
++            boolean userActivityValue = (dirty & DIRTY_USER_ACTIVITY) != 0;
++            boolean wakefullnessValue = (dirty & DIRTY_WAKEFULNESS) != 0;
++            boolean settingsValue = (dirty & DIRTY_SETTINGS) != 0;
++
++            if (DEBUG) {
++                Slog.d(TAG, "DIRTY_WAKE_LOCKS=" + wakeLocksValue + " DIRTY_USER_ACTIVITY=" + userActivityValue + " DIRTY_WAKEFULNESS=" + wakefullnessValue + " DIRTY_SETTINGS=" + settingsValue);
++            }
+             long nextTimeout = 0;
+             if (mWakefulness == WAKEFULNESS_AWAKE
+                     || mWakefulness == WAKEFULNESS_DREAMING
+@@ -2160,65 +2160,36 @@ public final class PowerManagerService extends SystemService
+                 final long nextProfileTimeout = getNextProfileTimeoutLocked(now);
+                 final PocketManager pocketManager = (PocketManager) mContext.getSystemService(Context.POCKET_SERVICE);
+                 final boolean isDeviceInPocket = pocketManager != null && pocketManager.isDeviceInPocket();
+-                final boolean buttonPressed = mEvent == PowerManager.USER_ACTIVITY_EVENT_BUTTON;
+ 
+                 mUserActivitySummary = 0;
+                 if (mLastUserActivityTime >= mLastWakeTime) {
+                     nextTimeout = mLastUserActivityTime
+                             + screenOffTimeout - screenDimDuration;
+                     if (now < nextTimeout) {
+-                        mUserActivitySummary = USER_ACTIVITY_SCREEN_BRIGHT;
+-                        if (mWakefulness == WAKEFULNESS_AWAKE) {
+-                            int buttonBrightness;
+-                            if (mHardwareKeysDisable) {
+-                                buttonBrightness = 0;
+-                            } else {
+-                                if (mButtonBrightnessOverrideFromWindowManager >= 0) {
+-                                    buttonBrightness = mButtonBrightnessOverrideFromWindowManager;
+-                                } else {
+-                                    buttonBrightness = mButtonBrightness;
++                        if (mButtonTimeoutEnabled && (userActivityValue || settingsValue)){
++                            final boolean buttonPressed = mEvent == PowerManager.USER_ACTIVITY_EVENT_BUTTON;
++                            if (mButtonBacklightOnTouchOnly) {
++                                if (buttonPressed) {
++                                    triggerButtonTimeoutEvent(now);
+                                 }
+-                            }
+-                            mLastButtonActivityTime = mButtonBacklightOnTouchOnly ?
+-                                    mLastButtonActivityTime : mLastUserActivityTime;
+-                            if (mButtonTimeout != 0
+-                                    && now > mLastButtonActivityTime + mButtonTimeout) {
+-                                mButtonsLight.setBrightness(0);
+-                                mButtonOn = false;
+                             } else {
+-                                if ((!mButtonBacklightOnTouchOnly || mButtonPressed) &&
+-                                        !mProximityPositive && !isDeviceInPocket) {
+-                                    mButtonsLight.setBrightness(buttonBrightness);
+-                                    mButtonPressed = false;
+-                                    if (buttonBrightness != 0 && mButtonTimeout != 0 && buttonPressed) {
+-                                        mButtonOn = true;
+-                                        if (now + mButtonTimeout < nextTimeout) {
+-                                            nextTimeout = now + mButtonTimeout;
+-                                        }
+-                                    }
+-                                } else if (mButtonBacklightOnTouchOnly && mButtonOn &&
+-                                        mLastButtonActivityTime + mButtonTimeout < nextTimeout) {
+-                                    nextTimeout = mLastButtonActivityTime + mButtonTimeout;
+-                                }
++                                triggerButtonTimeoutEvent(now);
+                             }
+                         }
++                        mUserActivitySummary = USER_ACTIVITY_SCREEN_BRIGHT;
+                     } else {
+                         nextTimeout = mLastUserActivityTime + screenOffTimeout;
+                         if (now < nextTimeout) {
+                             mUserActivitySummary = USER_ACTIVITY_SCREEN_DIM;
+-                            if (mWakefulness == WAKEFULNESS_AWAKE) {
+-                                mButtonsLight.setBrightness(0);
+-                                mButtonOn = false;
+-                            }
+                         }
+                     }
+                 }
+-
+                 if (mUserActivitySummary == 0
+                         && mLastUserActivityTimeNoChangeLights >= mLastWakeTime) {
+                     nextTimeout = mLastUserActivityTimeNoChangeLights + screenOffTimeout;
+                     if (now < nextTimeout) {
+-                        if (mDisplayPowerRequest.policy == DisplayPowerRequest.POLICY_BRIGHT) {
++                        if (mDisplayPowerRequest.policy == DisplayPowerRequest.POLICY_BRIGHT
++                                || mDisplayPowerRequest.policy == DisplayPowerRequest.POLICY_VR) {
+                             mUserActivitySummary = USER_ACTIVITY_SCREEN_BRIGHT;
+                         } else if (mDisplayPowerRequest.policy == DisplayPowerRequest.POLICY_DIM) {
+                             mUserActivitySummary = USER_ACTIVITY_SCREEN_DIM;
+@@ -2639,6 +2610,12 @@ public final class PowerManagerService extends SystemService
+                 mDisplayPowerRequest.dozeScreenBrightness = PowerManager.BRIGHTNESS_DEFAULT;
+             }
+ 
++            if (mButtonBrightnessSupport) {
++                if ((dirty & ( DIRTY_USER_ACTIVITY | DIRTY_SETTINGS | DIRTY_ACTUAL_DISPLAY_POWER_STATE_UPDATED)) != 0) {
++                    updateButtonLight(false);
++                }
++            }
++
+             mDisplayReady = mDisplayManagerInternal.requestPowerState(mDisplayPowerRequest,
+                     mRequestWaitForNegativeProximity);
+             mRequestWaitForNegativeProximity = false;
+@@ -3333,16 +3310,6 @@ public final class PowerManagerService extends SystemService
+         }
+     }
+ 
+-    private void setButtonBrightnessOverrideFromWindowManagerInternal(int brightness) {
+-        synchronized (mLock) {
+-            if (mButtonBrightnessOverrideFromWindowManager != brightness) {
+-                mButtonBrightnessOverrideFromWindowManager = brightness;
+-                mDirty |= DIRTY_SETTINGS;
+-                updatePowerStateLocked();
+-            }
+-        }
+-    }
+-
+     private void setUserInactiveOverrideFromWindowManagerInternal() {
+         synchronized (mLock) {
+             mUserInactiveOverrideFromWindowManager = true;
+@@ -3403,6 +3370,12 @@ public final class PowerManagerService extends SystemService
+         nativeSendPowerHint(hintId, data);
+     }
+ 
++    private void setTemporaryButtonBrightnessSettingOverrideInternal(int brightness) {
++        if (mButtonBrightnessSupport){
++            mLightsManager.getLight(LightsManager.LIGHT_ID_BUTTONS).setBrightness(brightness);
++        }
++    }
++
+     /**
+      * Low-level function turn the device off immediately, without trying
+      * to be clean.  Most people should use {@link ShutdownThread} for a clean shutdown.
+@@ -4111,6 +4084,12 @@ public final class PowerManagerService extends SystemService
+                     cleanupProximity();
+                     ((Runnable) msg.obj).run();
+                     break;
++                case MSG_BUTTON_TIMEOUT:
++                    if (DEBUG) {
++                        Slog.d(TAG, "button timeout triggered");
++                    }
++                    updateButtonLight(true);
++                    break;
+             }
+         }
+     }
+@@ -4899,6 +4878,19 @@ public final class PowerManagerService extends SystemService
+             }
+         }
+ 
++        @Override // Binder call
++        public void setTemporaryButtonBrightnessSettingOverride(int brightness) {
++            mContext.enforceCallingOrSelfPermission(
++                    android.Manifest.permission.DEVICE_POWER, null);
++
++            final long ident = Binder.clearCallingIdentity();
++            try {
++                setTemporaryButtonBrightnessSettingOverrideInternal(brightness);
++            } finally {
++                Binder.restoreCallingIdentity(ident);
++            }
++        }
++
+         @Override
+         /* updates the blocked uids, so if a wake lock is acquired for it
+          * can be released.
+@@ -4971,18 +4963,6 @@ public final class PowerManagerService extends SystemService
+             setScreenBrightnessOverrideFromWindowManagerInternal(screenBrightness);
+         }
+ 
+-        @Override
+-        public void setButtonBrightnessOverrideFromWindowManager(int screenBrightness) {
+-            mContext.enforceCallingOrSelfPermission(android.Manifest.permission.DEVICE_POWER, null);
+-
+-            final long ident = Binder.clearCallingIdentity();
+-            try {
+-                setButtonBrightnessOverrideFromWindowManagerInternal(screenBrightness);
+-            } finally {
+-                Binder.restoreCallingIdentity(ident);
+-            }
+-        }
+-
+         @Override
+         public void setDozeOverrideFromDreamManager(int screenState, int screenBrightness) {
+             switch (screenState) {
+@@ -5005,7 +4985,6 @@ public final class PowerManagerService extends SystemService
+             setDozeOverrideFromDreamManagerInternal(screenState, screenBrightness);
+         }
+ 
+-
+         @Override
+         public void setUserInactiveOverrideFromWindowManager() {
+             setUserInactiveOverrideFromWindowManagerInternal();
+@@ -5162,4 +5141,106 @@ public final class PowerManagerService extends SystemService
+                    mProximitySensor, SensorManager.SENSOR_DELAY_FASTEST);
+         }
+     }
++
++    private void updateButtonLightSettings() {
++        final ContentResolver resolver = mContext.getContentResolver();
++        if (mButtonBrightnessSupport){
++            mCustomButtonBrightness = Settings.System.getIntForUser(
++                    mContext.getContentResolver(), Settings.System.CUSTOM_BUTTON_BRIGHTNESS,
++                    mCustomButtonBrightness, UserHandle.USER_CURRENT);
++            mButtonUseScreenBrightness = Settings.System.getIntForUser(
++                    mContext.getContentResolver(), Settings.System.CUSTOM_BUTTON_USE_SCREEN_BRIGHTNESS,
++                    0, UserHandle.USER_CURRENT) != 0;
++            mButtonBacklightEnable = Settings.System.getIntForUser(
++                    mContext.getContentResolver(), Settings.System.BUTTON_BACKLIGHT_ENABLE,
++                    1, UserHandle.USER_CURRENT) != 0;
++
++            boolean hardwareKeysDisable = Settings.Secure.getIntForUser(
++                    mContext.getContentResolver(), Settings.Secure.HARDWARE_KEYS_DISABLE,
++                    0, UserHandle.USER_CURRENT) != 0;
++
++            mButtonBacklightEnable = mButtonBacklightEnable && !hardwareKeysDisable;
++            mButtonBacklightOnTouchOnly = Settings.System.getIntForUser(
++                    mContext.getContentResolver(), Settings.System.BUTTON_BACKLIGHT_ON_TOUCH_ONLY,
++                    0, UserHandle.USER_CURRENT) != 0;
++            mButtonTimeout = Settings.System.getIntForUser(resolver,
++                    Settings.System.BUTTON_BACKLIGHT_TIMEOUT,
++                    0, UserHandle.USER_CURRENT) * 1000;
++
++            mButtonTimeoutEnabled = mButtonTimeout != 0 && mButtonBacklightEnable;
++            // prevent remaining timout to be triggered
++            mHandler.removeMessages(MSG_BUTTON_TIMEOUT);
++            // force it off - it will come back if needed later
++            updateButtonLight(true);
++        }
++    }
++
++    private void updateButtonLight(boolean timeoutEvent) {
++        if (mDisplayPowerRequest == null){
++            return;
++        }
++
++        if (!mButtonBacklightEnable){
++            mCurrentButtonBrightness = 0;
++            mLightsManager.getLight(LightsManager.LIGHT_ID_BUTTONS).setBrightness(mCurrentButtonBrightness);
++            return;
++        }
++
++        if (timeoutEvent) {
++            if (DEBUG) {
++                Slog.d(TAG, "button timeout handled");
++            }
++            mCurrentButtonBrightness = 0;
++            mLightsManager.getLight(LightsManager.LIGHT_ID_BUTTONS).setBrightness(mCurrentButtonBrightness);
++            return;
++        }
++
++        final boolean buttonPressed = mEvent == PowerManager.USER_ACTIVITY_EVENT_BUTTON;
++        boolean buttonlight_on =  mDisplayPowerRequest.policy == DisplayPowerRequest.POLICY_BRIGHT;
++        int currentButtonBrightness = 0;
++
++        if (buttonlight_on){
++            if (mButtonBacklightOnTouchOnly && mButtonTimeoutEnabled) {
++                if (buttonPressed) {
++                    currentButtonBrightness = calcButtonLight();
++                } else {
++                    currentButtonBrightness = mCurrentButtonBrightness;
++                }
++            } else {
++                currentButtonBrightness = calcButtonLight();
++            }
++        } else {
++            currentButtonBrightness = 0;
++        }
++        mCurrentButtonBrightness = currentButtonBrightness;
++
++        if (DEBUG) {
++            Slog.d(TAG, "mCurrentButtonBrightness="+mCurrentButtonBrightness);
++        }
++
++        mLightsManager.getLight(LightsManager.LIGHT_ID_BUTTONS).setBrightness(mCurrentButtonBrightness);
++    }
++
++    private int calcButtonLight() {
++        int buttonBrightness = 0;
++
++        if (mCustomButtonBrightness == -1 || mButtonUseScreenBrightness){
++                    // use same value as screen
++                    buttonBrightness = Settings.System.getInt(mContext.getContentResolver(),
++                            Settings.System.SCREEN_BRIGHTNESS, 60);
++        } else {
++            buttonBrightness = mCustomButtonBrightness;
++        }
++        return buttonBrightness;
++    }
++
++    private void triggerButtonTimeoutEvent(long now) {
++        mHandler.removeMessages(MSG_BUTTON_TIMEOUT);
++        if (DEBUG) {
++            Slog.d(TAG, "button timeout set to " + (now + mButtonTimeout));
++        }
++        Message msg = mHandler.obtainMessage(MSG_BUTTON_TIMEOUT);
++        msg.setAsynchronous(true);
++        mHandler.sendMessageAtTime(msg, now + mButtonTimeout);
++    }
+ }
+diff --git a/services/core/jni/com_android_server_input_InputManagerService.cpp b/services/core/jni/com_android_server_input_InputManagerService.cpp
+index b7975691d25..0c82cdd8b7e 100644
+--- a/services/core/jni/com_android_server_input_InputManagerService.cpp
++++ b/services/core/jni/com_android_server_input_InputManagerService.cpp
+@@ -269,7 +269,7 @@ public:
+             const KeyEvent* keyEvent, uint32_t policyFlags);
+     virtual bool dispatchUnhandledKey(const sp<InputWindowHandle>& inputWindowHandle,
+             const KeyEvent* keyEvent, uint32_t policyFlags, KeyEvent* outFallbackKeyEvent);
+-    virtual void pokeUserActivity(nsecs_t eventTime, int32_t eventType, int32_t keyCode);
++    virtual void pokeUserActivity(nsecs_t eventTime, int32_t eventType);
+     virtual bool checkInjectEventsPermissionNonReentrant(
+             int32_t injectorPid, int32_t injectorUid);
+ 
+@@ -1179,9 +1179,9 @@ bool NativeInputManager::dispatchUnhandledKey(const sp<InputWindowHandle>& input
+     return result;
+ }
+ 
+-void NativeInputManager::pokeUserActivity(nsecs_t eventTime, int32_t eventType, int32_t keyCode) {
++void NativeInputManager::pokeUserActivity(nsecs_t eventTime, int32_t eventType) {
+     ATRACE_CALL();
+-    android_server_PowerManagerService_userActivity(eventTime, eventType, keyCode);
++    android_server_PowerManagerService_userActivity(eventTime, eventType);
+ }
+ 
+ 
+diff --git a/services/core/jni/com_android_server_power_PowerManagerService.cpp b/services/core/jni/com_android_server_power_PowerManagerService.cpp
+index d43978f48d4..b2d35d4153a 100644
+--- a/services/core/jni/com_android_server_power_PowerManagerService.cpp
++++ b/services/core/jni/com_android_server_power_PowerManagerService.cpp
+@@ -36,7 +36,6 @@
+ #include <hardware/power.h>
+ #include <hardware_legacy/power.h>
+ #include <suspend/autosuspend.h>
+-#include <android/keycodes.h>
+ 
+ #include "com_android_server_power_PowerManagerService.h"
+ 
+@@ -143,8 +142,7 @@ static void sendPowerHint(PowerHint hintId, uint32_t data) {
+     }
+ }
+ 
+-void android_server_PowerManagerService_userActivity(nsecs_t eventTime, int32_t eventType,
+-        int32_t keyCode) {
++void android_server_PowerManagerService_userActivity(nsecs_t eventTime, int32_t eventType) {
+     if (gPowerManagerServiceObj) {
+         // Throttle calls into user activity by event type.
+         // We're a little conservative about argument checking here in case the caller
+@@ -166,14 +164,9 @@ void android_server_PowerManagerService_userActivity(nsecs_t eventTime, int32_t
+ 
+         JNIEnv* env = AndroidRuntime::getJNIEnv();
+ 
+-        int flags = 0;
+-        if (keyCode == AKEYCODE_VOLUME_UP || keyCode == AKEYCODE_VOLUME_DOWN) {
+-            flags |= USER_ACTIVITY_FLAG_NO_BUTTON_LIGHTS;
+-        }
+-
+         env->CallVoidMethod(gPowerManagerServiceObj,
+                 gPowerManagerServiceClassInfo.userActivityFromNative,
+-                nanoseconds_to_milliseconds(eventTime), eventType, flags);
++                nanoseconds_to_milliseconds(eventTime), eventType, 0);
+         checkAndClearExceptionFromCallback(env, "userActivityFromNative");
+     }
+ }
+diff --git a/services/core/jni/com_android_server_power_PowerManagerService.h b/services/core/jni/com_android_server_power_PowerManagerService.h
+index 1dfd7bbca0e..a17fd650522 100644
+--- a/services/core/jni/com_android_server_power_PowerManagerService.h
++++ b/services/core/jni/com_android_server_power_PowerManagerService.h
+@@ -24,8 +24,7 @@
+ 
+ namespace android {
+ 
+-extern void android_server_PowerManagerService_userActivity(nsecs_t eventTime, int32_t eventType,
+-        int32_t keyCode);
++extern void android_server_PowerManagerService_userActivity(nsecs_t eventTime, int32_t eventType);
+ 
+ } // namespace android
+ 
+-- 
+2.19.1
+

@@ -1,0 +1,77 @@
+From 1b8c5f474fd2b11485f4ec3d9c8482bffc59663c Mon Sep 17 00:00:00 2001
+From: Kazakov Stepan <ksrt12group@gmail.com>
+Date: Mon, 3 Dec 2018 00:06:42 +0300
+Subject: [PATCH 3/5] base: allow home button to wake device [1/2]
+
+Signed-off-by: Kazakov Stepan <ksrt12group@gmail.com>
+---
+ core/java/android/provider/Settings.java          |  5 +++++
+ .../android/server/policy/PhoneWindowManager.java | 15 +++++++++++++++
+ 2 files changed, 20 insertions(+)
+
+diff --git a/core/java/android/provider/Settings.java b/core/java/android/provider/Settings.java
+index 128eb2956c9..ad6a8edd8f7 100644
+--- a/core/java/android/provider/Settings.java
++++ b/core/java/android/provider/Settings.java
+@@ -5778,6 +5778,11 @@ public final class Settings {
+         public static final String TOAST_ICON = "toast_icon";
+ 
+         /**
++         * Whether to wake the screen with the home key, the value is boolean.
++         * @hide
++         */
++        public static final String HOME_WAKE_SCREEN = "home_wake_screen";
++
+          * Enable or disable wifi data activity indicators
+          * @hide
+          */
+diff --git a/services/core/java/com/android/server/policy/PhoneWindowManager.java b/services/core/java/com/android/server/policy/PhoneWindowManager.java
+index 38d8dfb252e..56a4df94037 100644
+--- a/services/core/java/com/android/server/policy/PhoneWindowManager.java
++++ b/services/core/java/com/android/server/policy/PhoneWindowManager.java
+@@ -687,6 +687,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
+     private DeviceKeyHandler mDeviceKeyHandler;
+     private HardkeyActionHandler mKeyHandler;
+     boolean mHasNavigationBar = false;
++    boolean mHomeWakeScreen;
+     
+     private boolean mHandleVolumeKeysInWM;
+ 
+@@ -1247,6 +1248,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
+             resolver.registerContentObserver(Settings.System.getUriFor(
+                     Settings.System.RECENTS_LAYOUT_STYLE), false, this,
+                     UserHandle.USER_ALL);
++            resolver.registerContentObserver(Settings.System.getUriFor(
++                    Settings.System.HOME_WAKE_SCREEN), false, this,
++                    UserHandle.USER_ALL);
+             updateSettings();
+         }
+ 
+@@ -3116,6 +3120,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
+                     resolver, Settings.System.TORCH_LONG_PRESS_POWER_TIMEOUT, 0,
+                     UserHandle.USER_CURRENT);
+ 
++            mHomeWakeScreen = (Settings.System.getIntForUser(resolver,
++                    Settings.System.HOME_WAKE_SCREEN, 0, UserHandle.USER_CURRENT) == 1);
++
+             // Configure wake gesture.
+             boolean wakeGestureEnabledSetting = Settings.Secure.getIntForUser(resolver,
+                     Settings.Secure.WAKE_GESTURE_ENABLED, 0,
+@@ -7335,6 +7342,14 @@ public class PhoneWindowManager implements WindowManagerPolicy {
+                 break;
+             }
+ 
++            case KeyEvent.KEYCODE_HOME: {
++                if (down && !interactive && mHomeWakeScreen) {
++                    isWakeKey = true;
++                    Log.i(TAG, "KeyEvent.KEYCODE_HOME wakeUP");
++                }
++                break;
++            }
++
+             case KeyEvent.KEYCODE_ENDCALL: {
+                 result &= ~ACTION_PASS_TO_USER;
+                 if (down) {
+-- 
+2.19.1
+

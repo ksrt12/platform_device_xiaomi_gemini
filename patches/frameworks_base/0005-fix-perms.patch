@@ -1,7 +1,7 @@
-From da4ebeec32936c2b4862afed7196a2516679ac6a Mon Sep 17 00:00:00 2001
+From 4cba5a393acaf9ec19031de7390bd9f1a51d2624 Mon Sep 17 00:00:00 2001
 From: Kazakov Stepan <ksrt12group@gmail.com>
 Date: Sat, 10 Nov 2018 18:16:14 +0300
-Subject: [PATCH 2/3] fix perms
+Subject: [PATCH 5/5] fix perms
 
 Signed-off-by: Kazakov Stepan <ksrt12group@gmail.com>
 ---

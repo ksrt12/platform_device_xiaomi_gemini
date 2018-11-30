@@ -85,7 +85,7 @@ on enable-low-power
     # Disable sched_boost after boot complete
     write /proc/sys/kernel/sched_boost 0
 
-    write /sys/module/lowmemorykiller/parameters/vmpressure_file_min 80640
+    #write /sys/module/lowmemorykiller/parameters/vmpressure_file_min 80640
 
     write /sys/devices/system/cpu/cpu0/online 1
 
@@ -145,12 +145,12 @@ on enable-low-power
     write /sys/devices/soc/${ro.boot.bootdevice}/${ro.boot.bootdevice}:ufs_variant/pm_qos_enable 1
 
     # Set idle GPU to 133 MHz
-    write /sys/class/kgsl/kgsl-3d0/default_pwrlevel 6
+    #write /sys/class/kgsl/kgsl-3d0/default_pwrlevel 6
     write /sys/class/kgsl/kgsl-3d0/max_pwrlevel 0
-    write /sys/class/kgsl/kgsl-3d0/devfreq/adrenoboost 0
-    write /sys/class/kgsl/kgsl-3d0/devfreq/min_clock_mhz 133
+    #write /sys/class/kgsl/kgsl-3d0/devfreq/adrenoboost 0
+    write /sys/class/kgsl/kgsl-3d0/min_clock_mhz 133
     write /sys/class/kgsl/kgsl-3d0/devfreq/min_freq 133000000
-    write /sys/class/kgsl/kgsl-3d0/devfreq/max_clock_mhz 624
+    write /sys/class/kgsl/kgsl-3d0/max_clock_mhz 624
     write /sys/class/kgsl/kgsl-3d0/devfreq/max_freq 624000000
 
     write /sys/module/workqueue/parameters/power_efficient Y
