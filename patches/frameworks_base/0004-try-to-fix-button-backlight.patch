@@ -1,7 +1,7 @@
-From fab3479943bf4d0a75289c6bc1b6062a9648cb3d Mon Sep 17 00:00:00 2001
+From 040819531b0ee909dad3815cb06d58e5d3418d3e Mon Sep 17 00:00:00 2001
 From: Kazakov Stepan <ksrt12group@gmail.com>
 Date: Mon, 3 Dec 2018 00:03:51 +0300
-Subject: [PATCH 2/5] try to fix button backlight
+Subject: [PATCH 4/4] try to fix button backlight
 
 Signed-off-by: Kazakov Stepan <ksrt12group@gmail.com>
 ---
@@ -90,7 +90,7 @@ index d4e7ca13a7f..2cb5aeeeb2e 100644
       * Used by the window manager to override the user activity timeout based on the
       * current foreground activity.  It can only be used to make the timeout shorter
 diff --git a/core/java/android/provider/Settings.java b/core/java/android/provider/Settings.java
-index 2f4d3f886b6..128eb2956c9 100644
+index 0a511f2260a..d97dbd69781 100644
 --- a/core/java/android/provider/Settings.java
 +++ b/core/java/android/provider/Settings.java
 @@ -3322,26 +3322,6 @@ public final class Settings {
@@ -159,20 +159,20 @@ index 2f4d3f886b6..128eb2956c9 100644
          /** 
           * Screen stabilization parameters
           * @hide
-@@ -6149,6 +6161,11 @@ public final class Settings {
-             PRIVATE_SETTINGS.add(GLOBAL_ACTIONS_SCREENRECORD);
-             PRIVATE_SETTINGS.add(VOLUME_KEYS_CONTROL_RING_TONE);
-             PRIVATE_SETTINGS.add(THEMING_SETTINGS_DASHBOARD_ICONS);
+@@ -6156,6 +6168,11 @@ public final class Settings {
+             PRIVATE_SETTINGS.add(NETWORK_TRAFFIC_TYPE);
+             PRIVATE_SETTINGS.add(NETWORK_TRAFFIC_AUTOHIDE_THRESHOLD);
+             PRIVATE_SETTINGS.add(VOLUME_DIALOG_TIMEOUT);
 +            PRIVATE_SETTINGS.add(CUSTOM_BUTTON_BRIGHTNESS);
 +            PRIVATE_SETTINGS.add(CUSTOM_BUTTON_USE_SCREEN_BRIGHTNESS);
 +            PRIVATE_SETTINGS.add(BUTTON_BACKLIGHT_ENABLE);
 +            PRIVATE_SETTINGS.add(BUTTON_BACKLIGHT_TIMEOUT);
 +            PRIVATE_SETTINGS.add(BUTTON_BACKLIGHT_ON_TOUCH_ONLY);
-         }
- 
-         /**
+             PRIVATE_SETTINGS.add(GLOBAL_ACTIONS_SCREENRECORD);
+             PRIVATE_SETTINGS.add(VOLUME_KEYS_CONTROL_RING_TONE);
+             PRIVATE_SETTINGS.add(THEMING_SETTINGS_DASHBOARD_ICONS);
 diff --git a/core/res/res/values/havoc_config.xml b/core/res/res/values/havoc_config.xml
-index 86759345717..9e80ce87aa6 100644
+index 8c5b8611663..15c7155e132 100644
 --- a/core/res/res/values/havoc_config.xml
 +++ b/core/res/res/values/havoc_config.xml
 @@ -39,9 +39,6 @@
@@ -185,16 +185,18 @@ index 86759345717..9e80ce87aa6 100644
      <!-- Whether notify fingerprint client of successful cancelled authentication -->
      <bool name="config_notifyClientOnFingerprintCancelSuccess">false</bool>
  
-@@ -198,4 +195,7 @@
- 
+@@ -199,6 +196,9 @@
      <!-- Whether to cleanup fingerprints upon connection to the daemon and when user switches -->
      <bool name="config_cleanupUnusedFingerprints">true</bool>
-+
+ 
 +    <bool name="config_button_brightness_support">false</bool>
 +    <integer name="config_button_brightness_default">128</integer>
++
+     <!-- Whether the device has outdated qti-telephony-common.jar -->
+     <bool name="config_oldQtiTelephony">true</bool>
  </resources>
 diff --git a/core/res/res/values/havoc_symbols.xml b/core/res/res/values/havoc_symbols.xml
-index 9853c2569b8..7d3ae6ac70a 100644
+index 44a54689ec1..358872040f7 100644
 --- a/core/res/res/values/havoc_symbols.xml
 +++ b/core/res/res/values/havoc_symbols.xml
 @@ -27,9 +27,6 @@
@@ -207,15 +209,17 @@ index 9853c2569b8..7d3ae6ac70a 100644
    <!-- Whether notify fingerprint client of successful cancelled authentication -->
    <java-symbol type="bool" name="config_notifyClientOnFingerprintCancelSuccess" />
  
-@@ -271,4 +268,8 @@
+@@ -213,6 +210,10 @@
  
-   <!-- Power menu -->
-   <java-symbol type="drawable" name="ic_lock_screenrecord" />
-+
+   <java-symbol type="string" name="config_comboNetworkLocationProvider" />
+ 
 +  <!-- Button brightness -->
 +  <java-symbol type="bool" name="config_button_brightness_support" />
 +  <java-symbol type="integer" name="config_button_brightness_default" />
- </resources>
++
+   <!-- Weather icons -->
+   <java-symbol type="drawable" name="weather_clear_night" />
+   <java-symbol type="drawable" name="weather_cloudy" />
 diff --git a/services/core/java/com/android/server/notification/NotificationManagerService.java b/services/core/java/com/android/server/notification/NotificationManagerService.java
 index d9dac902cd2..10b4ade2cdc 100644
 --- a/services/core/java/com/android/server/notification/NotificationManagerService.java
