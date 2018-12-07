@@ -274,18 +274,6 @@
     <string name="allow_incall_home_title">Кнопка \"Домой\" при вызове</string>
     <string name="allow_incall_home_summary">Разрешить использование кнопки \"Домой\" во время вызова</string>
 
-    <!-- Buttons backlight timeout -->
-    <string name="backlight_timeout_title">Таймаут подсветки кнопок</string>
-    <string name="backlight_timeout_on">Включена постоянно</string>
-    <string name="backlight_timeout_default">5 сек (по умолчанию)</string>
-    <string name="backlight_timeout_1s">1 сек</string>
-    <string name="backlight_timeout_3s">3 сек</string>
-    <string name="backlight_timeout_5s">5 сек</string>
-    <string name="backlight_timeout_10s">10 сек</string>
-    <string name="backlight_timeout_15s">15 сек</string>
-    <string name="backlight_timeout_20s">20 сек</string>
-    <string name="backlight_timeout_30s">30 сек</string>
-
     <!-- Dashboard conditions-->
     <string name="dashboard_category">Опции меню настроек</string>
     <string name="dashboard_suggestions_title">Рекомендации</string>
@@ -294,13 +282,6 @@
     <string name="dashboard_conditions_title">Уведомления</string>
     <string name="summary_dashboard_conditions_enabled">Уведомления в меню настроек включены</string>
     <string name="summary_dashboard_conditions_disabled">Уведомления в меню настроек выключены</string>
-
-    <!-- Enable keys backlight-->
-    <string name="button_brightness_title">Подсветка</string>
-    <!-- Enable keys backlight-->
-    <string name="button_brightness_sw_title">Включить подсветку</string>
-    <string name="button_backlight_on_touch_only_title">Подсветка при касании</string>
-    <string name="button_backlight_on_touch_only_summary">Включать подсветку клавиш только после касания</string>
 
     <!-- HW Keys customization -->
     <string name="action_value_default_action" translatable="false">По умолчанию</string>
@@ -944,15 +925,6 @@
     <string name="pocket_judge_title">Режим \"В кармане\"</string>
     <string name="pocket_judge_summary">Блокировать экран и кнопки, когда устройство находится в кармане</string>
 	
-    <!-- Recents style -->
-    <string name="navbar_recents_style_title">Стиль запущенных приложений</string>
-    <string name="keys_action_app_switch_defaut">По умолчанию</string>
-    <string name="keys_action_omniswitch_short">OmniSwitch</string>
-    <string name="omniswitch_settings">Настройки</string>
-    <string name="omniswitch_dialog_running_new">В настоящее время OmniSwitch не включен. Включите его в настройках приложения.</string>
-    <string name="omniswitch_dialog_unavail">OmniSwitch не установлен</string>
-    <string name="omniswitch_title">Стиль запущенных приложений</string>
-
     <!-- Doze: switches -->
     <string name="doze_display_summary">Конфигурация настроек для ambient display</string>
     <string name="tilt_sensor_title">Датчик наклона</string>
@@ -1044,25 +1016,6 @@
     <!-- Bluetooth battery status -->
     <string name="bluetooth_battery_title">Показывать статус зарядки Bluetooth-устройства</string>
     <string name="bluetooth_battery_summary">Показывать заряд батареи подключенных в настоящее время bluetooth-устройств, если доступно</string>
-	
-    <!-- AOSP Recents component Style -->
-    <string name="recents_component_type_title">Стиль меню недавних приложений</string>
-    <string name="recents_pie">Pie</string>
-    <string name="recents_oreo">Oreo</string>
-
-    <!-- Circle app bar -->
-    <string name="category_app_circle_bar_title">Круговая панель приложений</string>
-    <string name="app_circle_bar_title">Круговая панель приложений</string>
-    <string name="app_circle_bar_summary">Показать круговую панель приложений после прикосновения к правому краю экрана</string>
-    <string name="app_circle_bar_included_apps_title">Включенные приложения</string>
-    <string name="app_circle_bar_included_apps_summary">Приложения будут отображены в круговой панели приложений</string>
-    <string name="trigger_category">Область вызова</string>
-    <string name="trigger_width_title">Ширина области вызова</string>
-    <string name="trigger_width_summary">Установить ширину области вызова</string>
-    <string name="trigger_top_title">Расположение области вызова</string>
-    <string name="trigger_top_summary">Установить вертикальное расположение области вызова</string>
-    <string name="trigger_bottom_title">Высота области вызова</string>
-    <string name="trigger_bottom_summary">Установить высоту области вызова</string>
     
      <!-- AOSP Recents -->
     <string name="aosp_first_time_title">Последние приложения в стиле AOSP</string>
@@ -1170,11 +1123,7 @@
     <string name="hide_lockscreen_icon_title">Скрыть значок блокировки</string>
     <string name="hide_lockscreen_icon_summary">Изменение видимости значка блокировки экрана</string>
 
-	<!-- Navbar Animation -->
-    <string name="pixel_navbar_anim_title">Pixel animation</string>
-    <string name="pixel_navbar_anim_summary">Переключить анимацию на кнопки \"Домой\"</string>
-
-    <!-- Pie -->
+    <!-- Pie
     <string name="pa_pie_control_summary">Ярлыки и навигация Edge</string>
     <string name="pie_enable_title">Включить панель PIE</string>
     <string name="pa_pie_control_title">Панель PIE</string>
@@ -1197,9 +1146,9 @@
     <string name="pa_pie_gravity_summary">Выберите место, где будет расположен PIE</string>
     <string name="pa_pie_gravity_bottom">Снизу</string>
     <string name="pa_pie_gravity_right">По правой стороне</string>
-    <string name="pa_pie_gravity_left">По левой стороне</string>
+    <string name="pa_pie_gravity_left">По левой стороне</string-->
 
-    <!-- Edge gestures -->
+    <!-- Edge gestures
     <string name="edge_gestures_title">Жесты</string> 
     <string name="edge_gestures_feedback_duration_title">Длительность тактильной обратной связи</string> 
     <string name="edge_gestures_long_press_delay_title">Задержка до тех пор, пока не начнется действие нажатия</string> 
@@ -1208,15 +1157,12 @@
     <string name="edge_gestures_landscape_back_edges_title">Трек назад на фоне</string> 
     <string name="edge_gestures_back_screen_percent_title">Обратный жест должен начинаться ниже этого процента экрана</string> 
     <string name="edge_gestures_back_screen_percent_summary">Триггер ниже% экрана</string> 
-    <string name="edge_gestures_summary">Навигация с помощью жестов</string> 
+    <string name="edge_gestures_summary">Навигация с помощью жестов</string--> 
 
     <!-- QS tile styles -->
     <string name="qs_tile_style_title">Стиль плиток</string>
     <string name="qstile_default">По умолчанию</string>
 
-	<!-- Onehand UI mode -->
-    <string name="one_hand_mode_title">Режим управления одной рукой</string>
-    <string name="one_hand_mode_summary">Для активации сделайте свайп влево или вправо на панели навигации</string>
 
     <!-- Show VoLTE icon on statusbar -->
     <string name="volte_icon_title">VoLTE</string>
@@ -1295,53 +1241,5 @@
   <string name="pulse_custom_buttons_opacity_title">Прозрачность кнопок в режиме Pulse</string>
   <string name="fling_lavalamp_color_from">Цвет запуска Lava Lamp</string>
   <string name="fling_lavalamp_color_to">Цвет завершения Lava Lamp</string>
-  <!-- Pulse config -->
-  <string name="pulse_custom_dimen">Ширина панели</string>
-  <string name="pulse_custom_div">Расстояние между панелями</string>
-  <string name="pulse_filled_block_size">Размер блоков</string>
-  <string name="pulse_empty_block_size">Расстояние между блоками</string>
-  <string name="gesture_anywhere_title">Жест везде</string>
-  <string name="gesture_anywhere_enabled_title">Жесты везде</string>
-  <string name="gesture_anywhere_enabled_summary">Включить функцию «Жест везде»</string>
-  <string name="gesture_anywhere_position_title">Расположение</string>
-  <string name="gesture_anywhere_position_left">По левому краю</string>
-  <string name="gesture_anywhere_position_right">По правому краю</string>
-  <string name="gesture_anywhere_gestures_title">Жесты</string>
-  <string name="gesture_anywhere_gestures_summary">Добавить, удалить и редактировать жесты</string>
-  <!-- Label, button used to add a gesture -->
-  <string name="ga_button_add">Добавить жест</string>
-  <!-- Label, button used to reload all gestures -->
-  <string name="ga_button_reload">Перезагрузить</string>
-  <!-- Label, button used to cancel the operation of adding a gesture -->
-  <string name="ga_button_discard">Отменить</string>
-  <!-- Label, button used to save a gesture newly created -->
-  <string name="ga_button_done">Выполнено</string>
-  <!-- Label, prompt asking the user to enter the name of the gesture -->
-  <string name="ga_prompt_gesture_name">Название</string>
-  <!-- Error message, informs the user he needs to enter a name before saving a gesture -->
-  <string name="ga_error_missing_name">Вы должны ввести название</string>
-  <!-- success message, tells the user where the gesture was saved -->
-  <string name="ga_save_success">Жест сохранён в %s</string>
-  <!-- Buttons in Rename gesture dialog box -->
-  <string name="ga_rename_action">ОК</string>
-  <!-- Buttons in Rename gesture dialog box -->
-  <string name="ga_cancel_action">Отмена</string>
-  <!-- Message displayed when the user opens the gestures settings screen -->
-  <string name="ga_gestures_loading">Загрузка жестов...</string>
-  <!-- Message displayed when the user has no gestures -->
-  <string name="ga_gestures_empty">Нет жестов</string>
-  <!-- Title of the screen used to view/manage gestures -->
-  <string name="ga_gestures_activity">Жесты</string>
-  <!-- Noun, menu item used to edit a gesture -->
-  <string name="ga_gestures_edit">Редактировать</string>
-  <!-- Noun, menu item used to remove a gesture -->
-  <string name="ga_gestures_delete">Удалить</string>
-  <!-- Message displayed when a gesture is successfully deleted -->
-  <string name="ga_gestures_delete_success">Жест удалён</string>
-  <!-- Title of dialog box -->
-  <string name="ga_gestures_rename_title">Переименовать жест</string>
-  <!-- Label of gesture name field in Rename gesture dialog box -->
-  <string name="ga_gestures_rename_label">Название жеста</string>
-  <!-- Message, displayed when the sdcard cannot be found, 1st parameter is the name of the file that stores the gestures.  CHAR LIMIT=80 -->
-  <string name="ga_gestures_error_loading">Не удалось загрузить %s. Убедитесь, что у вас есть доступ к памяти.</string>
+
 </resources>
