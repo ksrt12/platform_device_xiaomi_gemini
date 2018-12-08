@@ -225,6 +225,9 @@ TARGET_RELEASETOOLS_EXTENSIONS := $(VENDOR_PATH)
 OVERRIDE_RS_DRIVER := libRSDriver_adreno.so
 NUM_FRAMEBUFFER_SURFACE_BUFFERS := 3
 
+# RIL
+DISABLE_RILD_OEM_HOOK := false
+
 # SELinux
 BOARD_SEPOLICY_DIRS += $(VENDOR_PATH)/sepolicy
 include device/qcom/sepolicy/sepolicy.mk
