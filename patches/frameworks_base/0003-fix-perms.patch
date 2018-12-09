@@ -1,15 +1,15 @@
-From 901340f9aee1b6710bb5203bb32082d17afa5185 Mon Sep 17 00:00:00 2001
+From 3c3beb80772c51117604c4fd2525e4e5582d91cd Mon Sep 17 00:00:00 2001
 From: Kazakov Stepan <ksrt12group@gmail.com>
 Date: Sat, 10 Nov 2018 18:16:14 +0300
-Subject: [PATCH 3/4] fix perms
+Subject: [PATCH 3/5] fix perms
 
 Signed-off-by: Kazakov Stepan <ksrt12group@gmail.com>
 ---
- data/etc/privapp-permissions-platform.xml | 2 ++
- 1 file changed, 2 insertions(+)
+ data/etc/privapp-permissions-platform.xml | 4 ++++
+ 1 file changed, 4 insertions(+)
 
 diff --git a/data/etc/privapp-permissions-platform.xml b/data/etc/privapp-permissions-platform.xml
-index bfe864ac480..4f41f8540cf 100644
+index bfe864ac480..1b4394515c1 100644
 --- a/data/etc/privapp-permissions-platform.xml
 +++ b/data/etc/privapp-permissions-platform.xml
 @@ -242,6 +242,7 @@ applications that come with the platform
@@ -20,7 +20,15 @@ index bfe864ac480..4f41f8540cf 100644
          <permission name="android.permission.ACCESS_NOTIFICATIONS"/>
          <permission name="android.permission.BACKUP"/>
          <permission name="android.permission.BATTERY_STATS"/>
-@@ -359,6 +360,7 @@ applications that come with the platform
+@@ -260,6 +261,7 @@ applications that come with the platform
+         <permission name="android.permission.MODIFY_PHONE_STATE"/>
+         <permission name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+         <permission name="android.permission.MOVE_PACKAGE"/>
++        <permission name="android.permission.NAVIGATION_EDITOR"/>
+         <permission name="android.permission.OVERRIDE_WIFI_CONFIG"/>
+         <permission name="android.permission.PACKAGE_USAGE_STATS"/>
+         <permission name="android.permission.READ_SEARCH_INDEXABLES"/>
+@@ -359,6 +361,7 @@ applications that come with the platform
          <permission name="android.permission.BIND_APPWIDGET"/>
          <permission name="android.permission.BLUETOOTH_PRIVILEGED"/>
          <permission name="android.permission.CHANGE_COMPONENT_ENABLED_STATE"/>
@@ -28,6 +36,14 @@ index bfe864ac480..4f41f8540cf 100644
          <permission name="android.permission.CHANGE_DEVICE_IDLE_TEMP_WHITELIST"/>
          <permission name="android.permission.CHANGE_OVERLAY_PACKAGES"/>
          <permission name="android.permission.CONNECTIVITY_INTERNAL"/>
+@@ -377,6 +380,7 @@ applications that come with the platform
+         <permission name="android.permission.MODIFY_AUDIO_SETTINGS"/>
+         <permission name="android.permission.MODIFY_PHONE_STATE"/>
+         <permission name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
++        <permission name="android.permission.NAVIGATION_EDITOR"/>
+         <permission name="android.permission.ONE_HANDED_MODE"/>
+         <permission name="android.permission.OVERRIDE_WIFI_CONFIG"/>
+         <permission name="android.permission.PACKAGE_USAGE_STATS"/>
 -- 
 2.19.1
 

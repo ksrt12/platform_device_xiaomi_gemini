@@ -1,4 +1,4 @@
-From 484c9889ee10d423754500466bf1b4e6f2ee900c Mon Sep 17 00:00:00 2001
+From 13c8cfaca975df88d811c37fad655e0b1b986c5b Mon Sep 17 00:00:00 2001
 From: Kazakov Stepan <ksrt12group@gmail.com>
 Date: Mon, 3 Dec 2018 00:20:38 +0300
 Subject: [PATCH 2/2] home wake up
@@ -26,7 +26,7 @@ index 1a65447..fb850bf 100644
 +    <string name="home_button_wake_summary">Нажатие кнопки Домой пробуждает устройство</string>   
  </resources>
 diff --git a/res/values/havoc_strings.xml b/res/values/havoc_strings.xml
-index 17a9144..094e092 100644
+index 3b71b46..b59c653 100644
 --- a/res/values/havoc_strings.xml
 +++ b/res/values/havoc_strings.xml
 @@ -1229,6 +1229,9 @@

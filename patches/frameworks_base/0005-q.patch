@@ -1,0 +1,112 @@
+From 973814303abbab1ba0e3c89f66b1b3aa0b5736a5 Mon Sep 17 00:00:00 2001
+From: Kazakov Stepan <ksrt12group@gmail.com>
+Date: Sun, 9 Dec 2018 00:26:05 +0300
+Subject: [PATCH 5/5] q
+
+Signed-off-by: Kazakov Stepan <ksrt12group@gmail.com>
+---
+ .../internal/util/havoc/HavocUtils.java       |  4 +--
+ .../server/policy/PhoneWindowManager.java     | 26 +++++++++----------
+ 2 files changed, 15 insertions(+), 15 deletions(-)
+
+diff --git a/core/java/com/android/internal/util/havoc/HavocUtils.java b/core/java/com/android/internal/util/havoc/HavocUtils.java
+index 31f2c8dc60d..0c7851df0ea 100644
+--- a/core/java/com/android/internal/util/havoc/HavocUtils.java
++++ b/core/java/com/android/internal/util/havoc/HavocUtils.java
+@@ -190,7 +190,7 @@ public class HavocUtils {
+         long when = SystemClock.uptimeMillis();
+         final KeyEvent evDown = new KeyEvent(when, when, KeyEvent.ACTION_DOWN, keycode, 0,
+                 0, KeyCharacterMap.VIRTUAL_KEYBOARD, 0,
+-                KeyEvent.FLAG_FROM_SYSTEM,
++                KeyEvent.FLAG_FROM_SYSTEM | KeyEvent.FLAG_VIRTUAL_HARD_KEY,
+                 InputDevice.SOURCE_KEYBOARD);
+         final KeyEvent evUp = KeyEvent.changeAction(evDown, KeyEvent.ACTION_UP);
+ 
+@@ -215,7 +215,7 @@ public class HavocUtils {
+         long when = SystemClock.uptimeMillis();
+         final KeyEvent evDown = new KeyEvent(when, when, KeyEvent.ACTION_DOWN, keycode, 0,
+                 0, KeyCharacterMap.VIRTUAL_KEYBOARD, 0,
+-                KeyEvent.FLAG_FROM_SYSTEM,
++                KeyEvent.FLAG_FROM_SYSTEM | KeyEvent.FLAG_VIRTUAL_HARD_KEY,
+                 InputDevice.SOURCE_KEYBOARD);
+         final KeyEvent evUp = KeyEvent.changeAction(evDown, KeyEvent.ACTION_UP);
+         h.post(new Runnable() {
+diff --git a/services/core/java/com/android/server/policy/PhoneWindowManager.java b/services/core/java/com/android/server/policy/PhoneWindowManager.java
+index 56a4df94037..fee358ae332 100644
+--- a/services/core/java/com/android/server/policy/PhoneWindowManager.java
++++ b/services/core/java/com/android/server/policy/PhoneWindowManager.java
+@@ -3120,8 +3120,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
+                     resolver, Settings.System.TORCH_LONG_PRESS_POWER_TIMEOUT, 0,
+                     UserHandle.USER_CURRENT);
+ 
+-            mHomeWakeScreen = (Settings.System.getIntForUser(resolver,
+-                    Settings.System.HOME_WAKE_SCREEN, 0, UserHandle.USER_CURRENT) == 1);
++            mHomeWakeScreen = Settings.System.getIntForUser(resolver,
++                    Settings.System.HOME_WAKE_SCREEN, 0, UserHandle.USER_CURRENT) != 0;
+ 
+             // Configure wake gesture.
+             boolean wakeGestureEnabledSetting = Settings.Secure.getIntForUser(resolver,
+@@ -7001,7 +7001,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
+         final int source = event.getSource();
+         final boolean navBarKey = source == InputDevice.SOURCE_NAVIGATION_BAR;
+         final boolean appSwitchKey = keyCode == KeyEvent.KEYCODE_APP_SWITCH;
+-        final boolean homeKey = keyCode == KeyEvent.KEYCODE_HOME;
++        //final boolean homeKey = keyCode == KeyEvent.KEYCODE_HOME;
+         final boolean menuKey = keyCode == KeyEvent.KEYCODE_MENU;
+         final boolean backKey = keyCode == KeyEvent.KEYCODE_BACK;
+         final boolean virtualKey = event.getDeviceId() == KeyCharacterMap.VIRTUAL_KEYBOARD;
+@@ -7038,12 +7038,12 @@ public class PhoneWindowManager implements WindowManagerPolicy {
+         }
+ 
+         if (mANBIHandler != null && mANBIEnabled && mANBIHandler.isScreenTouched()
+-                && !navBarKey && (appSwitchKey || homeKey || menuKey || backKey)) {
++                && !navBarKey && (appSwitchKey || menuKey || backKey)) {
+             return 0;
+         }
+ 
+         // Disable hw keys in Ambient and when screen off
+-        if ((isDozeMode() || !isScreenOn()) && (appSwitchKey || homeKey || menuKey || backKey)) {
++        if ((isDozeMode() || !isScreenOn()) && (appSwitchKey || menuKey || backKey)) {
+             return 0;
+         }
+ 
+@@ -7180,6 +7180,13 @@ public class PhoneWindowManager implements WindowManagerPolicy {
+                 break;
+             }
+ 
++            case KeyEvent.KEYCODE_HOME:
++                if (down && !interactive && mHomeWakeScreen) {
++                    isWakeKey = true;
++                    Slog.i(TAG, "KeyEvent.KEYCODE_HOME wakeUP");
++                }
++                break;
++
+             case KeyEvent.KEYCODE_VOLUME_DOWN:
+             case KeyEvent.KEYCODE_VOLUME_UP:
+             case KeyEvent.KEYCODE_VOLUME_MUTE: {
+@@ -7324,6 +7331,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
+                                 && !isScreenOn() && notHandledMusicControl) {
+                             // Turn screen on
+                             isWakeKey = true;
++                            Slog.i(TAG, "wakeUP from vol");
+                         } else if (notHandledMusicControl) {
+                             KeyEvent newEvent = event;
+                             if (!down) {
+@@ -7342,14 +7350,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
+                 break;
+             }
+ 
+-            case KeyEvent.KEYCODE_HOME: {
+-                if (down && !interactive && mHomeWakeScreen) {
+-                    isWakeKey = true;
+-                    Log.i(TAG, "KeyEvent.KEYCODE_HOME wakeUP");
+-                }
+-                break;
+-            }
+-
+             case KeyEvent.KEYCODE_ENDCALL: {
+                 result &= ~ACTION_PASS_TO_USER;
+                 if (down) {
+-- 
+2.19.1
+

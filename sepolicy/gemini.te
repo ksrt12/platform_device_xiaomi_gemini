@@ -1,0 +1,51 @@
+#============= hal_fingerprint_default ==============
+allow hal_fingerprint_default storage_file:dir search;
+
+#============= netmgrd ==============
+allow netmgrd netutils_wrapper:process noatsecure;
+
+#============= platform_app ==============
+allow platform_app bg_boot_complete_prop:file read;
+allow platform_app bg_daemon_prop:file read;
+
+#============= priv_app ==============
+allow priv_app bg_boot_complete_prop:file read;
+allow priv_app bg_daemon_prop:file read;
+allow priv_app boottime_prop:file read;
+allow priv_app cnd_vendor_prop:file read;
+allow priv_app console_silent_prop:file read;
+#allow priv_app mnt_vendor_file:dir search;
+allow priv_app proc:file read;
+allow priv_app proc_modules:file read;
+allow priv_app sysfs_android_usb:file read;
+
+#============= su ==============
+allow su devpts:chr_file open;
+allow su functionfs:file ioctl;
+allow su kernel:security read_policy;
+#allow su magisk:unix_stream_socket connectto;
+#allow su self:capability dac_override;
+allow su selinuxfs:file { open read };
+
+#============= untrusted_app ==============
+allow untrusted_app bg_boot_complete_prop:file read;
+allow untrusted_app bg_daemon_prop:file read;
+allow untrusted_app boottime_prop:file read;
+allow untrusted_app cnd_vendor_prop:file read;
+
+#!!!! This avc is a constraint violation.  You would need to modify the attributes of either the source or target types to allow this access.
+#Constraint rule: 
+#	mlsconstrain unix_stream_socket { connectto } ((l1 eq l2 -Fail-)  or (t1 == mlstrustedsubject -Fail-)  or (t2 == mlstrustedsubject -Fail-) ); Constraint DENIED
+
+#	Possible cause is the source level (s0:c118,c256,c512,c768) and target level (s0:c512,c768) are different.
+allow untrusted_app untrusted_app_27:unix_stream_socket connectto;
+
+#============= untrusted_app_27 ==============
+allow untrusted_app_27 bg_boot_complete_prop:file read;
+allow untrusted_app_27 bg_daemon_prop:file read;
+allow untrusted_app_27 boottime_prop:file read;
+allow untrusted_app_27 cnd_vendor_prop:file read;
+allow untrusted_app_27 console_silent_prop:file read;
+
+#============= webview_zygote ==============
+allow webview_zygote theme_data_file:dir search;

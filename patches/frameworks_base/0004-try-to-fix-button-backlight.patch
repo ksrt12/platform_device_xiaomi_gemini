@@ -1,7 +1,7 @@
-From 040819531b0ee909dad3815cb06d58e5d3418d3e Mon Sep 17 00:00:00 2001
+From 3119381abccf641bd10f6a0dd50df9656fc2a121 Mon Sep 17 00:00:00 2001
 From: Kazakov Stepan <ksrt12group@gmail.com>
 Date: Mon, 3 Dec 2018 00:03:51 +0300
-Subject: [PATCH 4/4] try to fix button backlight
+Subject: [PATCH 4/5] try to fix button backlight
 
 Signed-off-by: Kazakov Stepan <ksrt12group@gmail.com>
 ---
@@ -13,10 +13,7 @@ Signed-off-by: Kazakov Stepan <ksrt12group@gmail.com>
  core/res/res/values/havoc_symbols.xml         |   7 +-
  .../NotificationManagerService.java           |   2 +-
  .../server/power/PowerManagerService.java     | 315 +++++++++++-------
- ...droid_server_input_InputManagerService.cpp |   6 +-
- ...droid_server_power_PowerManagerService.cpp |  11 +-
- ...android_server_power_PowerManagerService.h |   3 +-
- 11 files changed, 253 insertions(+), 185 deletions(-)
+ 8 files changed, 247 insertions(+), 171 deletions(-)
 
 diff --git a/core/java/android/os/IPowerManager.aidl b/core/java/android/os/IPowerManager.aidl
 index 626abe7d487..4092863f62f 100644
@@ -90,7 +87,7 @@ index d4e7ca13a7f..2cb5aeeeb2e 100644
       * Used by the window manager to override the user activity timeout based on the
       * current foreground activity.  It can only be used to make the timeout shorter
 diff --git a/core/java/android/provider/Settings.java b/core/java/android/provider/Settings.java
-index 0a511f2260a..d97dbd69781 100644
+index f309d44d527..543ff909cec 100644
 --- a/core/java/android/provider/Settings.java
 +++ b/core/java/android/provider/Settings.java
 @@ -3322,26 +3322,6 @@ public final class Settings {
@@ -159,7 +156,7 @@ index 0a511f2260a..d97dbd69781 100644
          /** 
           * Screen stabilization parameters
           * @hide
-@@ -6156,6 +6168,11 @@ public final class Settings {
+@@ -6157,6 +6169,11 @@ public final class Settings {
              PRIVATE_SETTINGS.add(NETWORK_TRAFFIC_TYPE);
              PRIVATE_SETTINGS.add(NETWORK_TRAFFIC_AUTOHIDE_THRESHOLD);
              PRIVATE_SETTINGS.add(VOLUME_DIALOG_TIMEOUT);
@@ -732,7 +729,6 @@ index 9cd9c210f28..c9dbc3a553c 100755
 +        mHandler.sendMessageAtTime(msg, now + mButtonTimeout);
 +    }
  }
- 
 -- 
 2.19.1
 
