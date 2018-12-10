@@ -14,7 +14,7 @@
 
 LOCAL_PATH := $(call my-dir)
 
-ifneq ($(POWER_LIB),libperfmgr)
+ifeq ($(POWER_LIB),libperfmgr)
 include $(CLEAR_VARS)
 
 LOCAL_MODULE_RELATIVE_PATH := hw
@@ -22,28 +22,13 @@ LOCAL_PROPRIETARY_MODULE := true
 LOCAL_MODULE_OWNER := qcom
 LOCAL_MODULE_TAGS := optional
 
-LOCAL_MODULE := android.hardware.power@1.1-service.gemini
-LOCAL_INIT_RC := android.hardware.power@1.1-service.gemini.rc
-LOCAL_SRC_FILES := service.cpp Power.cpp power-helper.c metadata-parser.c utils.c list.c hint-data.c
+LOCAL_MODULE := android.hardware.power@1.2-service.gemini-libperfmgr
+LOCAL_INIT_RC := android.hardware.power@1.2-service.gemini-libperfmgr.rc
+LOCAL_SRC_FILES := service.cpp Power.cpp InteractionHandler.cpp power-helper.c
 
-# Include target-specific files.
-ifeq ($(call is-board-platform-in-list, msm8996), true)
-LOCAL_SRC_FILES += power-8996.c
+ifeq ($(TARGET_HAS_NO_WLAN_STATS),true)
+LOCAL_CFLAGS += -DNO_WLAN_STATS
 endif
-
-ifeq ($(TARGET_USES_INTERACTION_BOOST),true)
-    LOCAL_CFLAGS += -DINTERACTION_BOOST
-endif
-
-ifneq ($(TARGET_USES_AOSP),true)
-    LOCAL_CFLAGS += -DEXTRA_POWERHAL_HINTS
-endif
-
-ifeq ($(TARGET_USES_LAUNCH_BOOST),true)
-    LOCAL_CFLAGS += -DLAUNCH_HINTS
-endif
-
-LOCAL_HEADER_LIBRARIES := libhardware_headers
 
 LOCAL_SHARED_LIBRARIES := \
     libbase \
@@ -52,8 +37,10 @@ LOCAL_SHARED_LIBRARIES := \
     libhidltransport \
     liblog \
     libutils \
-    android.hardware.power@1.1
-
+    android.hardware.power@1.0 \
+    android.hardware.power@1.1 \
+    android.hardware.power@1.2 \
+    libperfmgr
 
 include $(BUILD_EXECUTABLE)
 endif
