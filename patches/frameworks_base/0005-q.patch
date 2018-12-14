@@ -1,13 +1,13 @@
-From 973814303abbab1ba0e3c89f66b1b3aa0b5736a5 Mon Sep 17 00:00:00 2001
+From 246b255389d11f3f451afc1e40c4096bcc046a5d Mon Sep 17 00:00:00 2001
 From: Kazakov Stepan <ksrt12group@gmail.com>
 Date: Sun, 9 Dec 2018 00:26:05 +0300
-Subject: [PATCH 5/5] q
+Subject: [PATCH] q
 
 Signed-off-by: Kazakov Stepan <ksrt12group@gmail.com>
 ---
  .../internal/util/havoc/HavocUtils.java       |  4 +--
- .../server/policy/PhoneWindowManager.java     | 26 +++++++++----------
- 2 files changed, 15 insertions(+), 15 deletions(-)
+ .../server/policy/PhoneWindowManager.java     | 27 ++++++++++---------
+ 2 files changed, 16 insertions(+), 15 deletions(-)
 
 diff --git a/core/java/com/android/internal/util/havoc/HavocUtils.java b/core/java/com/android/internal/util/havoc/HavocUtils.java
 index 31f2c8dc60d..0c7851df0ea 100644
@@ -32,10 +32,10 @@ index 31f2c8dc60d..0c7851df0ea 100644
          final KeyEvent evUp = KeyEvent.changeAction(evDown, KeyEvent.ACTION_UP);
          h.post(new Runnable() {
 diff --git a/services/core/java/com/android/server/policy/PhoneWindowManager.java b/services/core/java/com/android/server/policy/PhoneWindowManager.java
-index 56a4df94037..fee358ae332 100644
+index 295a8c9ee52..6f6756f9337 100644
 --- a/services/core/java/com/android/server/policy/PhoneWindowManager.java
 +++ b/services/core/java/com/android/server/policy/PhoneWindowManager.java
-@@ -3120,8 +3120,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
+@@ -3130,8 +3130,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                      resolver, Settings.System.TORCH_LONG_PRESS_POWER_TIMEOUT, 0,
                      UserHandle.USER_CURRENT);
  
@@ -46,7 +46,7 @@ index 56a4df94037..fee358ae332 100644
  
              // Configure wake gesture.
              boolean wakeGestureEnabledSetting = Settings.Secure.getIntForUser(resolver,
-@@ -7001,7 +7001,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
+@@ -7011,7 +7011,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
          final int source = event.getSource();
          final boolean navBarKey = source == InputDevice.SOURCE_NAVIGATION_BAR;
          final boolean appSwitchKey = keyCode == KeyEvent.KEYCODE_APP_SWITCH;
@@ -55,7 +55,7 @@ index 56a4df94037..fee358ae332 100644
          final boolean menuKey = keyCode == KeyEvent.KEYCODE_MENU;
          final boolean backKey = keyCode == KeyEvent.KEYCODE_BACK;
          final boolean virtualKey = event.getDeviceId() == KeyCharacterMap.VIRTUAL_KEYBOARD;
-@@ -7038,12 +7038,12 @@ public class PhoneWindowManager implements WindowManagerPolicy {
+@@ -7048,12 +7048,12 @@ public class PhoneWindowManager implements WindowManagerPolicy {
          }
  
          if (mANBIHandler != null && mANBIEnabled && mANBIHandler.isScreenTouched()
@@ -70,12 +70,20 @@ index 56a4df94037..fee358ae332 100644
              return 0;
          }
  
-@@ -7180,6 +7180,13 @@ public class PhoneWindowManager implements WindowManagerPolicy {
+@@ -7063,6 +7063,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
+                 && (keyCode == KeyEvent.KEYCODE_VOLUME_UP || keyCode == KeyEvent.KEYCODE_VOLUME_DOWN);
+         // Music control
+         isVolumeRockerWake = isVolumeRockerWake ? (mVolumeMusicControlActive) : false;
++        boolean isHomeWakeScreen = !isScreenOn() && mHomeWakeScreen;
+         int result;
+         boolean isWakeKey = (policyFlags & WindowManagerPolicy.FLAG_WAKE) != 0
+                 || event.isWakeKey() || isVolumeRockerWake;
+@@ -7190,6 +7191,13 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                  break;
              }
  
 +            case KeyEvent.KEYCODE_HOME:
-+                if (down && !interactive && mHomeWakeScreen) {
++                if (down && !interactive) {
 +                    isWakeKey = true;
 +                    Slog.i(TAG, "KeyEvent.KEYCODE_HOME wakeUP");
 +                }
@@ -84,7 +92,7 @@ index 56a4df94037..fee358ae332 100644
              case KeyEvent.KEYCODE_VOLUME_DOWN:
              case KeyEvent.KEYCODE_VOLUME_UP:
              case KeyEvent.KEYCODE_VOLUME_MUTE: {
-@@ -7324,6 +7331,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
+@@ -7334,6 +7342,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                                  && !isScreenOn() && notHandledMusicControl) {
                              // Turn screen on
                              isWakeKey = true;
@@ -92,7 +100,7 @@ index 56a4df94037..fee358ae332 100644
                          } else if (notHandledMusicControl) {
                              KeyEvent newEvent = event;
                              if (!down) {
-@@ -7342,14 +7350,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
+@@ -7352,14 +7361,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                  break;
              }
  
