@@ -81,9 +81,9 @@ public class ButtonSettingsActivity extends PreferenceActivity implements OnPref
         if (!TextUtils.isEmpty(node)) {
             Boolean value = (Boolean) newValue;
             FileUtils.writeLine(node, value ? "1" : "0");
-            if (Constants.FP_WAKEUP_KEY.equals(preference.getKey())) {
+            /*if (Constants.FP_WAKEUP_KEY.equals(preference.getKey())) {
                 Utils.broadcastCustIntent(this, value);
-            }
+            }*/
             return true;
         }
         node = Constants.sStringNodePreferenceMap.get(preference.getKey());

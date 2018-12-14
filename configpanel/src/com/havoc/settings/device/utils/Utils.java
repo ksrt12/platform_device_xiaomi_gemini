@@ -97,13 +97,13 @@ public class Utils {
             b.setChecked(false);
         }
     }
-
+/*
     public static void broadcastCustIntent(Context context, boolean value) {
         final Intent intent = new Intent(Constants.CUST_INTENT);
         intent.putExtra(Constants.CUST_INTENT_EXTRA, value);
         context.sendBroadcastAsUser(intent, UserHandle.CURRENT);
     }
-
+*/
     public static String getFileValue(String filename, String defValue) {
         String fileValue = readLine(filename);
         if(fileValue!=null){

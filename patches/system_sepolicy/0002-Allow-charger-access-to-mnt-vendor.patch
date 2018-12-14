@@ -1,7 +1,7 @@
-From fd524c011fdc6814f9b01a983f0fe6506c61dad1 Mon Sep 17 00:00:00 2001
+From 393bf993ff29eeee060a4c7a98270d9cffb1b746 Mon Sep 17 00:00:00 2001
 From: DennySPB <dennyspb@gmail.com>
 Date: Fri, 16 Nov 2018 14:00:03 +0300
-Subject: [PATCH] Allow charger access to /mnt/vendor
+Subject: [PATCH 2/2] Allow charger access to /mnt/vendor
 
 needed for offline xiaomi charger
 

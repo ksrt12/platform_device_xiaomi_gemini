@@ -56,7 +56,7 @@ public class Constants {
         BUTTON_SWAP_KEY,
         FP_HOME_KEY,
         FP_WAKEUP_KEY,
-	DT2W_KEY
+        DT2W_KEY
     };
 
     static {

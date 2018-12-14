@@ -1,5 +1,6 @@
 #============= hal_fingerprint_default ==============
 allow hal_fingerprint_default storage_file:dir search;
+allow hal_fingerprint_default storage_file:lnk_file read;
 
 #============= netmgrd ==============
 allow netmgrd netutils_wrapper:process noatsecure;
@@ -26,6 +27,9 @@ allow su kernel:security read_policy;
 #allow su magisk:unix_stream_socket connectto;
 #allow su self:capability dac_override;
 allow su selinuxfs:file { open read };
+#============= su ==============
+allow su device_logging_prop:file { getattr open read };
+#allow su shell_data_file:dir { search write };
 
 #============= untrusted_app ==============
 allow untrusted_app bg_boot_complete_prop:file read;
