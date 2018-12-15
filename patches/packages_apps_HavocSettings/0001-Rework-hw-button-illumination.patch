@@ -1,4 +1,4 @@
-From d356cd335f78a8341b143f640878307961a08058 Mon Sep 17 00:00:00 2001
+From bc8510cea263e748872ea61924f8d379141d04d8 Mon Sep 17 00:00:00 2001
 From: Kazakov Stepan <ksrt12group@gmail.com>
 Date: Thu, 29 Nov 2018 02:40:50 +0300
 Subject: [PATCH 1/2] Rework hw button illumination
@@ -74,10 +74,10 @@ index 2372e3e..25259cb 100644
      <string-array name="toast_animation_entries" translatable="false">
          <item>@string/toast_none_animation</item>
 diff --git a/res/values/havoc_strings.xml b/res/values/havoc_strings.xml
-index b4e8c16..3b71b46 100644
+index 48c7978..0e089d8 100644
 --- a/res/values/havoc_strings.xml
 +++ b/res/values/havoc_strings.xml
-@@ -276,17 +276,16 @@
+@@ -278,17 +278,16 @@
      <string name="allow_incall_home_title">Home button when ringing</string>
      <string name="allow_incall_home_summary">Allow to use Home button when device is ringing</string>
  
@@ -105,7 +105,7 @@ index b4e8c16..3b71b46 100644
  
      <!-- Dashboard conditions--> 
      <string name="dashboard_category">Settings Dashboard</string> 
-@@ -297,13 +296,6 @@
+@@ -299,13 +298,6 @@
      <string name="summary_dashboard_suggestions_enabled">Dashboard suggestions are enabled</string> 
      <string name="summary_dashboard_suggestions_disabled">Dashboard suggestions are disabled</string> 
  
@@ -120,10 +120,10 @@ index b4e8c16..3b71b46 100644
      <string name="action_value_default_action" translatable="false">default</string>
      <string name="action_value_select_app" translatable="false">app</string>
 diff --git a/res/xml/havoc_settings_buttons.xml b/res/xml/havoc_settings_buttons.xml
-index ae50882..af4f81f 100644
+index d5295a7..54069c9 100644
 --- a/res/xml/havoc_settings_buttons.xml
 +++ b/res/xml/havoc_settings_buttons.xml
-@@ -67,33 +67,6 @@
+@@ -33,33 +33,6 @@
              android:summary="@string/swap_navigation_keys_title_summary"
  	        android:defaultValue="false" />
  
@@ -157,7 +157,7 @@ index ae50882..af4f81f 100644
          <com.havoc.settings.preferences.SystemSettingSwitchPreference
              android:key="anbi_enabled_option"
              android:title="@string/anbi_title"
-@@ -102,6 +75,43 @@
+@@ -108,6 +81,43 @@
  
      </PreferenceCategory>
  

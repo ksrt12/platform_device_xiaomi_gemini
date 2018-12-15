@@ -1,7 +1,7 @@
-From 3119381abccf641bd10f6a0dd50df9656fc2a121 Mon Sep 17 00:00:00 2001
+From aaefa906da330c0bb80fb16e5e0c390b31605fda Mon Sep 17 00:00:00 2001
 From: Kazakov Stepan <ksrt12group@gmail.com>
 Date: Mon, 3 Dec 2018 00:03:51 +0300
-Subject: [PATCH 4/5] try to fix button backlight
+Subject: [PATCH 3/4] try to fix button backlight
 
 Signed-off-by: Kazakov Stepan <ksrt12group@gmail.com>
 ---
@@ -87,10 +87,10 @@ index d4e7ca13a7f..2cb5aeeeb2e 100644
       * Used by the window manager to override the user activity timeout based on the
       * current foreground activity.  It can only be used to make the timeout shorter
 diff --git a/core/java/android/provider/Settings.java b/core/java/android/provider/Settings.java
-index f309d44d527..543ff909cec 100644
+index 6d5d72f0777..be9c0c91880 100644
 --- a/core/java/android/provider/Settings.java
 +++ b/core/java/android/provider/Settings.java
-@@ -3322,26 +3322,6 @@ public final class Settings {
+@@ -3324,26 +3324,6 @@ public final class Settings {
           */
          public static final int SCREEN_BRIGHTNESS_MODE_AUTOMATIC = 1;
  
@@ -117,7 +117,7 @@ index f309d44d527..543ff909cec 100644
          /**
           * Whether to show the IME switcher in the status bar
           * @hide
-@@ -4285,6 +4265,38 @@ public final class Settings {
+@@ -4281,6 +4261,38 @@ public final class Settings {
          public static final Validator SHOW_BATTERY_PERCENT_VALIDATOR =
                  new SettingsValidators.InclusiveIntegerRangeValidator(0, 2);
  
@@ -156,7 +156,7 @@ index f309d44d527..543ff909cec 100644
          /** 
           * Screen stabilization parameters
           * @hide
-@@ -6157,6 +6169,11 @@ public final class Settings {
+@@ -6167,6 +6179,11 @@ public final class Settings {
              PRIVATE_SETTINGS.add(NETWORK_TRAFFIC_TYPE);
              PRIVATE_SETTINGS.add(NETWORK_TRAFFIC_AUTOHIDE_THRESHOLD);
              PRIVATE_SETTINGS.add(VOLUME_DIALOG_TIMEOUT);

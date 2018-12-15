@@ -1,15 +1,14 @@
-From 13c8cfaca975df88d811c37fad655e0b1b986c5b Mon Sep 17 00:00:00 2001
+From 25fb331f5091494bc4ec30c3f0fa9306dfd4daf3 Mon Sep 17 00:00:00 2001
 From: Kazakov Stepan <ksrt12group@gmail.com>
 Date: Mon, 3 Dec 2018 00:20:38 +0300
 Subject: [PATCH 2/2] home wake up
 
 Signed-off-by: Kazakov Stepan <ksrt12group@gmail.com>
 ---
- res/values-ru/string.xml                      | 5 ++++-
- res/values/havoc_strings.xml                  | 3 +++
- res/xml/havoc_settings_buttons.xml            | 6 ++++++
- src/com/havoc/settings/fragments/Buttons.java | 5 +++++
- 4 files changed, 18 insertions(+), 1 deletion(-)
+ res/values-ru/string.xml           | 5 ++++-
+ res/values/havoc_strings.xml       | 3 +++
+ res/xml/havoc_settings_buttons.xml | 6 ++++++
+ 3 files changed, 13 insertions(+), 1 deletion(-)
 
 diff --git a/res/values-ru/string.xml b/res/values-ru/string.xml
 index 1a65447..fb850bf 100644
@@ -26,10 +25,10 @@ index 1a65447..fb850bf 100644
 +    <string name="home_button_wake_summary">Нажатие кнопки Домой пробуждает устройство</string>   
  </resources>
 diff --git a/res/values/havoc_strings.xml b/res/values/havoc_strings.xml
-index 3b71b46..b59c653 100644
+index 0e089d8..5bc82fe 100644
 --- a/res/values/havoc_strings.xml
 +++ b/res/values/havoc_strings.xml
-@@ -1229,6 +1229,9 @@
+@@ -1235,6 +1235,9 @@
      <string name="lockclock_font_size_title">Clock font size</string>
      
      <string name="ambient_play">Music</string>
@@ -40,45 +39,22 @@ index 3b71b46..b59c653 100644
      <!-- Power menu Animations  -->
      <string name="power_menu_animation_title">Power menu animation</string>
 diff --git a/res/xml/havoc_settings_buttons.xml b/res/xml/havoc_settings_buttons.xml
-index af4f81f..ba2d38a 100644
+index 54069c9..e5403a1 100644
 --- a/res/xml/havoc_settings_buttons.xml
 +++ b/res/xml/havoc_settings_buttons.xml
-@@ -73,6 +73,12 @@
+@@ -39,6 +39,12 @@
              android:summary="@string/anbi_summary"
              android:defaultValue="false" />
  
 +        <com.havoc.settings.preferences.SystemSettingSwitchPreference
-+            android:key="home_button_wake"
++            android:key="home_wake_screen"
 +            android:title="@string/home_button_wake_title"
 +            android:summary="@string/home_button_wake_summary"
-+            android:defaultValue="false" />
++            android:defaultValue="true" />
 +
      </PreferenceCategory>
  
      <PreferenceCategory
-diff --git a/src/com/havoc/settings/fragments/Buttons.java b/src/com/havoc/settings/fragments/Buttons.java
-index c56f11d..1c7230f 100644
---- a/src/com/havoc/settings/fragments/Buttons.java
-+++ b/src/com/havoc/settings/fragments/Buttons.java
-@@ -73,6 +73,9 @@ public class Buttons extends ActionFragment implements OnPreferenceChangeListene
-     public static final int KEY_MASK_CAMERA = 0x20;
-     public static final int KEY_MASK_VOLUME = 0x40;
- 
-+    private static final String HOME_BUTTON_WAKE = "home_button_wake";    
-+    private SwitchPreference mHomeButtonWake;
-+
-     private SwitchPreference mHwKeyDisable;
-     private ListPreference mTorchLongPressPowerTimeout;
-     private SystemSettingSwitchPreference mSwapKeysPreference;
-@@ -134,6 +137,8 @@ public class Buttons extends ActionFragment implements OnPreferenceChangeListene
- 
-             mSwapKeysPreference = (SystemSettingSwitchPreference) prefScreen.findPreference(
-                 KEY_BUTTON_SWAP_KEYS);
-+            mHomeButtonWake = (SystemSettingSwitchPreference) prefScreen.findPreference(
-+                HOME_BUTTON_WAKE);
-  
-         } else {
-             prefScreen.removePreference(hwkeyCat);
 -- 
 2.19.1
 
