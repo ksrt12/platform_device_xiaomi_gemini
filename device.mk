@@ -418,6 +418,17 @@ PRODUCT_COPY_FILES += vendor/havoc/prebuilt/common/bootanimation/1080.zip:system
 #$(LOCAL_PATH)/patches/bootanimation.zip
 PRODUCT_PACKAGES += Phonograph KiwiBrowser
 PRODUCT_PACKAGES += nano htop
+#Google prebuilts
+PRODUCT_PACKAGES += \
+    MarkupGoogle \
+    WellbeingPrebuilt \
+    Turbo
+
+PRODUCT_COPY_FILES += \
+    device/apps3/lib/libsketchology_native.so:system/lib/libsketchology_native.so \
+    device/apps3/lib64/libsketchology_native.so:system/lib64/libsketchology_native.so \
+    device/apps3/etc/turbo.xml:system/etc/sysconfig/turbo.xml \
+    device/apps3/etc/privapp-permissions-turbo.xml:system/etc/permissions/privapp-permissions-turbo.xml
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/media/audio/alarms/Creamy.ogg:system/media/audio/alarms/Creamy.ogg \
