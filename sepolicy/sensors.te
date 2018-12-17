@@ -1,3 +1,4 @@
 get_prop(sensors, system_panel_prop)
 allow sensors sysfs:file { open read };
 allow sensors mnt_vendor_file:file rw_file_perms;
+allow sensors property_socket:sock_file write;
