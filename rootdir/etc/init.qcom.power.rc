@@ -187,7 +187,7 @@ on enable-low-power
     # Set nice Level to 9
     write /proc/sys/kernel/sched_upmigrate_min_nice 9
 
-    # Set perfd properties
+    # Set PowerHal property
     setprop vendor.post_boot.parsed 1
 
 on property:sys.boot_completed=1
@@ -195,6 +195,9 @@ on property:sys.boot_completed=1
 
     # Set I/O squeduler
     setprop sys.io.scheduler "cfq"
+
+    # Enable PowerHAL hint processing
+    setprop vendor.powerhal.init 1
 
 on property:init.svc.recovery=running
     trigger enable-low-power

@@ -43,16 +43,6 @@ PRODUCT_GENERIC_PROPERTIES += \
     use.dts_eagle=true \
     hpx_send_params=1
 
-#QTI Performance
-PRODUCT_GENERIC_PROPERTIES += \
-    vendor.enable_prefetch=1 \
-    vendor.iop.enable_uxe=1 \
-    vendor.iop.enable_prefetch_ofr=1 \
-    vendor.perf.iop_v3.enable=1 \
-    ro.vendor.at_library=libqti-at.so \
-    persist.vendor.qti.games.gt.prof=1
-
-
 # HWUI and Dalvik VM overrides
 $(call inherit-product, $(LOCAL_PATH)/phone-xxhdpi-3072-dalvik-heap.mk)
 
@@ -267,6 +257,10 @@ PRODUCT_COPY_FILES += \
     frameworks/av/media/libstagefright/data/media_codecs_google_telephony.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_telephony.xml \
     frameworks/av/media/libstagefright/data/media_codecs_google_video.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_video.xml
 
+# MSM IRQ Balancer configuration file
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/msm_irqbalance.conf:$(TARGET_COPY_OUT_VENDOR)/etc/msm_irqbalance.conf
+
 # Net
 PRODUCT_PACKAGES += \
     android.system.net.netd@1.0 \
@@ -308,6 +302,9 @@ PRODUCT_PACKAGES += \
 # OTA Updates
 PRODUCT_PACKAGES += \
     Updates
+
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/powerhint.json:$(TARGET_COPY_OUT_VENDOR)/etc/powerhint.json
 
 # QCOM
 PRODUCT_COPY_FILES += \
@@ -392,11 +389,6 @@ PRODUCT_COPY_FILES += \
 # Wfd
 PRODUCT_BOOT_JARS += \
     WfdCommon
-
-#QTI performance
-PRODUCT_BOOT_JARS += \
-    QPerformance \
-    UxPerformance
 
 # HIDL
 $(call inherit-product, $(LOCAL_PATH)/hidl.mk)

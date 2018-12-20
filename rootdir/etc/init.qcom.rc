@@ -215,19 +215,6 @@ on post-fs-data
     # for android.hardware.health@2.0-service.gemini cycle count backup
     mkdir /mnt/vendor/persist/battery 0700 system system
 
-    # SSC/SLPI sensors
-    mkdir /mnt/vendor/persist/sensors
-    chown root system /mnt/vendor/persist/sensors
-    chmod 0775 /mnt/vendor/persist/sensors
-    chown root system /mnt/vendor/persist/sensors/sensors_settings
-    chmod 0664 /mnt/vendor/persist/sensors/sensors_settings
-    chown root system /mnt/vendor/persist/sensors/sns.reg
-    chmod 0664 /mnt/vendor/persist/sensors/sns.reg
-    chown root system /mnt/vendor/persist/PRSensorData.txt
-    chmod 0660 /mnt/vendor/persist/PRSensorData.txt
-    chown root system /mnt/vendor/persist/PSensor3cm_ct.txt
-    chmod 0660 /mnt/vendor/persist/PSensor3cm_ct.txt
-
     # /dev/sensors only supports an ioctl to get the current SLPI timestamp;
     # allow the sensors daemon to perform this as non-root
     chown root system /dev/sensors
@@ -238,22 +225,15 @@ on post-fs-data
 
     setprop vold.post_fs_data_done 1
 
-    #Create PERFD deamon related dirs
-    mkdir /data/vendor/perfd 0770 root system
-    chmod 2770 /data/vendor/perfd
-    rm /data/vendor/perfd/default_values
-
-    #Create IOP  deamon related dirs
-    mkdir /data/vendor/iop 0700 root system
-
     # NFC local data and nfcee xml storage
     mkdir /data/nfc 0770 nfc nfc
     mkdir /data/nfc/param 0770 nfc nfc
     mkdir /data/vendor/nfc 0770 nfc nfc
 
-    # Create IOP  deamon related dirs
-    mkdir /data/vendor/iop 0770 root system
-
+    # Create related dirs
+    mkdir /data/system/perfd 0770 root system
+    chmod 2770 /data/system/perfd
+   
     # Create /data/vendor/time folder for time-services
     mkdir /data/vendor/time/ 0700 system system
 
@@ -269,6 +249,14 @@ on post-fs-data
     write /data/vendor/radio/db_check_done 0
     chown radio radio /data/vendor/radio/db_check_done
     chmod 0660 /data/vendor/radio/db_check_done
+
+    # Setup permission for powerHAL
+    chown system system /dev/stune/top-app/schedtune.boost
+    chown system system /dev/cpu_dma_latency
+    chown system system /sys/class/kgsl/kgsl-3d0/devfreq/min_freq
+    chown system system /sys/class/kgsl/kgsl-3d0/devfreq/max_freq
+    chown system system /sys/class/devfreq/soc:qcom,gpubw/min_freq
+    chown system system /sys/devices/soc/soc:qcom,cpubw/devfreq/soc:qcom,cpubw/min_freq
 
 on early-boot
     # Set RLIMIT_MEMLOCK to 64MB
@@ -288,6 +276,27 @@ on early-boot
     chown system system /sys/devices/soc/qpnp-fg-22/power_supply/bms/charge_full
     # HardwareInfo needs to be able to read charge_full
     chmod 644 /sys/devices/soc/qpnp-fg-22/power_supply/bms/charge_full
+
+    # for backward compatibility
+    chown system system /persist/sensors
+    chown system system /persist/sensors/registry
+    chown system system /persist/sensors/registry/registry
+    chown system system /persist/sensors/registry/registry/sensors_registry
+    chown system system /persist/sensors/sensors_settings
+    chown system system /persist/sensors/registry/config
+    chmod 0664 /persist/sensors/sensors_settings
+
+    chown system system /mnt/vendor/persist/sensors
+    chown system system /mnt/vendor/persist/sensors/sns.reg
+    chown system system /mnt/vendor/persist/sensors/sensors_list.txt
+    chown system system /mnt/vendor/persist/sensors/registry
+    chown system system /mnt/vendor/persist/sensors/registry/registry
+    chown system system /mnt/vendor/persist/sensors/registry/registry/sensors_registry
+    chown system system /mnt/vendor/persist/sensors/sensors_settings
+    chown system system /mnt/vendor/persist/sensors/registry/sns_reg_config
+    chown system system /mnt/vendor/persist/sensors/registry/config
+    chmod 0664 /mnt/vendor/persist/sensors/sensors_settings
+    chown root audio /sys/kernel/boot_adsp/boot
 
     # SSR setup
     write /sys/bus/msm_subsys/devices/subsys0/restart_level "related"
@@ -494,6 +503,13 @@ service vendor.start_hci_filter /vendor/bin/wcnss_filter
     group bluetooth diag system wakelock
     disabled
 
+service vendor.msm_irqbalance /vendor/bin/msm_irqbalance -f /vendor/etc/msm_irqbalance.conf
+    socket msm_irqbalance seqpacket 660 root system
+    class core
+    user root
+    group root
+    writepid /dev/cpuset/system-background/tasks
+
 service vendor.atfwd /vendor/bin/ATFWD-daemon
     class late_start
     user system
@@ -697,8 +713,12 @@ service tfa-sh /vendor/bin/init.tfa.sh /vendor/etc/silence_short.wav 15 1
     disabled
     oneshot
 
-on property:sys.post_boot.parsed=1
-    start perfd
+on property:vendor.post_boot.parsed=1
+
+    # Setup permission for powerHAL
+    chown system system /sys/devices/soc/soc:qcom,cpubw/devfreq/soc:qcom,cpubw/bw_hwmon/hyst_trigger_count
+    chown system system /sys/devices/soc/soc:qcom,cpubw/devfreq/soc:qcom,cpubw/bw_hwmon/hist_memory
+    chown system system /sys/devices/soc/soc:qcom,cpubw/devfreq/soc:qcom,cpubw/bw_hwmon/hyst_length
 
 on property:init.svc.surfaceflinger=restarting
     stop vendor.hwcomposer-2-1
