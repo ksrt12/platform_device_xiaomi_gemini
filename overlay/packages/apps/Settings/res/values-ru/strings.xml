@@ -31,4 +31,35 @@
     <string name="theme_accent_picker_default">По умолчанию</string>
     <string name="accent_picker_material_colors">Палитра Material</string>
     <string name="accent_picker_custom_colors">Пользовательские</string>
+
+    <string name="havoc_title">Havoc</string>
+    <string name="havoc_info">Версия Havoc</string>
+    <string name="havoc_maintainer">Разработчик</string>
+    <string name="havoc_date">Дата сборки</string>
+    <string name="havoc_type">Тип сборки</string>
+    <string name="havoc_device">Устройство</string>
+    <string name="havoc_version">Версия</string>
+
+    <string name="rom_tags_title">Тэги</string>
+
+    <string name="usb_default_config_title">Конфигурация USB</string>
+    <string name="usb_default_config_summary">Выберите поведение по умолчанию при подключении к устройству через USB</string>
+
+    <string name="screenrecord_quality_title">Качество записи</string>
+    <string name="screenrecord_quality_low">Низкое</string>
+    <string name="screenrecord_quality_medium">Среднее</string>
+    <string name="screenrecord_quality_high">Высокое</string>
+
+    <string name="audio_panel_view">Ползунки панели громкости</string>
+    <string name="audio_panel_view_media_title">Медиа</string>
+    <string name="audio_panel_view_ringer_title">Звонки</string>
+    <string name="audio_panel_view_notification_title">Уведомления</string>
+    <string name="audio_panel_view_alarm_title">Будильник</string>
+    <string name="audio_panel_view_voice_title">Голосовые вызовы</string>
+    <string name="audio_panel_view_bt_sco_title">Bluetooth</string>
+
+    <!-- Volume Panel on Left -->
+    <string name="volume_panel_on_left_title">Панель громкости слева</string>
+    <string name="volume_panel_on_left_summary">Показывать панель громкости с левой стороны экрана</string>
+
 </resources>

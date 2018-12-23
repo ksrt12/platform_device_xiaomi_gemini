@@ -1,4 +1,4 @@
-From aaefa906da330c0bb80fb16e5e0c390b31605fda Mon Sep 17 00:00:00 2001
+From 20ec4d450dede1cacb20326d88f52dbadc252c5a Mon Sep 17 00:00:00 2001
 From: Kazakov Stepan <ksrt12group@gmail.com>
 Date: Mon, 3 Dec 2018 00:03:51 +0300
 Subject: [PATCH 3/4] try to fix button backlight
@@ -87,7 +87,7 @@ index d4e7ca13a7f..2cb5aeeeb2e 100644
       * Used by the window manager to override the user activity timeout based on the
       * current foreground activity.  It can only be used to make the timeout shorter
 diff --git a/core/java/android/provider/Settings.java b/core/java/android/provider/Settings.java
-index 6d5d72f0777..be9c0c91880 100644
+index 4789de17413..7e777bcbdf9 100644
 --- a/core/java/android/provider/Settings.java
 +++ b/core/java/android/provider/Settings.java
 @@ -3324,26 +3324,6 @@ public final class Settings {
@@ -156,7 +156,7 @@ index 6d5d72f0777..be9c0c91880 100644
          /** 
           * Screen stabilization parameters
           * @hide
-@@ -6167,6 +6179,11 @@ public final class Settings {
+@@ -6484,6 +6496,11 @@ public final class Settings {
              PRIVATE_SETTINGS.add(NETWORK_TRAFFIC_TYPE);
              PRIVATE_SETTINGS.add(NETWORK_TRAFFIC_AUTOHIDE_THRESHOLD);
              PRIVATE_SETTINGS.add(VOLUME_DIALOG_TIMEOUT);
@@ -169,7 +169,7 @@ index 6d5d72f0777..be9c0c91880 100644
              PRIVATE_SETTINGS.add(VOLUME_KEYS_CONTROL_RING_TONE);
              PRIVATE_SETTINGS.add(THEMING_SETTINGS_DASHBOARD_ICONS);
 diff --git a/core/res/res/values/havoc_config.xml b/core/res/res/values/havoc_config.xml
-index 8c5b8611663..15c7155e132 100644
+index 9479a4d8a9e..aefa6b24aa4 100644
 --- a/core/res/res/values/havoc_config.xml
 +++ b/core/res/res/values/havoc_config.xml
 @@ -39,9 +39,6 @@
@@ -182,7 +182,7 @@ index 8c5b8611663..15c7155e132 100644
      <!-- Whether notify fingerprint client of successful cancelled authentication -->
      <bool name="config_notifyClientOnFingerprintCancelSuccess">false</bool>
  
-@@ -199,6 +196,9 @@
+@@ -190,6 +187,9 @@
      <!-- Whether to cleanup fingerprints upon connection to the daemon and when user switches -->
      <bool name="config_cleanupUnusedFingerprints">true</bool>
  
@@ -191,9 +191,9 @@ index 8c5b8611663..15c7155e132 100644
 +
      <!-- Whether the device has outdated qti-telephony-common.jar -->
      <bool name="config_oldQtiTelephony">true</bool>
- </resources>
+ 
 diff --git a/core/res/res/values/havoc_symbols.xml b/core/res/res/values/havoc_symbols.xml
-index 44a54689ec1..358872040f7 100644
+index 542dbae96df..55ba79e15d6 100644
 --- a/core/res/res/values/havoc_symbols.xml
 +++ b/core/res/res/values/havoc_symbols.xml
 @@ -27,9 +27,6 @@
@@ -206,7 +206,7 @@ index 44a54689ec1..358872040f7 100644
    <!-- Whether notify fingerprint client of successful cancelled authentication -->
    <java-symbol type="bool" name="config_notifyClientOnFingerprintCancelSuccess" />
  
-@@ -213,6 +210,10 @@
+@@ -210,6 +207,10 @@
  
    <java-symbol type="string" name="config_comboNetworkLocationProvider" />
  

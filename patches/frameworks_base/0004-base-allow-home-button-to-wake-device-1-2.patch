@@ -1,4 +1,4 @@
-From f896f55d9661d66853cf62675834d28521d68670 Mon Sep 17 00:00:00 2001
+From 95333862d26cce55167d81ae88854eeb916d2701 Mon Sep 17 00:00:00 2001
 From: Kazakov Stepan <ksrt12group@gmail.com>
 Date: Mon, 3 Dec 2018 00:06:42 +0300
 Subject: [PATCH 4/4] base: allow home button to wake device [1/2]
@@ -7,14 +7,13 @@ Signed-off-by: Kazakov Stepan <ksrt12group@gmail.com>
 ---
  core/java/android/provider/Settings.java      |  6 +++++
  .../server/policy/PhoneWindowManager.java     | 22 +++++++++++++++----
- .../android/telephony/SignalStrength.java     |  3 +--
- 3 files changed, 25 insertions(+), 6 deletions(-)
+ 2 files changed, 24 insertions(+), 4 deletions(-)
 
 diff --git a/core/java/android/provider/Settings.java b/core/java/android/provider/Settings.java
-index be9c0c91880..6a0ba06050f 100644
+index 7e777bcbdf9..28e6a99ed0b 100644
 --- a/core/java/android/provider/Settings.java
 +++ b/core/java/android/provider/Settings.java
-@@ -5768,6 +5768,12 @@ public final class Settings {
+@@ -5771,6 +5771,12 @@ public final class Settings {
          public static final String TOAST_ICON = "toast_icon";
  
          /**
@@ -28,10 +27,10 @@ index be9c0c91880..6a0ba06050f 100644
           * @hide
           */
 diff --git a/services/core/java/com/android/server/policy/PhoneWindowManager.java b/services/core/java/com/android/server/policy/PhoneWindowManager.java
-index aa76d8dec56..bc3e03aa38f 100644
+index b755eba9965..4fce7cedd32 100644
 --- a/services/core/java/com/android/server/policy/PhoneWindowManager.java
 +++ b/services/core/java/com/android/server/policy/PhoneWindowManager.java
-@@ -687,6 +687,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
+@@ -688,6 +688,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
      private DeviceKeyHandler mDeviceKeyHandler;
      private HardkeyActionHandler mKeyHandler;
      boolean mHasNavigationBar = false;
@@ -39,9 +38,9 @@ index aa76d8dec56..bc3e03aa38f 100644
      
      private boolean mHandleVolumeKeysInWM;
  
-@@ -1247,6 +1248,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
+@@ -1263,6 +1264,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
              resolver.registerContentObserver(Settings.System.getUriFor(
-                     Settings.System.RECENTS_LAYOUT_STYLE), false, this,
+                     Settings.System.BOTTOM_GESTURE_SWIPE_LIMIT), false, this,
                      UserHandle.USER_ALL);
 +            resolver.registerContentObserver(Settings.System.getUriFor(
 +                    Settings.System.HOME_WAKE_SCREEN), false, this,
@@ -49,7 +48,7 @@ index aa76d8dec56..bc3e03aa38f 100644
              updateSettings();
          }
  
-@@ -3126,6 +3130,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
+@@ -3151,6 +3155,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                      resolver, Settings.System.TORCH_LONG_PRESS_POWER_TIMEOUT, 0,
                      UserHandle.USER_CURRENT);
  
@@ -59,7 +58,7 @@ index aa76d8dec56..bc3e03aa38f 100644
              // Configure wake gesture.
              boolean wakeGestureEnabledSetting = Settings.Secure.getIntForUser(resolver,
                      Settings.Secure.WAKE_GESTURE_ENABLED, 0,
-@@ -3138,7 +3145,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
+@@ -3163,7 +3170,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
              // navbar
              mHasNavigationBar = DeviceUtils.deviceSupportNavigationBar(mContext);
  
@@ -68,7 +67,7 @@ index aa76d8dec56..bc3e03aa38f 100644
              boolean threeFingerGesture = Settings.System.getIntForUser(resolver,
                      Settings.System.THREE_FINGER_GESTURE, 0, UserHandle.USER_CURRENT) == 1;
              enableSwipeThreeFingerGesture(threeFingerGesture);
-@@ -7004,7 +7011,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
+@@ -7035,7 +7042,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
          final int source = event.getSource();
          final boolean navBarKey = source == InputDevice.SOURCE_NAVIGATION_BAR;
          final boolean appSwitchKey = keyCode == KeyEvent.KEYCODE_APP_SWITCH;
@@ -76,7 +75,7 @@ index aa76d8dec56..bc3e03aa38f 100644
          final boolean menuKey = keyCode == KeyEvent.KEYCODE_MENU;
          final boolean backKey = keyCode == KeyEvent.KEYCODE_BACK;
          final boolean virtualKey = event.getDeviceId() == KeyCharacterMap.VIRTUAL_KEYBOARD;
-@@ -7041,12 +7047,12 @@ public class PhoneWindowManager implements WindowManagerPolicy {
+@@ -7072,12 +7078,12 @@ public class PhoneWindowManager implements WindowManagerPolicy {
          }
  
          if (mANBIHandler != null && mANBIEnabled && mANBIHandler.isScreenTouched()
@@ -91,7 +90,7 @@ index aa76d8dec56..bc3e03aa38f 100644
              return 0;
          }
  
-@@ -7183,6 +7189,14 @@ public class PhoneWindowManager implements WindowManagerPolicy {
+@@ -7214,6 +7220,14 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                  break;
              }
  
@@ -106,27 +105,6 @@ index aa76d8dec56..bc3e03aa38f 100644
              case KeyEvent.KEYCODE_VOLUME_DOWN:
              case KeyEvent.KEYCODE_VOLUME_UP:
              case KeyEvent.KEYCODE_VOLUME_MUTE: {
-diff --git a/telephony/java/android/telephony/SignalStrength.java b/telephony/java/android/telephony/SignalStrength.java
-index 5c89c83daee..644dc0b2cf4 100644
---- a/telephony/java/android/telephony/SignalStrength.java
-+++ b/telephony/java/android/telephony/SignalStrength.java
-@@ -20,7 +20,6 @@ import android.os.Bundle;
- import android.os.Parcel;
- import android.os.Parcelable;
- import android.telephony.CarrierConfigManager;
--import android.text.TextUtils;
- import android.util.Log;
- import android.content.res.Resources;
- 
-@@ -1109,7 +1108,7 @@ public class SignalStrength implements Parcelable {
-     public int getWcdmaLevel() {
-         int level = SIGNAL_STRENGTH_NONE_OR_UNKNOWN;
- 
--        if (TextUtils.isEmpty(mWcdmaDefaultSignalMeasurement)) {
-+        if (mWcdmaDefaultSignalMeasurement == null) {
-             Log.wtf(LOG_TAG, "getWcdmaLevel - WCDMA default signal measurement is invalid.");
-             return level;
-         }
 -- 
 2.19.1
 
