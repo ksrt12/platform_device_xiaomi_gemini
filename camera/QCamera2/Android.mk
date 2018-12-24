@@ -93,11 +93,14 @@ LOCAL_C_INCLUDES := \
         $(call project-path-for,qcom-media)/mm-core/inc \
         system/core/include/cutils \
         system/core/include/system \
-        system/media/camera/include/system
+        system/media/camera/include/system \
+        hardware/interfaces/camera/common/1.0/default/include
 
 #HAL 1.0 Include paths
 LOCAL_C_INCLUDES += \
-        $(LOCAL_PATH)/HAL
+        $(LOCAL_PATH)/HAL \
+        $(TARGET_OUT_HEADERS)/qcom/display \
+        $(call project-path-for,qcom-display)/libqservice
 
 LOCAL_HEADER_LIBRARIES := generated_kernel_headers
 
@@ -114,13 +117,10 @@ ifneq (,$(filter msm8996 msmcobalt msmfalcon,$(TARGET_BOARD_PLATFORM)))
 endif
 
 #LOCAL_STATIC_LIBRARIES := libqcamera2_util
-LOCAL_C_INCLUDES += \
-        $(TARGET_OUT_HEADERS)/qcom/display
-LOCAL_C_INCLUDES += \
-        $(call project-path-for,qcom-display)/libqservice
+
 LOCAL_SHARED_LIBRARIES := libcamera_client liblog libhardware libutils libcutils libdl libsync
 LOCAL_SHARED_LIBRARIES += libmmcamera_interface libmmjpeg_interface libui libcamera_metadata
-LOCAL_SHARED_LIBRARIES += libqdMetaData libqservice libbinder
+LOCAL_SHARED_LIBRARIES += libqdMetaData libqservice libbinder android.hardware.camera.common@1.0
 ifeq ($(USE_DISPLAY_SERVICE),true)
 LOCAL_SHARED_LIBRARIES += android.frameworks.displayservice@1.0 libhidlbase libhidltransport
 else
@@ -129,10 +129,9 @@ endif
 ifeq ($(TARGET_TS_MAKEUP),true)
 LOCAL_SHARED_LIBRARIES += libts_face_beautify_hal libts_detected_face_hal
 endif
+
 LOCAL_HEADER_LIBRARIES += media_plugin_headers
-
 LOCAL_STATIC_LIBRARIES := android.hardware.camera.common@1.0-helper
-
 
 LOCAL_MODULE_RELATIVE_PATH := hw
 LOCAL_MODULE := camera.$(TARGET_BOARD_PLATFORM)
