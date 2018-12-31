@@ -20,4 +20,5 @@ allow hal_fingerprint_default mnt_user_file:dir search;
 allow hal_fingerprint_default mnt_user_file:lnk_file read;
 
 # Ignore all logging requests
-dontaudit hal_fingerprint_default storage_file:dir search;
+dontaudit hal_fingerprint_default { sdcardfs storage_file }:dir search;
+allow hal_fingerprint_default storage_file:lnk_file read;

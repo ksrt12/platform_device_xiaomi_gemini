@@ -1,7 +1,7 @@
-From 52ac8e38ac469462c1f816e15672dc95fb6a4343 Mon Sep 17 00:00:00 2001
+From 77a5fb61ec9d74362731d648cd242c99e8a27825 Mon Sep 17 00:00:00 2001
 From: Harsh Shandilya <msfjarvis@gmail.com>
 Date: Thu, 24 Aug 2017 13:34:12 +0000
-Subject: [PATCH 2/2] DeviceInfoSettings: Bring back CAF/AOSP tags
+Subject: [PATCH 2/3] DeviceInfoSettings: Bring back CAF/AOSP tags
 
 Change-Id: I8d9a50abbd9158704c8d32edcb8de60172a21475
 Signed-off-by: Simao Gomes Viana <xdevs23@outlook.com>
@@ -30,10 +30,10 @@ index 0c31f1cd95..3275cf05ab 100644
      <string name="selinux_status">SELinux status</string>
      <string name="selinux_status_disabled">Disabled</string>
 diff --git a/res/xml/my_device_info.xml b/res/xml/my_device_info.xml
-index 5d38c87bf3..0245067445 100644
+index 35d402da68..5f29580647 100644
 --- a/res/xml/my_device_info.xml
 +++ b/res/xml/my_device_info.xml
-@@ -133,6 +133,14 @@
+@@ -112,6 +112,14 @@
          android:summary="@string/summary_placeholder"
          settings:allowDividerAbove="true"/>
  
@@ -123,21 +123,21 @@ index 0000000000..d2adeafacf
 +}
 +
 diff --git a/src/com/android/settings/deviceinfo/aboutphone/MyDeviceInfoFragment.java b/src/com/android/settings/deviceinfo/aboutphone/MyDeviceInfoFragment.java
-index 6e62d5db9f..8ccfcb30b6 100644
+index 16ed848040..d4cb9e2d34 100644
 --- a/src/com/android/settings/deviceinfo/aboutphone/MyDeviceInfoFragment.java
 +++ b/src/com/android/settings/deviceinfo/aboutphone/MyDeviceInfoFragment.java
-@@ -42,6 +42,7 @@ import com.android.settings.deviceinfo.DeviceNamePreferenceController;
- import com.android.settings.deviceinfo.FccEquipmentIdPreferenceController;
- import com.android.settings.deviceinfo.FeedbackPreferenceController;
+@@ -40,6 +40,7 @@ import com.android.settings.deviceinfo.BuildNumberPreferenceController;
+ import com.android.settings.deviceinfo.DeviceModelPreferenceController;
+ import com.android.settings.deviceinfo.DeviceNamePreferenceController;
  import com.android.settings.deviceinfo.IpAddressPreferenceController;
 +import com.android.settings.deviceinfo.RomTagsPreferenceController;
  import com.android.settings.deviceinfo.SELinuxStatusPreferenceController;
  import com.android.settings.deviceinfo.WifiMacAddressPreferenceController;
  import com.android.settings.deviceinfo.firmwareversion.FirmwareVersionPreferenceController;
-@@ -119,6 +120,7 @@ public class MyDeviceInfoFragment extends DashboardFragment
+@@ -115,6 +116,7 @@ public class MyDeviceInfoFragment extends DashboardFragment
+         controllers.add(new IpAddressPreferenceController(context, lifecycle));
+         controllers.add(new WifiMacAddressPreferenceController(context, lifecycle));
          controllers.add(new BluetoothAddressPreferenceController(context, lifecycle));
-         controllers.add(new FeedbackPreferenceController(fragment, context));
-         controllers.add(new FccEquipmentIdPreferenceController(context));
 +        controllers.add(new RomTagsPreferenceController(context));
          controllers.add(new SELinuxStatusPreferenceController(context));
          controllers.add(new HavocInfoPreferenceController(context, fragment));

@@ -1,7 +1,7 @@
-From 95333862d26cce55167d81ae88854eeb916d2701 Mon Sep 17 00:00:00 2001
+From c1a25fa430e8bbd4faed5c41004c8a9a04b8efa3 Mon Sep 17 00:00:00 2001
 From: Kazakov Stepan <ksrt12group@gmail.com>
 Date: Mon, 3 Dec 2018 00:06:42 +0300
-Subject: [PATCH 4/4] base: allow home button to wake device [1/2]
+Subject: [PATCH 4/5] base: allow home button to wake device [1/2]
 
 Signed-off-by: Kazakov Stepan <ksrt12group@gmail.com>
 ---
@@ -10,10 +10,10 @@ Signed-off-by: Kazakov Stepan <ksrt12group@gmail.com>
  2 files changed, 24 insertions(+), 4 deletions(-)
 
 diff --git a/core/java/android/provider/Settings.java b/core/java/android/provider/Settings.java
-index 7e777bcbdf9..28e6a99ed0b 100644
+index 2d74213a298..cac9000470f 100644
 --- a/core/java/android/provider/Settings.java
 +++ b/core/java/android/provider/Settings.java
-@@ -5771,6 +5771,12 @@ public final class Settings {
+@@ -5751,6 +5751,12 @@ public final class Settings {
          public static final String TOAST_ICON = "toast_icon";
  
          /**
@@ -27,7 +27,7 @@ index 7e777bcbdf9..28e6a99ed0b 100644
           * @hide
           */
 diff --git a/services/core/java/com/android/server/policy/PhoneWindowManager.java b/services/core/java/com/android/server/policy/PhoneWindowManager.java
-index b755eba9965..4fce7cedd32 100644
+index 314227b09a6..9502500ae71 100644
 --- a/services/core/java/com/android/server/policy/PhoneWindowManager.java
 +++ b/services/core/java/com/android/server/policy/PhoneWindowManager.java
 @@ -688,6 +688,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {

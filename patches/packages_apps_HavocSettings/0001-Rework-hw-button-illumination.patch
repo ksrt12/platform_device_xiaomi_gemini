@@ -1,4 +1,4 @@
-From bc8510cea263e748872ea61924f8d379141d04d8 Mon Sep 17 00:00:00 2001
+From 5dccec2d8a22e5beaf1fdbff47fc4ee0582c298c Mon Sep 17 00:00:00 2001
 From: Kazakov Stepan <ksrt12group@gmail.com>
 Date: Thu, 29 Nov 2018 02:40:50 +0300
 Subject: [PATCH 1/2] Rework hw button illumination
@@ -10,10 +10,10 @@ Signed-off-by: Kazakov Stepan <ksrt12group@gmail.com>
 ---
  res/values-ru/string.xml                      |  15 +++
  res/values/havoc_arrays.xml                   |  25 ----
- res/values/havoc_strings.xml                  |  28 ++---
+ res/values/havoc_strings.xml                  |  27 ++---
  res/xml/havoc_settings_buttons.xml            |  64 +++++-----
  src/com/havoc/settings/fragments/Buttons.java | 112 +++++++-----------
- 5 files changed, 107 insertions(+), 137 deletions(-)
+ 5 files changed, 106 insertions(+), 137 deletions(-)
  create mode 100644 res/values-ru/string.xml
 
 diff --git a/res/values-ru/string.xml b/res/values-ru/string.xml
@@ -38,7 +38,7 @@ index 0000000..1a65447
 +    <string name="button_manual_brightness">Уровень яркости</string>    
 +</resources>
 diff --git a/res/values/havoc_arrays.xml b/res/values/havoc_arrays.xml
-index 2372e3e..25259cb 100644
+index 10a1c72..ed3384b 100644
 --- a/res/values/havoc_arrays.xml
 +++ b/res/values/havoc_arrays.xml
 @@ -30,31 +30,6 @@
@@ -74,15 +74,15 @@ index 2372e3e..25259cb 100644
      <string-array name="toast_animation_entries" translatable="false">
          <item>@string/toast_none_animation</item>
 diff --git a/res/values/havoc_strings.xml b/res/values/havoc_strings.xml
-index 48c7978..0e089d8 100644
+index 912ec65..f942b08 100644
 --- a/res/values/havoc_strings.xml
 +++ b/res/values/havoc_strings.xml
-@@ -278,17 +278,16 @@
+@@ -278,17 +278,15 @@
      <string name="allow_incall_home_title">Home button when ringing</string>
      <string name="allow_incall_home_summary">Allow to use Home button when device is ringing</string>
  
 -    <!-- Buttons backlight timeout -->
--    <string name="backlight_timeout_title">Buttons backlight timeout</string>
+-    <string name="backlight_timeout_title">Button backlight timeout</string>
 -    <string name="backlight_timeout_on">Enabled always</string>
 -    <string name="backlight_timeout_default">0.5 sec</string>
 -    <string name="backlight_timeout_1s">1 sec</string>
@@ -101,19 +101,18 @@ index 48c7978..0e089d8 100644
 +    <string name="button_timeout_title">Backlight timeout</string>
 +    <string name="button_backlight_on_touch_only_title">Button backlight touch</string>
 +    <string name="button_backlight_on_touch_only_summary">Button backlight will only appear when buttons are pressed rather than on all the time. Timeout still impacts this feature.</string>
-+
  
      <!-- Dashboard conditions--> 
-     <string name="dashboard_category">Settings Dashboard</string> 
-@@ -299,13 +298,6 @@
+     <string name="dashboard_category">Settings</string> 
+@@ -299,13 +297,6 @@
      <string name="summary_dashboard_suggestions_enabled">Dashboard suggestions are enabled</string> 
      <string name="summary_dashboard_suggestions_disabled">Dashboard suggestions are disabled</string> 
  
 -    <!-- Enable keys backlight-->
--    <string name="button_brightness_title">Backlight</string>
+-    <string name="button_brightness_title">Button backlight brightness</string>
 -    <!-- Enable keys backlight-->
 -    <string name="button_brightness_sw_title">Enable backlight</string>
--    <string name="button_backlight_on_touch_only_title">Button touch</string>
+-    <string name="button_backlight_on_touch_only_title">Button backlight on touch</string>
 -    <string name="button_backlight_on_touch_only_summary">Enable backlight with timeout only on button touch</string>
 -
      <!-- HW Keys customization -->

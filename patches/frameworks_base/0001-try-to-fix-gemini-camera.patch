@@ -1,7 +1,7 @@
-From 24fe18f850337b7600228c4e9ca56afb0637dd43 Mon Sep 17 00:00:00 2001
+From db413c0fd58d927d8e0f9b6f09ede8c78399d26a Mon Sep 17 00:00:00 2001
 From: Kazakov Stepan <ksrt12group@gmail.com>
 Date: Tue, 27 Nov 2018 01:34:27 +0300
-Subject: [PATCH 1/4] try to fix gemini camera
+Subject: [PATCH 1/5] try to fix gemini camera
 
 Signed-off-by: Kazakov Stepan <ksrt12group@gmail.com>
 ---

@@ -1,4 +1,4 @@
-From 25fb331f5091494bc4ec30c3f0fa9306dfd4daf3 Mon Sep 17 00:00:00 2001
+From 6f8c4f92fb53917fad3cf4e23e470dca8e5cb123 Mon Sep 17 00:00:00 2001
 From: Kazakov Stepan <ksrt12group@gmail.com>
 Date: Mon, 3 Dec 2018 00:20:38 +0300
 Subject: [PATCH 2/2] home wake up
@@ -25,10 +25,10 @@ index 1a65447..fb850bf 100644
 +    <string name="home_button_wake_summary">Нажатие кнопки Домой пробуждает устройство</string>   
  </resources>
 diff --git a/res/values/havoc_strings.xml b/res/values/havoc_strings.xml
-index 0e089d8..5bc82fe 100644
+index f942b08..08de970 100644
 --- a/res/values/havoc_strings.xml
 +++ b/res/values/havoc_strings.xml
-@@ -1235,6 +1235,9 @@
+@@ -1242,6 +1242,9 @@
      <string name="lockclock_font_size_title">Clock font size</string>
      
      <string name="ambient_play">Music</string>
