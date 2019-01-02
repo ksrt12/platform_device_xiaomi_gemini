@@ -1,4 +1,4 @@
-/* Copyright (c) 2011-2014, The Linux Foundation. All rights reserved.
+/* Copyright (c) 2011-2014, 2016-2017 The Linux Foundation. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -32,6 +32,7 @@
 #include <stddef.h>
 #include <ctype.h>
 #include <gps_extended.h>
+#include <LocationAPI.h>
 #include <MsgTask.h>
 #include <log_util.h>
 
@@ -44,6 +45,7 @@ int decodeAddress(char *addr_string, int string_size,
                   const char *data, int data_size);
 
 #define MAX_ADAPTERS          10
+#define MAX_FEATURE_LENGTH    100
 
 #define TO_ALL_ADAPTERS(adapters, call)                                \
     for (int i = 0; i < MAX_ADAPTERS && NULL != (adapters)[i]; i++) {  \
@@ -81,6 +83,7 @@ class LocApiBase {
     ContextBase *mContext;
     LocAdapterBase* mLocAdapters[MAX_ADAPTERS];
     uint64_t mSupportedMsg;
+    uint8_t mFeaturesSupported[MAX_FEATURE_LENGTH];
 
 protected:
     virtual enum loc_api_adapter_err
@@ -100,36 +103,38 @@ public:
     inline void sendMsg(const LocMsg* msg) const {
         mMsgTask->sendMsg(msg);
     }
-
     void addAdapter(LocAdapterBase* adapter);
     void removeAdapter(LocAdapterBase* adapter);
 
     // upward calls
     void handleEngineUpEvent();
     void handleEngineDownEvent();
-    void reportPosition(UlpLocation &location,
-                        GpsLocationExtended &locationExtended,
-                        void* locationExt,
+    void reportPosition(UlpLocation& location,
+                        GpsLocationExtended& locationExtended,
                         enum loc_sess_status status,
                         LocPosTechMask loc_technology_mask =
                                   LOC_POS_TECH_MASK_DEFAULT);
-    void reportSv(GpsSvStatus &svStatus,
-                  GpsLocationExtended &locationExtended,
-                  void* svExt);
-    void reportStatus(GpsStatusValue status);
+    void reportSv(GnssSvNotification& svNotify);
+    void reportSvMeasurement(GnssSvMeasurementSet &svMeasurementSet);
+    void reportSvPolynomial(GnssSvPolynomial &svPolynomial);
+    void reportStatus(LocGpsStatusValue status);
     void reportNmea(const char* nmea, int length);
     void reportXtraServer(const char* url1, const char* url2,
                           const char* url3, const int maxlength);
     void requestXtraData();
     void requestTime();
     void requestLocation();
-    void requestATL(int connHandle, AGpsType agps_type);
+    void requestATL(int connHandle, LocAGpsType agps_type);
     void releaseATL(int connHandle);
     void requestSuplES(int connHandle);
     void reportDataCallOpened();
     void reportDataCallClosed();
-    void requestNiNotify(GpsNiNotification &notify, const void* data);
+    void requestNiNotify(GnssNiNotification &notify, const void* data);
     void saveSupportedMsgList(uint64_t supportedMsgList);
+    void reportGnssMeasurementData(GnssMeasurementsNotification& measurements, int msInWeek);
+    void saveSupportedFeatureList(uint8_t *featureList);
+    void reportWwanZppFix(LocGpsLocation &zppLoc);
+    void reportOdcpiRequest(OdcpiRequestInfo& request);
 
     // downward calls
     // All below functions are to be defined by adapter specific modules:
@@ -141,8 +146,8 @@ public:
         startFix(const LocPosMode& posMode);
     virtual enum loc_api_adapter_err
         stopFix();
-    virtual enum loc_api_adapter_err
-        deleteAidingData(GpsAidingData f);
+    virtual LocationError
+        deleteAidingData(const GnssAidingData& data);
     virtual enum loc_api_adapter_err
         enableData(int enable);
     virtual enum loc_api_adapter_err
@@ -150,28 +155,30 @@ public:
     virtual enum loc_api_adapter_err
         injectPosition(double latitude, double longitude, float accuracy);
     virtual enum loc_api_adapter_err
-        setTime(GpsUtcTime time, int64_t timeReference, int uncertainty);
+        injectPosition(const Location& location);
+    virtual enum loc_api_adapter_err
+        setTime(LocGpsUtcTime time, int64_t timeReference, int uncertainty);
     virtual enum loc_api_adapter_err
         setXtraData(char* data, int length);
     virtual enum loc_api_adapter_err
         requestXtraServer();
     virtual enum loc_api_adapter_err
-        atlOpenStatus(int handle, int is_succ, char* apn, AGpsBearerType bear, AGpsType agpsType);
+        atlOpenStatus(int handle, int is_succ, char* apn, AGpsBearerType bear, LocAGpsType agpsType);
     virtual enum loc_api_adapter_err
         atlCloseStatus(int handle, int is_succ);
     virtual enum loc_api_adapter_err
         setPositionMode(const LocPosMode& posMode);
-    virtual enum loc_api_adapter_err
+    virtual LocationError
         setServer(const char* url, int len);
-    virtual enum loc_api_adapter_err
+    virtual LocationError
         setServer(unsigned int ip, int port,
                   LocServerType type);
+    virtual LocationError
+        informNiResponse(GnssNiResponse userResponse, const void* passThroughData);
+    virtual LocationError setSUPLVersion(GnssConfigSuplVersion version);
     virtual enum loc_api_adapter_err
-        informNiResponse(GpsUserResponseType userResponse, const void* passThroughData);
-    virtual enum loc_api_adapter_err
-        setSUPLVersion(uint32_t version);
-    virtual enum loc_api_adapter_err
-        setLPPConfig(uint32_t profile);
+        setNMEATypes (uint32_t typesMask);
+    virtual LocationError setLPPConfig(GnssConfigLppProfile profile);
     virtual enum loc_api_adapter_err
         setSensorControlConfig(int sensorUsage, int sensorProvider);
     virtual enum loc_api_adapter_err
@@ -196,46 +203,61 @@ public:
                                int gyroSamplesPerBatchHigh,
                                int gyroBatchesPerSecHigh,
                                int algorithmConfig);
+    virtual LocationError
+        setAGLONASSProtocol(GnssConfigAGlonassPositionProtocolMask aGlonassProtocol);
+    virtual LocationError setLPPeProtocolCp(GnssConfigLppeControlPlaneMask lppeCP);
+    virtual LocationError setLPPeProtocolUp(GnssConfigLppeUserPlaneMask lppeUP);
     virtual enum loc_api_adapter_err
-        setExtPowerConfig(int isBatteryCharging);
+        getWwanZppFix();
     virtual enum loc_api_adapter_err
-        setAGLONASSProtocol(unsigned long aGlonassProtocol);
+        getBestAvailableZppFix(LocGpsLocation & zppLoc);
     virtual enum loc_api_adapter_err
-        getWwanZppFix(GpsLocation & zppLoc);
-    virtual enum loc_api_adapter_err
-        getBestAvailableZppFix(GpsLocation & zppLoc);
-    virtual enum loc_api_adapter_err
-        getBestAvailableZppFix(GpsLocation & zppLoc, LocPosTechMask & tech_mask);
-    virtual int initDataServiceClient();
+        getBestAvailableZppFix(LocGpsLocation & zppLoc, GpsLocationExtended & locationExtended,
+                LocPosTechMask & tech_mask);
+    virtual int initDataServiceClient(bool isDueToSsr);
     virtual int openAndStartDataCall();
     virtual void stopDataCall();
     virtual void closeDataCall();
+    virtual void releaseDataServiceClient();
+    virtual void installAGpsCert(const LocDerEncodedCertificate* pData,
+                                 size_t length,
+                                 uint32_t slotBitMask);
+    inline virtual void setInSession(bool inSession) {
 
-    inline virtual void setInSession(bool inSession) {}
+        (void)inSession;
+    }
     inline bool isMessageSupported (LocCheckingMessagesID msgID) const {
-        if (msgID > (sizeof(mSupportedMsg) << 3)) {
+
+        // confirm if msgID is not larger than the number of bits in
+        // mSupportedMsg
+        if ((uint64_t)msgID > (sizeof(mSupportedMsg) << 3)) {
             return false;
         } else {
             uint32_t messageChecker = 1 << msgID;
             return (messageChecker & mSupportedMsg) == messageChecker;
         }
     }
+
     void updateEvtMask();
 
-    /*Values for lock
-      1 = Do not lock any position sessions
-      2 = Lock MI position sessions
-      3 = Lock MT position sessions
-      4 = Lock all position sessions
-     */
-    virtual int setGpsLock(unsigned int lock);
+    virtual LocationError setGpsLock(GnssConfigGpsLock lock);
     /*
       Returns
       Current value of GPS Lock on success
       -1 on failure
      */
     virtual int getGpsLock(void);
-    virtual enum loc_api_adapter_err setXtraVersionCheck(enum xtra_version_check check);
+
+    virtual LocationError setXtraVersionCheck(uint32_t check);
+    /*
+      Check if the modem support the service
+     */
+    virtual bool gnssConstellationConfig();
+
+    /*
+       Check if a feature is supported
+      */
+    bool isFeatureSupported(uint8_t featureVal);
 };
 
 typedef LocApiBase* (getLocApi_t)(const MsgTask* msgTask,
