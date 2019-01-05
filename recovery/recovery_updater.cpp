@@ -27,7 +27,8 @@
 #include <time.h>
 #include <unistd.h>
 
-#include "edify/include/edify/expr.h"
+#include "edify/expr.h"
+#include "otautil/error_code.h"
 #include "updater/install.h"
 
 #define MAX(a, b) (((a) > (b)) ? (a) : (b))
@@ -166,13 +167,13 @@ Value * VerifyModemFn(const char *name, State *state, const std::vector<std::uni
 
     ret = get_modem_version(current_modem_version, MODEM_VER_BUF_LEN);
     if (ret) {
-        return ErrorAbort(state, "%s() failed to read current MODEM build time-stamp: %d",
+        return ErrorAbort(state, kFreadFailure, "%s() failed to read current MODEM build time-stamp: %d",
                 name, ret);
     }
 
     std::vector<std::string> modem_version;
     if (!ReadArgs(state, argv, & modem_version)) {
-        return ErrorAbort(state, "%s() error parsing arguments", name);
+        return ErrorAbort(state, kArgsParsingFailure, "%s() error parsing arguments", name);
     }
 
     memset(&tm1, 0, sizeof(tm));

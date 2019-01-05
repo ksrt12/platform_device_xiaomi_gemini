@@ -20,9 +20,7 @@ LOCAL_SRC_FILES += \
     Agps.cpp \
     XtraSystemStatusObserver.cpp
 
-LOCAL_CFLAGS += \
-     -fno-short-enums \
-     -Wno-deprecated
+LOCAL_CFLAGS += -fno-short-enums $(GNSS_CFLAGS)
 
 ifeq ($(TARGET_BUILD_VARIANT),user)
    LOCAL_CFLAGS += -DTARGET_BUILD_VARIANT_USER
@@ -33,7 +31,5 @@ LOCAL_HEADER_LIBRARIES := \
     libloc_core_headers \
     libloc_pla_headers \
     liblocation_api_headers
-
-LOCAL_CFLAGS += $(GNSS_CFLAGS)
 
 include $(BUILD_SHARED_LIBRARY)
