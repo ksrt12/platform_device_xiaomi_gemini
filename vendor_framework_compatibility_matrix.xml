@@ -52,7 +52,7 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     </hal>
     <hal format="hidl" optional="true">
         <name>vendor.display.config</name>
-        <version>1.0-4</version>
+        <version>1.0-6</version>
         <interface>
              <name>IDisplayConfig</name>
              <instance>default</instance>
@@ -85,7 +85,6 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             <name>IdpmQmi</name>
             <instance>dpmQmiService</instance>
         </interface>
-        <fqname>@1.0::IdpmQmi/dpmQmiService</fqname>
     </hal>
     <hal format="hidl" optional="true">
         <name>android.hardware.nfc</name>
@@ -136,7 +135,6 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
    </hal>
    <hal format="hidl" optional="true">
        <name>com.qualcomm.qti.imscmservice</name>
-       <version>1.0</version>
        <version>2.0-1</version>
        <interface>
          <name>IImsCmService</name>
@@ -145,7 +143,6 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
    </hal>
    <hal format="hidl" optional="true">
        <name>com.qualcomm.qti.uceservice</name>
-       <version>1.0</version>
        <version>2.0</version>
        <interface>
          <name>IUceService</name>
@@ -223,6 +220,15 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         </interface>
     </hal>
     <hal format="hidl" optional="true">
+        <name>vendor.qti.hardware.data.connection</name>
+        <version>1.0</version>
+        <interface>
+            <name>IDataConnection</name>
+            <instance>slot1</instance>
+            <instance>slot2</instance>
+        </interface>
+    </hal>
+    <hal format="hidl" optional="true">
         <name>vendor.qti.hardware.fm</name>
         <version>1.0</version>
         <interface>
@@ -294,7 +300,7 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     <hal format="hidl" optional="true">
         <name>vendor.qti.hardware.radio.qtiradio</name>
         <version>1.0</version>
-        <version>2.0</version>
+        <version>2.0-1</version>
         <interface>
             <name>IQtiRadio</name>
             <instance>slot1</instance>
@@ -321,7 +327,7 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     </hal>
     <hal format="hidl" optional="true">
         <name>vendor.qti.hardware.radio.uim</name>
-        <version>1.0</version>
+        <version>1.1</version>
         <interface>
             <name>IUim</name>
             <instance>Uim0</instance>
@@ -446,6 +452,34 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         <version>1.0</version>
         <interface>
             <name>IFactory</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+   <hal format="hidl" optional="true">
+       <name>vendor.qti.hardware.wifi.wifilearner</name>
+       <version>1.0</version>
+       <interface>
+           <name>IWifiStats</name>
+           <instance>wifiStats</instance>
+       </interface>
+   </hal>
+
+    <!-- fingerprint hal: using remote service instead of Google's default service-->
+    <hal format="hidl" optional="true">
+        <name>android.hardware.biometrics.fingerprint</name>
+        <transport>hwbinder</transport>
+        <version>2.1</version>
+        <interface>
+            <name>IBiometricsFingerprint</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="hidl" optional="true">
+        <name>vendor.qti.hardware.fingerprint</name>
+        <transport>hwbinder</transport>
+        <version>1.0</version>
+        <interface>
+            <name>IQtiExtendedFingerprint</name>
             <instance>default</instance>
         </interface>
     </hal>
