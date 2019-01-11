@@ -1,4 +1,4 @@
-From 2e11bd9c9cf33c16a8e724d988a1d1fcb58f4e8c Mon Sep 17 00:00:00 2001
+From 3839aa939860170f8b4208f99393be949a6961ee Mon Sep 17 00:00:00 2001
 From: Kazakov Stepan <ksrt12group@gmail.com>
 Date: Sat, 10 Nov 2018 18:16:14 +0300
 Subject: [PATCH 2/5] fix perms
@@ -9,7 +9,7 @@ Signed-off-by: Kazakov Stepan <ksrt12group@gmail.com>
  1 file changed, 4 insertions(+)
 
 diff --git a/data/etc/privapp-permissions-platform.xml b/data/etc/privapp-permissions-platform.xml
-index bfe864ac480..1b4394515c1 100644
+index 66d3917278f..f04d249a320 100644
 --- a/data/etc/privapp-permissions-platform.xml
 +++ b/data/etc/privapp-permissions-platform.xml
 @@ -242,6 +242,7 @@ applications that come with the platform

@@ -1,4 +1,4 @@
-From 8f0db8c04bf03f72aeef1a59a490c61626c7ffe7 Mon Sep 17 00:00:00 2001
+From cb019c2266b3880f6b9ca222b8f57f44546ffddd Mon Sep 17 00:00:00 2001
 From: Kazakov Stepan <ksrt12group@gmail.com>
 Date: Mon, 3 Dec 2018 00:03:51 +0300
 Subject: [PATCH 3/5] try to fix button backlight
@@ -12,8 +12,8 @@ Signed-off-by: Kazakov Stepan <ksrt12group@gmail.com>
  core/res/res/values/havoc_config.xml          |   6 +-
  core/res/res/values/havoc_symbols.xml         |   7 +-
  .../NotificationManagerService.java           |   2 +-
- .../server/power/PowerManagerService.java     | 315 +++++++++++-------
- 8 files changed, 247 insertions(+), 171 deletions(-)
+ .../server/power/PowerManagerService.java     | 314 +++++++++++-------
+ 8 files changed, 247 insertions(+), 170 deletions(-)
 
 diff --git a/core/java/android/os/IPowerManager.aidl b/core/java/android/os/IPowerManager.aidl
 index 626abe7d487..4092863f62f 100644
@@ -87,7 +87,7 @@ index d4e7ca13a7f..2cb5aeeeb2e 100644
       * Used by the window manager to override the user activity timeout based on the
       * current foreground activity.  It can only be used to make the timeout shorter
 diff --git a/core/java/android/provider/Settings.java b/core/java/android/provider/Settings.java
-index 4c4d0fe5c14..2d74213a298 100644
+index 3ca6819db92..955c7ea4598 100644
 --- a/core/java/android/provider/Settings.java
 +++ b/core/java/android/provider/Settings.java
 @@ -3324,26 +3324,6 @@ public final class Settings {
@@ -156,7 +156,7 @@ index 4c4d0fe5c14..2d74213a298 100644
          /** 
           * Screen stabilization parameters
           * @hide
-@@ -6592,6 +6604,11 @@ public final class Settings {
+@@ -6640,6 +6652,11 @@ public final class Settings {
              PRIVATE_SETTINGS.add(NETWORK_TRAFFIC_TYPE);
              PRIVATE_SETTINGS.add(NETWORK_TRAFFIC_AUTOHIDE_THRESHOLD);
              PRIVATE_SETTINGS.add(VOLUME_DIALOG_TIMEOUT);
@@ -169,7 +169,7 @@ index 4c4d0fe5c14..2d74213a298 100644
              PRIVATE_SETTINGS.add(VOLUME_KEYS_CONTROL_RING_TONE);
              PRIVATE_SETTINGS.add(THEMING_SETTINGS_DASHBOARD_ICONS);
 diff --git a/core/res/res/values/havoc_config.xml b/core/res/res/values/havoc_config.xml
-index 0134bc76f9a..f905130fe22 100644
+index ef1b88736f3..b44fe4ce5a1 100644
 --- a/core/res/res/values/havoc_config.xml
 +++ b/core/res/res/values/havoc_config.xml
 @@ -39,9 +39,6 @@
@@ -182,7 +182,7 @@ index 0134bc76f9a..f905130fe22 100644
      <!-- Whether notify fingerprint client of successful cancelled authentication -->
      <bool name="config_notifyClientOnFingerprintCancelSuccess">false</bool>
  
-@@ -190,6 +187,9 @@
+@@ -185,6 +182,9 @@
      <!-- Whether to cleanup fingerprints upon connection to the daemon and when user switches -->
      <bool name="config_cleanupUnusedFingerprints">true</bool>
  
@@ -193,7 +193,7 @@ index 0134bc76f9a..f905130fe22 100644
      <bool name="config_oldQtiTelephony">true</bool>
  
 diff --git a/core/res/res/values/havoc_symbols.xml b/core/res/res/values/havoc_symbols.xml
-index a1a374f66dc..636c6758ba9 100644
+index 861400b6a6c..428e42d62da 100644
 --- a/core/res/res/values/havoc_symbols.xml
 +++ b/core/res/res/values/havoc_symbols.xml
 @@ -27,9 +27,6 @@
@@ -206,7 +206,7 @@ index a1a374f66dc..636c6758ba9 100644
    <!-- Whether notify fingerprint client of successful cancelled authentication -->
    <java-symbol type="bool" name="config_notifyClientOnFingerprintCancelSuccess" />
  
-@@ -210,6 +207,10 @@
+@@ -201,6 +198,10 @@
  
    <java-symbol type="string" name="config_comboNetworkLocationProvider" />
  
@@ -218,7 +218,7 @@ index a1a374f66dc..636c6758ba9 100644
    <java-symbol type="drawable" name="weather_clear_night" />
    <java-symbol type="drawable" name="weather_cloudy" />
 diff --git a/services/core/java/com/android/server/notification/NotificationManagerService.java b/services/core/java/com/android/server/notification/NotificationManagerService.java
-index d9dac902cd2..10b4ade2cdc 100644
+index 1b830917548..81748251caf 100644
 --- a/services/core/java/com/android/server/notification/NotificationManagerService.java
 +++ b/services/core/java/com/android/server/notification/NotificationManagerService.java
 @@ -1243,7 +1243,7 @@ public class NotificationManagerService extends SystemService {
@@ -231,10 +231,10 @@ index d9dac902cd2..10b4ade2cdc 100644
                      mNotificationPulseEnabled = pulseEnabled;
                      updateNotificationPulse();
 diff --git a/services/core/java/com/android/server/power/PowerManagerService.java b/services/core/java/com/android/server/power/PowerManagerService.java
-index ded681ef5a9..d034abde794 100755
+index bb37f06b9eb..b96ad6a71be 100755
 --- a/services/core/java/com/android/server/power/PowerManagerService.java
 +++ b/services/core/java/com/android/server/power/PowerManagerService.java
-@@ -141,6 +141,8 @@ public final class PowerManagerService extends SystemService
+@@ -140,6 +140,8 @@ public final class PowerManagerService extends SystemService
      private static final int MSG_CHECK_FOR_LONG_WAKELOCKS = 4;
      private static final int MSG_WAKE_UP = 5;
  
@@ -243,7 +243,7 @@ index ded681ef5a9..d034abde794 100755
      // Dirty bit: mWakeLocks changed
      protected static final int DIRTY_WAKE_LOCKS = 1 << 0;
      // Dirty bit: mWakefulness changed
-@@ -201,8 +203,6 @@ public final class PowerManagerService extends SystemService
+@@ -200,8 +202,6 @@ public final class PowerManagerService extends SystemService
      // Power features defined in hardware/libhardware/include/hardware/power.h.
      private static final int POWER_FEATURE_DOUBLE_TAP_TO_WAKE = 1;
  
@@ -252,7 +252,7 @@ index ded681ef5a9..d034abde794 100755
      // Default setting for double tap to wake.
      private static final int DEFAULT_DOUBLE_TAP_TO_WAKE = 0;
  
-@@ -261,13 +261,6 @@ public final class PowerManagerService extends SystemService
+@@ -260,13 +260,6 @@ public final class PowerManagerService extends SystemService
      private Light mAttentionLight;
      private Light mButtonsLight;
  
@@ -266,7 +266,7 @@ index ded681ef5a9..d034abde794 100755
      private final Object mLock = LockGuard.installNewLock(LockGuard.INDEX_POWER);
  
      // A bitfield that indicates what parts of the power state have
-@@ -513,11 +506,6 @@ public final class PowerManagerService extends SystemService
+@@ -512,11 +505,6 @@ public final class PowerManagerService extends SystemService
      // Set to -1 when not told the user is inactive since the last period spent dozing or asleep.
      private long mOverriddenTimeout = -1;
  
@@ -278,7 +278,7 @@ index ded681ef5a9..d034abde794 100755
      // The user activity timeout override from the window manager
      // to allow the current foreground activity to override the user activity timeout.
      // Use -1 to disable.
-@@ -544,12 +532,6 @@ public final class PowerManagerService extends SystemService
+@@ -543,12 +531,6 @@ public final class PowerManagerService extends SystemService
      // True if we are currently in light device idle mode.
      private boolean mLightDeviceIdleMode;
  
@@ -291,7 +291,7 @@ index ded681ef5a9..d034abde794 100755
      // Set of app ids that we will always respect the wake locks for.
      int[] mDeviceIdleWhitelist = new int[0];
  
-@@ -618,6 +600,24 @@ public final class PowerManagerService extends SystemService
+@@ -617,6 +599,24 @@ public final class PowerManagerService extends SystemService
          }
      }
  
@@ -316,7 +316,7 @@ index ded681ef5a9..d034abde794 100755
      /**
       * All times are in milliseconds. These constants are kept synchronized with the system
       * global Settings. Any access to this class or its fields should be done while
-@@ -813,7 +813,6 @@ public final class PowerManagerService extends SystemService
+@@ -812,7 +812,6 @@ public final class PowerManagerService extends SystemService
              mScreenBrightnessSettingMinimum = pm.getMinimumScreenBrightnessSetting();
              mScreenBrightnessSettingMaximum = pm.getMaximumScreenBrightnessSetting();
              mScreenBrightnessSettingDefault = pm.getDefaultScreenBrightnessSetting();
@@ -324,7 +324,7 @@ index ded681ef5a9..d034abde794 100755
  
              SensorManager sensorManager = new SystemSensorManager(mContext, mHandler.getLooper());
  
-@@ -899,21 +898,31 @@ public final class PowerManagerService extends SystemService
+@@ -898,21 +897,31 @@ public final class PowerManagerService extends SystemService
          resolver.registerContentObserver(Settings.Global.getUriFor(
                  Settings.Global.DEVICE_DEMO_MODE),
                  false, mSettingsObserver, UserHandle.USER_SYSTEM);
@@ -368,7 +368,7 @@ index ded681ef5a9..d034abde794 100755
          resolver.registerContentObserver(Settings.System.getUriFor(
                  Settings.System.WAKELOCK_BLOCKING_ENABLED),
                  false, mSettingsObserver, UserHandle.USER_ALL);
-@@ -1002,6 +1011,10 @@ public final class PowerManagerService extends SystemService
+@@ -1001,6 +1010,10 @@ public final class PowerManagerService extends SystemService
              mProximityWakeLock = mContext.getSystemService(PowerManager.class)
                      .newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "ProximityWakeLock");
          }
@@ -379,7 +379,7 @@ index ded681ef5a9..d034abde794 100755
      }
  
      private void updateSettingsLocked() {
-@@ -1061,27 +1074,12 @@ public final class PowerManagerService extends SystemService
+@@ -1060,27 +1073,12 @@ public final class PowerManagerService extends SystemService
                  Settings.System.SCREEN_BRIGHTNESS_MODE,
                  Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL, UserHandle.USER_CURRENT);
  
@@ -408,7 +408,7 @@ index ded681ef5a9..d034abde794 100755
          mDirty |= DIRTY_SETTINGS;
      }
  
-@@ -1430,6 +1428,7 @@ public final class PowerManagerService extends SystemService
+@@ -1429,6 +1427,7 @@ public final class PowerManagerService extends SystemService
  
          Trace.traceBegin(Trace.TRACE_TAG_POWER, "userActivity");
          try {
@@ -416,7 +416,7 @@ index ded681ef5a9..d034abde794 100755
              if (eventTime > mLastInteractivePowerHintTime) {
                  powerHintInternal(PowerHint.INTERACTION, 0);
                  mLastInteractivePowerHintTime = eventTime;
-@@ -1463,13 +1462,6 @@ public final class PowerManagerService extends SystemService
+@@ -1462,13 +1461,6 @@ public final class PowerManagerService extends SystemService
                  }
              } else {
                  if (eventTime > mLastUserActivityTime) {
@@ -430,7 +430,7 @@ index ded681ef5a9..d034abde794 100755
                      mLastUserActivityTime = eventTime;
                      mDirty |= DIRTY_USER_ACTIVITY;
                      if (event == PowerManager.USER_ACTIVITY_EVENT_BUTTON) {
-@@ -2150,6 +2142,14 @@ public final class PowerManagerService extends SystemService
+@@ -2149,6 +2141,14 @@ public final class PowerManagerService extends SystemService
                  | DIRTY_WAKEFULNESS | DIRTY_SETTINGS)) != 0) {
              mHandler.removeMessages(MSG_USER_ACTIVITY_TIMEOUT);
  
@@ -445,14 +445,7 @@ index ded681ef5a9..d034abde794 100755
              long nextTimeout = 0;
              if (mWakefulness == WAKEFULNESS_AWAKE
                      || mWakefulness == WAKEFULNESS_DREAMING
-@@ -2161,65 +2161,36 @@ public final class PowerManagerService extends SystemService
-                 final long nextProfileTimeout = getNextProfileTimeoutLocked(now);
-                 final PocketManager pocketManager = (PocketManager) mContext.getSystemService(Context.POCKET_SERVICE);
-                 final boolean isDeviceInPocket = pocketManager != null && pocketManager.isDeviceInPocket();
--                final boolean buttonPressed = mEvent == PowerManager.USER_ACTIVITY_EVENT_BUTTON;
- 
-                 mUserActivitySummary = 0;
-                 if (mLastUserActivityTime >= mLastWakeTime) {
+@@ -2164,58 +2164,30 @@ public final class PowerManagerService extends SystemService
                      nextTimeout = mLastUserActivityTime
                              + screenOffTimeout - screenDimDuration;
                      if (now < nextTimeout) {
@@ -481,10 +474,10 @@ index ded681ef5a9..d034abde794 100755
 -                                mButtonOn = false;
                              } else {
 -                                if ((!mButtonBacklightOnTouchOnly || mButtonPressed) &&
--                                        !mProximityPositive && !isDeviceInPocket) {
+-                                        !mProximityPositive) {
 -                                    mButtonsLight.setBrightness(buttonBrightness);
 -                                    mButtonPressed = false;
--                                    if (buttonBrightness != 0 && mButtonTimeout != 0 && buttonPressed) {
+-                                    if (buttonBrightness != 0 && mButtonTimeout != 0) {
 -                                        mButtonOn = true;
 -                                        if (now + mButtonTimeout < nextTimeout) {
 -                                            nextTimeout = now + mButtonTimeout;
@@ -520,7 +513,7 @@ index ded681ef5a9..d034abde794 100755
                              mUserActivitySummary = USER_ACTIVITY_SCREEN_BRIGHT;
                          } else if (mDisplayPowerRequest.policy == DisplayPowerRequest.POLICY_DIM) {
                              mUserActivitySummary = USER_ACTIVITY_SCREEN_DIM;
-@@ -2640,6 +2611,12 @@ public final class PowerManagerService extends SystemService
+@@ -2636,6 +2608,12 @@ public final class PowerManagerService extends SystemService
                  mDisplayPowerRequest.dozeScreenBrightness = PowerManager.BRIGHTNESS_DEFAULT;
              }
  
@@ -533,7 +526,7 @@ index ded681ef5a9..d034abde794 100755
              mDisplayReady = mDisplayManagerInternal.requestPowerState(mDisplayPowerRequest,
                      mRequestWaitForNegativeProximity);
              mRequestWaitForNegativeProximity = false;
-@@ -3334,16 +3311,6 @@ public final class PowerManagerService extends SystemService
+@@ -3330,16 +3308,6 @@ public final class PowerManagerService extends SystemService
          }
      }
  
@@ -550,7 +543,7 @@ index ded681ef5a9..d034abde794 100755
      private void setUserInactiveOverrideFromWindowManagerInternal() {
          synchronized (mLock) {
              mUserInactiveOverrideFromWindowManager = true;
-@@ -3404,6 +3371,12 @@ public final class PowerManagerService extends SystemService
+@@ -3400,6 +3368,12 @@ public final class PowerManagerService extends SystemService
          nativeSendPowerHint(hintId, data);
      }
  
@@ -563,7 +556,7 @@ index ded681ef5a9..d034abde794 100755
      /**
       * Low-level function turn the device off immediately, without trying
       * to be clean.  Most people should use {@link ShutdownThread} for a clean shutdown.
-@@ -4112,6 +4085,12 @@ public final class PowerManagerService extends SystemService
+@@ -4108,6 +4082,12 @@ public final class PowerManagerService extends SystemService
                      cleanupProximity();
                      ((Runnable) msg.obj).run();
                      break;
@@ -576,7 +569,7 @@ index ded681ef5a9..d034abde794 100755
              }
          }
      }
-@@ -4900,6 +4879,19 @@ public final class PowerManagerService extends SystemService
+@@ -4896,6 +4876,19 @@ public final class PowerManagerService extends SystemService
              }
          }
  
@@ -596,7 +589,7 @@ index ded681ef5a9..d034abde794 100755
          @Override
          /* updates the blocked uids, so if a wake lock is acquired for it
           * can be released.
-@@ -4972,18 +4964,6 @@ public final class PowerManagerService extends SystemService
+@@ -4968,18 +4961,6 @@ public final class PowerManagerService extends SystemService
              setScreenBrightnessOverrideFromWindowManagerInternal(screenBrightness);
          }
  
@@ -615,7 +608,7 @@ index ded681ef5a9..d034abde794 100755
          @Override
          public void setDozeOverrideFromDreamManager(int screenState, int screenBrightness) {
              switch (screenState) {
-@@ -5006,7 +4986,6 @@ public final class PowerManagerService extends SystemService
+@@ -5002,7 +4983,6 @@ public final class PowerManagerService extends SystemService
              setDozeOverrideFromDreamManagerInternal(screenState, screenBrightness);
          }
  
@@ -623,7 +616,7 @@ index ded681ef5a9..d034abde794 100755
          @Override
          public void setUserInactiveOverrideFromWindowManager() {
              setUserInactiveOverrideFromWindowManagerInternal();
-@@ -5165,4 +5144,106 @@ public final class PowerManagerService extends SystemService
+@@ -5161,4 +5141,106 @@ public final class PowerManagerService extends SystemService
                     mProximitySensor, SensorManager.SENSOR_DELAY_FASTEST);
          }
      }

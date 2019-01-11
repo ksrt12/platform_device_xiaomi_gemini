@@ -232,7 +232,7 @@ DISABLE_RILD_OEM_HOOK := false
 # SELinux
 BOARD_SEPOLICY_DIRS += $(VENDOR_PATH)/sepolicy
 include device/qcom/sepolicy/sepolicy.mk
-include device/syberia/sepolicy/common/sepolicy.mk
+include device/havoc/sepolicy/qcom/sepolicy.mk
 
 # Vendor init
 TARGET_INIT_VENDOR_LIB := libinit_gemini

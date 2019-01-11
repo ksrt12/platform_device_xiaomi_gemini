@@ -1,4 +1,4 @@
-From c1a25fa430e8bbd4faed5c41004c8a9a04b8efa3 Mon Sep 17 00:00:00 2001
+From 64bfdfea393abfd108e02e4462a4b249e9fcf43f Mon Sep 17 00:00:00 2001
 From: Kazakov Stepan <ksrt12group@gmail.com>
 Date: Mon, 3 Dec 2018 00:06:42 +0300
 Subject: [PATCH 4/5] base: allow home button to wake device [1/2]
@@ -6,14 +6,14 @@ Subject: [PATCH 4/5] base: allow home button to wake device [1/2]
 Signed-off-by: Kazakov Stepan <ksrt12group@gmail.com>
 ---
  core/java/android/provider/Settings.java      |  6 +++++
- .../server/policy/PhoneWindowManager.java     | 22 +++++++++++++++----
- 2 files changed, 24 insertions(+), 4 deletions(-)
+ .../server/policy/PhoneWindowManager.java     | 24 +++++++++++++++----
+ 2 files changed, 25 insertions(+), 5 deletions(-)
 
 diff --git a/core/java/android/provider/Settings.java b/core/java/android/provider/Settings.java
-index 2d74213a298..cac9000470f 100644
+index 955c7ea4598..21c7c489781 100644
 --- a/core/java/android/provider/Settings.java
 +++ b/core/java/android/provider/Settings.java
-@@ -5751,6 +5751,12 @@ public final class Settings {
+@@ -5730,6 +5730,12 @@ public final class Settings {
          public static final String TOAST_ICON = "toast_icon";
  
          /**
@@ -27,18 +27,20 @@ index 2d74213a298..cac9000470f 100644
           * @hide
           */
 diff --git a/services/core/java/com/android/server/policy/PhoneWindowManager.java b/services/core/java/com/android/server/policy/PhoneWindowManager.java
-index 314227b09a6..9502500ae71 100644
+index bed0b48f21f..836ed5f5e7b 100644
 --- a/services/core/java/com/android/server/policy/PhoneWindowManager.java
 +++ b/services/core/java/com/android/server/policy/PhoneWindowManager.java
-@@ -688,6 +688,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
-     private DeviceKeyHandler mDeviceKeyHandler;
+@@ -689,7 +689,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
+     MetricsLogger mLogger;
      private HardkeyActionHandler mKeyHandler;
      boolean mHasNavigationBar = false;
+-
 +    boolean mHomeWakeScreen;
-     
++    
      private boolean mHandleVolumeKeysInWM;
  
-@@ -1263,6 +1264,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
+     boolean mVolumeRockerWake;
+@@ -1322,6 +1323,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
              resolver.registerContentObserver(Settings.System.getUriFor(
                      Settings.System.BOTTOM_GESTURE_SWIPE_LIMIT), false, this,
                      UserHandle.USER_ALL);
@@ -48,7 +50,7 @@ index 314227b09a6..9502500ae71 100644
              updateSettings();
          }
  
-@@ -3151,6 +3155,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
+@@ -3229,6 +3233,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                      resolver, Settings.System.TORCH_LONG_PRESS_POWER_TIMEOUT, 0,
                      UserHandle.USER_CURRENT);
  
@@ -58,7 +60,7 @@ index 314227b09a6..9502500ae71 100644
              // Configure wake gesture.
              boolean wakeGestureEnabledSetting = Settings.Secure.getIntForUser(resolver,
                      Settings.Secure.WAKE_GESTURE_ENABLED, 0,
-@@ -3163,7 +3170,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
+@@ -3241,7 +3248,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
              // navbar
              mHasNavigationBar = DeviceUtils.deviceSupportNavigationBar(mContext);
  
@@ -67,7 +69,7 @@ index 314227b09a6..9502500ae71 100644
              boolean threeFingerGesture = Settings.System.getIntForUser(resolver,
                      Settings.System.THREE_FINGER_GESTURE, 0, UserHandle.USER_CURRENT) == 1;
              enableSwipeThreeFingerGesture(threeFingerGesture);
-@@ -7035,7 +7042,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
+@@ -7142,7 +7149,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
          final int source = event.getSource();
          final boolean navBarKey = source == InputDevice.SOURCE_NAVIGATION_BAR;
          final boolean appSwitchKey = keyCode == KeyEvent.KEYCODE_APP_SWITCH;
@@ -75,7 +77,7 @@ index 314227b09a6..9502500ae71 100644
          final boolean menuKey = keyCode == KeyEvent.KEYCODE_MENU;
          final boolean backKey = keyCode == KeyEvent.KEYCODE_BACK;
          final boolean virtualKey = event.getDeviceId() == KeyCharacterMap.VIRTUAL_KEYBOARD;
-@@ -7072,12 +7078,12 @@ public class PhoneWindowManager implements WindowManagerPolicy {
+@@ -7163,12 +7169,12 @@ public class PhoneWindowManager implements WindowManagerPolicy {
          }
  
          if (mANBIHandler != null && mANBIEnabled && mANBIHandler.isScreenTouched()
@@ -90,7 +92,7 @@ index 314227b09a6..9502500ae71 100644
              return 0;
          }
  
-@@ -7214,6 +7220,14 @@ public class PhoneWindowManager implements WindowManagerPolicy {
+@@ -7310,6 +7316,14 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                  break;
              }
  
