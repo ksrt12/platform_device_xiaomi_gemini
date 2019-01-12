@@ -38,29 +38,6 @@
     </privapp-permissions>
     -->
 
-    <privapp-permissions package="com.quicinc.cne.CNEService">
-        <permission name="android.permission.PACKET_KEEPALIVE_OFFLOAD"/>
-    </privapp-permissions>
-    <privapp-permissions package="com.qualcomm.qcrilmsgtunnel">
-        <permission name="android.permission.INTERACT_ACROSS_USERS"/>
-    </privapp-permissions>
-    <privapp-permissions package="com.qualcomm.qti.tetherservice">
-        <permission name="android.permission.INTERACT_ACROSS_USERS"/>
-    </privapp-permissions>
-    <privapp-permissions package="com.qualcomm.location">
-        <permission name="android.permission.CONTROL_LOCATION_UPDATES"/>
-        <permission name="android.permission.MANAGE_USERS"/>
-    </privapp-permissions>
-    <privapp-permissions package="com.qualcomm.wfd.service">
-        <permission name="android.permission.READ_FRAME_BUFFER"/>
-        <permission name="android.permission.WRITE_MEDIA_STORAGE"/>
-    </privapp-permissions>
-    <privapp-permissions package="org.codeaurora.snapcam">
-      <permission name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
-      <permission name="android.permission.PREVENT_POWER_KEY"/>
-      <permission name="android.permission.WRITE_MEDIA_STORAGE"/>
-    </privapp-permissions>
-
     <privapp-permissions package="com.google.android.apps.wallpaper">
         <permission name="android.permission.READ_WALLPAPER_INTERNAL"/>
     </privapp-permissions>
@@ -76,6 +53,10 @@
         <permission name="android.permission.ACCESS_CACHE_FILESYSTEM"/>
         <permission name="android.permission.REBOOT"/>
         <permission name="android.permission.RECOVERY"/>
+    </privapp-permissions>
+
+    <privapp-permissions package="com.android.vending">
+        <permission name="android.permission.SUBSTITUTE_NOTIFICATION_APP_NAME"/>
     </privapp-permissions>
 
 </permissions>
