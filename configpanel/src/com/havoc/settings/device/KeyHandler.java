@@ -1,5 +1,6 @@
 /*
 * Copyright (C) 2018 Syberia Project
+* Copyright (C) 2019 ksrt12
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -19,8 +20,14 @@ package com.havoc.settings.device;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Handler;
-import android.database.ContentObserver;
+import android.os.PowerManager;
+import android.os.PowerManager.WakeLock;
 import android.util.Log;
 import android.provider.Settings;
 import android.view.KeyEvent;
@@ -32,7 +39,7 @@ import com.android.internal.util.ArrayUtils;
 public class KeyHandler implements DeviceKeyHandler {
 
     private static final String TAG = KeyHandler.class.getSimpleName();
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
 
     private static final int KEY_HOME = 102;
     private static final int KEY_HOME_VIRTUAL = 96;
@@ -47,53 +54,38 @@ public class KeyHandler implements DeviceKeyHandler {
     };
 
     protected final Context mContext;
-    private Handler mHandler = new Handler();
-    private SettingsObserver mSettingsObserver;
+    private final PowerManager mPowerManager;
     private static boolean mButtonDisabled;
-
-    private class SettingsObserver extends ContentObserver {
-        SettingsObserver(Handler handler) {
-            super(handler);
-        }
-
-        void observe() {
-            mContext.getContentResolver().registerContentObserver(Settings.Secure.getUriFor(
-                    Settings.Secure.HARDWARE_KEYS_DISABLE),
-                    false, this);
-            update();
-        }
-
-        @Override
-        public void onChange(boolean selfChange) {
-            update();
-        }
-
-
-        public void update() {
-            if (DEBUG) Log.i(TAG, "update called" );
-            setButtonSetting(mContext);
-        }
-    }
+    private Handler mHandler = new Handler();
+    private SensorManager mSensorManager;
+    private Sensor mProximitySensor;
+    WakeLock mProximityWakeLock;
+    private int mProximityTimeOut;
+    private boolean mProximityWakeSupported;
 
     public KeyHandler(Context context) {
         if (DEBUG) Log.i(TAG, "KeyHandler called");
         mContext = context;
-	mSettingsObserver = new SettingsObserver(mHandler);
-        mSettingsObserver.observe();
+        mPowerManager = context.getSystemService(PowerManager.class);
+
+        final Resources resources = mContext.getResources();
+        mProximityTimeOut = resources.getInteger(
+                com.android.internal.R.integer.config_proximityCheckTimeout);
+        mProximityWakeSupported = resources.getBoolean(
+                com.android.internal.R.bool.config_proximityCheckOnWake);
+
+        if (mProximityWakeSupported) {
+            mSensorManager = context.getSystemService(SensorManager.class);
+            mProximitySensor = mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
+            mProximityWakeLock = mPowerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,
+                    "ProximityWakeLock");
+        }
     }
 
-    @Override
-    public boolean handleKeyEvent(KeyEvent event) {
+    public KeyEvent handleKeyEvent(KeyEvent event) {
         if (DEBUG) Log.i(TAG, "handleKeyEvent called - scancode=" + event.getScanCode() + " - keyevent=" + event.getAction());
-        return false;
+        return event;
     }
-
-    @Override
-    public boolean canHandleKeyEvent(KeyEvent event) {
-        Log.i(TAG, "canHandleKeyEvent called - scancode=" + event.getScanCode() + " - keyevent=" + event.getAction());
-        return false;
-    }
-
 
     public static void setButtonSetting(Context context) {
         if (DEBUG) Log.i(TAG, "SetButtonDisable called" );
@@ -103,42 +95,4 @@ public class KeyHandler implements DeviceKeyHandler {
         if (DEBUG) Log.i(TAG, "setButtonDisable=" + mButtonDisabled);
     }
 
-    @Override
-    public boolean isCameraLaunchEvent(KeyEvent event) {
-        return false;
-    }
-
-    @Override
-    public boolean isWakeEvent(KeyEvent event){
-        if (DEBUG) Log.i(TAG, "isWakeEvent called - scancode=" + event.getScanCode() + " - keyevent=" + event.getAction());
-        if (event.getAction() != KeyEvent.ACTION_UP) {
-            return false;
-        }
-            if (event.getScanCode() == KEY_HOME) {
-                if (DEBUG) Log.i(TAG, "KEY_HOME pressed");
-                return true;
-	    }
-        return false;
-    }
-
-    @Override
-    public boolean isDisabledKeyEvent(KeyEvent event) {
-        if (DEBUG) Log.i(TAG, "isDisabledKeyEvent called");
-        if (mButtonDisabled) {
-            if (DEBUG) Log.i(TAG, "Buttons are disabled");
-            if (ArrayUtils.contains(sDisabledKeys, event.getScanCode())) {
-                if (DEBUG) Log.i(TAG, "Key blocked=" + event.getScanCode());
-                return true;
-            }
-        }
-        return false;
-    }
-
-    @Override
-    public Intent isActivityLaunchEvent(KeyEvent event) {
-        if (event.getAction() != KeyEvent.ACTION_UP) {
-            return null;
-        }
-        return null;
-    }
 }
