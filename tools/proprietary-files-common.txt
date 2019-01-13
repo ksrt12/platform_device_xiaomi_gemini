@@ -399,18 +399,18 @@ vendor/lib/libRSDriver_adreno.so|7e6b61cb975de2029ea6debe4fe442852da06e00
 vendor/lib64/libhdr_tm.so|f4c0fe6a734077666ec5e10f68577f70a26cd2d2
 vendor/lib/libhdr_tm.so|37ac96055e1fcb2d1a3b4507ba62760ca30915b3
 
-# Graphics (SDM) - from daisy - PKQ1.180917.001
-vendor/lib64/libscalar.so|a48bf0845cc4c2cbffc3c4a2fac6e11f3acf48ec
-vendor/lib64/libsdm-color.so|6305527de13c7f33c6cc469f01f6346f5627be82
-vendor/lib64/libsdm-diag.so|73713b128751534fa8f25d00c4d56644e8a7868a
--vendor/lib64/libsdm-disp-vndapis.so|0770a8dc3ab6b3f385be14cd25e8b89a0e780a2e
-vendor/lib64/libsdmextension.so|b26b05c09aac03153fdb6ece475cc5866f390e1d
-vendor/lib64/libtinyxml2_1.so|5ffb12fd2162910fc95be463fcde04ab5c427045
+# Graphics (SDM) - LA.UM.7.5.r1-03700-8x96.0
+vendor/lib64/libscalar.so|490cc7447863b3279771ad99e92a5625525db055
+vendor/lib64/libsdm-color.so|9bb3f5147c277eae08c7f918e7de3bd2fccf1f74
+vendor/lib64/libsdm-diag.so|7ab5d2a980029ac9bd20fe68656823b21e483e11
+-vendor/lib64/libsdm-disp-vndapis.so|6ae24866bbd413ed112778650c8fd7a2631cb1a9
+vendor/lib64/libsdmextension.so|e91aaf852df780e42bb083c3089f5b42c87c49f7
+vendor/lib64/libtinyxml2_1.so|b743b93bbb47bb2d80322fcfb985b7b8c696fa1b
 vendor/lib/libscalar.so|04bd08e3c814687226287d167351bf76e233fd86
-vendor/lib/libsdm-color.so|9144f6d1e254fc6353fb91386eb1d0ee1964d8a2
+vendor/lib/libsdm-color.so|b13ab5f965f5bb8f40207879415cb1adbb55da42
 vendor/lib/libsdm-diag.so|e2e3a0fba39190c58bafa0568e8cd51b391b71b6
--vendor/lib/libsdm-disp-vndapis.so|55e2d71cb097a2af3310b112e086e919bd81656f
-vendor/lib/libsdmextension.so|04fba39e30c182e4edbf01d78c897c0fd0dc52d9
+-vendor/lib/libsdm-disp-vndapis.so|6c4233ea3676643bc9658c25cfad7edd45c49362
+vendor/lib/libsdmextension.so|a8659e7e0df5f1e20266ede1331da0660e0fe260
 vendor/lib/libtinyxml2_1.so|3882fddae942997be6ad6af789cf209fa45e61b3
 
 # Graphics (Vulkan) - from marlin - PPR2.180905.006
@@ -524,7 +524,7 @@ vendor/bin/hw/vendor.display.color@1.0-service|4186fc9f9c69897fe4d79bbf58025144d
 vendor/bin/mm-pp-dpps|74141c92e68a293b2f5fb0992cb58102ecd9718b
 vendor/etc/init/vendor.display.color@1.0-service.rc|5ad673f879b3685a0e79b5633437e5499cb94f48
 vendor/lib64/libdisp-aba.so|09a8d5f64b3a6f6f57971ad6fab62cfde4e98547
-vendor/lib64/libsdm-disp-vndapis.so|0770a8dc3ab6b3f385be14cd25e8b89a0e780a2e
+vendor/lib64/libsdm-disp-vndapis.so|6ae24866bbd413ed112778650c8fd7a2631cb1a9
 vendor/lib64/vendor.display.color@1.0.so|4a77650c5d42169073a13f5150da619bf806e7d7
 vendor/lib64/vendor.display.color@1.1.so|a8bfe228ed1235f1ceb8ab794100c7edab38d0a7
 vendor/lib64/vendor.display.color@1.2.so|6a9474efc2736d68bab877dfdbdca5296c8b4e5d
