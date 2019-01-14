@@ -29,3 +29,4 @@ allow init sysfs:file setattr;
 allow init proc:file { open read getattr};
 allow init sensors:process noatsecure;
 allow init nativetest_data_file:file getattr;
+ 

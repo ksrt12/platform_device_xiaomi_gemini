@@ -31,12 +31,6 @@ allow untrusted_app bg_boot_complete_prop:file read;
 allow untrusted_app bg_daemon_prop:file read;
 allow untrusted_app boottime_prop:file read;
 allow untrusted_app cnd_vendor_prop:file read;
-
-#!!!! This avc is a constraint violation.  You would need to modify the attributes of either the source or target types to allow this access.
-#Constraint rule: 
-#	mlsconstrain unix_stream_socket { connectto } ((l1 eq l2 -Fail-)  or (t1 == mlstrustedsubject -Fail-)  or (t2 == mlstrustedsubject -Fail-) ); Constraint DENIED
-
-#	Possible cause is the source level (s0:c118,c256,c512,c768) and target level (s0:c512,c768) are different.
 allow untrusted_app untrusted_app_27:unix_stream_socket connectto;
 
 #============= untrusted_app_27 ==============
@@ -48,3 +42,25 @@ allow untrusted_app_27 console_silent_prop:file read;
 
 #============= webview_zygote ==============
 allow webview_zygote theme_data_file:dir search;
+
+#============= bluetooth ==============
+allow bluetooth adbtcp_prop:file read;
+allow bluetooth bg_boot_complete_prop:file read;
+
+#============= dataservice_app ==============
+allow dataservice_app adbtcp_prop:file read;
+allow dataservice_app bg_boot_complete_prop:file read;
+allow dataservice_app bg_daemon_prop:file read;
+allow dataservice_app runtime_event_log_tags_file:file read;
+
+#============= dex2oat ==============
+allow dex2oat runtime_event_log_tags_file:file read;
+
+#============= dpmd ==============
+allow dpmd netutils_wrapper:process noatsecure;
+
+#============= hal_health_default ==============
+allow hal_health_default mnt_vendor_file:dir search;
+
+#============= hal_wifi_default ==============
+allow hal_wifi_default kernel:system module_request;

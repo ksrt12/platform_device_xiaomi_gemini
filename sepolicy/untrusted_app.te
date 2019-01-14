@@ -2,3 +2,4 @@
 r_dir_file(untrusted_app, sysfs_batteryinfo)
 allow untrusted_app vendor_camera_prop:file r_file_perms;
 allow untrusted_app untrusted_app_27:unix_stream_socket connectto;
+allow untrusted_app mnt_vendor_file:dir { getattr search };
