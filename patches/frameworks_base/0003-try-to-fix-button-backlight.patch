@@ -1,4 +1,4 @@
-From cb019c2266b3880f6b9ca222b8f57f44546ffddd Mon Sep 17 00:00:00 2001
+From 1453d51ef29912c8f071394e2bfcca393894e0d6 Mon Sep 17 00:00:00 2001
 From: Kazakov Stepan <ksrt12group@gmail.com>
 Date: Mon, 3 Dec 2018 00:03:51 +0300
 Subject: [PATCH 3/5] try to fix button backlight
@@ -87,7 +87,7 @@ index d4e7ca13a7f..2cb5aeeeb2e 100644
       * Used by the window manager to override the user activity timeout based on the
       * current foreground activity.  It can only be used to make the timeout shorter
 diff --git a/core/java/android/provider/Settings.java b/core/java/android/provider/Settings.java
-index 3ca6819db92..955c7ea4598 100644
+index e708ee6b4a6..fa7592375f0 100644
 --- a/core/java/android/provider/Settings.java
 +++ b/core/java/android/provider/Settings.java
 @@ -3324,26 +3324,6 @@ public final class Settings {
@@ -156,7 +156,7 @@ index 3ca6819db92..955c7ea4598 100644
          /** 
           * Screen stabilization parameters
           * @hide
-@@ -6640,6 +6652,11 @@ public final class Settings {
+@@ -6674,6 +6686,11 @@ public final class Settings {
              PRIVATE_SETTINGS.add(NETWORK_TRAFFIC_TYPE);
              PRIVATE_SETTINGS.add(NETWORK_TRAFFIC_AUTOHIDE_THRESHOLD);
              PRIVATE_SETTINGS.add(VOLUME_DIALOG_TIMEOUT);
@@ -169,7 +169,7 @@ index 3ca6819db92..955c7ea4598 100644
              PRIVATE_SETTINGS.add(VOLUME_KEYS_CONTROL_RING_TONE);
              PRIVATE_SETTINGS.add(THEMING_SETTINGS_DASHBOARD_ICONS);
 diff --git a/core/res/res/values/havoc_config.xml b/core/res/res/values/havoc_config.xml
-index ef1b88736f3..b44fe4ce5a1 100644
+index 9fc41ab7a3a..735503a9054 100644
 --- a/core/res/res/values/havoc_config.xml
 +++ b/core/res/res/values/havoc_config.xml
 @@ -39,9 +39,6 @@
@@ -193,7 +193,7 @@ index ef1b88736f3..b44fe4ce5a1 100644
      <bool name="config_oldQtiTelephony">true</bool>
  
 diff --git a/core/res/res/values/havoc_symbols.xml b/core/res/res/values/havoc_symbols.xml
-index 861400b6a6c..428e42d62da 100644
+index 20036d65299..40a05a09d75 100644
 --- a/core/res/res/values/havoc_symbols.xml
 +++ b/core/res/res/values/havoc_symbols.xml
 @@ -27,9 +27,6 @@
@@ -206,7 +206,7 @@ index 861400b6a6c..428e42d62da 100644
    <!-- Whether notify fingerprint client of successful cancelled authentication -->
    <java-symbol type="bool" name="config_notifyClientOnFingerprintCancelSuccess" />
  
-@@ -201,6 +198,10 @@
+@@ -202,6 +199,10 @@
  
    <java-symbol type="string" name="config_comboNetworkLocationProvider" />
  
