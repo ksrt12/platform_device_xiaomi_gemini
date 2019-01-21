@@ -47,16 +47,15 @@ TARGET_NO_BOOTLOADER := true
 TARGET_USE_SDCLANG := true
 
 # HIDL
-DEVICE_FRAMEWORK_COMPATIBILITY_MATRIX_FILE := $(VENDOR_PATH)/vendor_framework_compatibility_matrix.xml
-DEVICE_FRAMEWORK_MANIFEST_FILE := $(VENDOR_PATH)/framework_manifest.xml
-DEVICE_MANIFEST_FILE := $(VENDOR_PATH)/manifest.xml
-DEVICE_MATRIX_FILE := $(VENDOR_PATH)/compatibility_matrix.xml
+DEVICE_FRAMEWORK_COMPATIBILITY_MATRIX_FILE := $(VENDOR_PATH)/configs/vendor_framework_compatibility_matrix.xml
+DEVICE_FRAMEWORK_MANIFEST_FILE := $(VENDOR_PATH)/configs/framework_manifest.xml
+DEVICE_MANIFEST_FILE := $(VENDOR_PATH)/configs/manifest.xml
+DEVICE_MATRIX_FILE := $(VENDOR_PATH)/configs/compatibility_matrix.xml
 
 # Kernel
 BOARD_KERNEL_BASE := 0x80000000
 BOARD_KERNEL_CMDLINE := androidboot.hardware=qcom ehci-hcd.park=3 cma=32M@0-0xffffffff
 BOARD_KERNEL_CMDLINE += firmware_class.path=/vendor/firmware_mnt/image loop.max_part=7
-#BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
 BOARD_KERNEL_IMAGE_NAME := Image.gz-dtb
 BOARD_KERNEL_PAGESIZE := 4096
 BOARD_KERNEL_TAGS_OFFSET := 0x00000100
@@ -152,9 +151,6 @@ MAX_EGL_CACHE_SIZE := 2048*1024
 SF_VSYNC_EVENT_PHASE_OFFSET_NS := 6000000
 VSYNC_EVENT_PHASE_OFFSET_NS := 2000000
 
-#Enable DRM plugins 64 bit compilation
-TARGET_ENABLE_MEDIADRM_64 := true
-
 # DRM
 TARGET_ENABLE_MEDIADRM_64 := true
 
@@ -163,7 +159,7 @@ TARGET_HW_DISK_ENCRYPTION := true
 TARGET_CRYPTFS_HW_PATH := vendor/qcom/opensource/cryptfs_hw
 
 # Filesystem
-TARGET_FS_CONFIG_GEN := $(VENDOR_PATH)/config.fs
+TARGET_FS_CONFIG_GEN := $(VENDOR_PATH)/configs/config.fs
 
 # Lights
 TARGET_PROVIDES_LIBLIGHT := true
@@ -220,7 +216,7 @@ TARGET_USERIMAGES_USE_F2FS := true
 
 # Releasetools
 TARGET_RECOVERY_UPDATER_LIBS := librecovery_updater_gemini
-TARGET_RELEASETOOLS_EXTENSIONS := $(VENDOR_PATH)
+TARGET_RELEASETOOLS_EXTENSIONS := $(VENDOR_PATH)/tools
 
 # Render
 OVERRIDE_RS_DRIVER := libRSDriver_adreno.so

@@ -22,7 +22,7 @@ device='gemini'
 vendor='xiaomi'
 
 lines = [ line for line in open('proprietary-files.txt', 'r') ]
-vendorPath = '../../../vendor/' + vendor + '/' + device + '/proprietary'
+vendorPath = '../../../../vendor/' + vendor + '/' + device + '/proprietary'
 needSHA1 = False
 
 for index, line in enumerate(lines):

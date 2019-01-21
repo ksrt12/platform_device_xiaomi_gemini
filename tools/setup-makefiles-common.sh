@@ -18,37 +18,47 @@
 
 set -e
 
-DEVICE=gemini
+DEVICE_COMMON=msm8996-common
 VENDOR=xiaomi
 
-INITIAL_COPYRIGHT_YEAR=2016
+INITIAL_COPYRIGHT_YEAR=2017
 
 # Load extract_utils and do some sanity checks
 MY_DIR="${BASH_SOURCE%/*}"
 if [[ ! -d "$MY_DIR" ]]; then MY_DIR="$PWD"; fi
 
-JDC_ROOT="$MY_DIR"/../../..
+SYBERIA_ROOT="$MY_DIR"/../../../..
 
-HELPER="$JDC_ROOT"/vendor/aosp/build/tools/extract_utils.sh
+HELPER="$SYBERIA_ROOT"/vendor/havoc/build/tools/extract_utils.sh
 if [ ! -f "$HELPER" ]; then
     echo "Unable to find helper script at $HELPER"
     exit 1
 fi
 . "$HELPER"
 
-# Initialize the helper
-setup_vendor "$DEVICE" "$VENDOR" "$JDC_ROOT"
+# Initialize the helper for common
+setup_vendor "$DEVICE_COMMON" "$VENDOR" "$SYBERIA_ROOT" true
 
 # Copyright headers and guards
-write_headers
+write_headers "capricorn gemini lithium natrium scorpio"
 
-write_makefiles "$MY_DIR"/proprietary-files.txt
+# The standard common blobs
+write_makefiles "$MY_DIR"/proprietary-files-common.txt true
 
-cat << EOF >> "$ANDROIDMK"
-\$(shell mkdir -p \$(PRODUCT_OUT)/system/vendor/lib/egl && pushd \$(PRODUCT_OUT)/system/vendor/lib > /dev/null && ln -s egl/libEGL_adreno.so libEGL_adreno.so && popd > /dev/null)
-\$(shell mkdir -p \$(PRODUCT_OUT)/system/vendor/lib64/egl && pushd \$(PRODUCT_OUT)/system/vendor/lib64 > /dev/null && ln -s egl/libEGL_adreno.so libEGL_adreno.so && popd > /dev/null)
-
-EOF
-
-# Finish
+# We are done!
 write_footers
+
+if [ -s "$MY_DIR"/../$DEVICE/proprietary-files-common.txt ]; then
+    # Reinitialize the helper for device
+    INITIAL_COPYRIGHT_YEAR="$DEVICE_BRINGUP_YEAR"
+    setup_vendor "$DEVICE" "$VENDOR" "$SYBERIA_ROOT" false
+
+    # Copyright headers and guards
+    write_headers
+
+    # The standard device blobs
+    write_makefiles "$MY_DIR"/../$DEVICE/proprietary-files-common.txt true
+
+    # We are done!
+    write_footers
+fi

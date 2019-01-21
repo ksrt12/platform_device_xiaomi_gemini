@@ -27,9 +27,9 @@ export VENDOR=xiaomi
 MY_DIR="${BASH_SOURCE%/*}"
 if [[ ! -d "$MY_DIR" ]]; then MY_DIR="$PWD"; fi
 
-SYBERIA_ROOT="$MY_DIR"/../../..
+SYBERIA_ROOT="$MY_DIR"/../../../..
 
-HELPER="$SYBERIA_ROOT"/vendor/syberia/build/tools/extract_utils.sh
+HELPER="$SYBERIA_ROOT"/vendor/havoc/build/tools/extract_utils.sh
 if [ ! -f "$HELPER" ]; then
     echo "Unable to find helper script at $HELPER"
     exit 1

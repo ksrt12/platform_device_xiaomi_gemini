@@ -155,11 +155,6 @@ PRODUCT_PACKAGES += \
 #    init.spectrum.rc \
 #    init.spectrum.sh
 
-# CMHW
-PRODUCT_PACKAGES += \
-    org.cyanogenmod.hardware \
-    org.cyanogenmod.hardware.xml
-
 # CNE
 PRODUCT_PACKAGES += \
     libcnefeatureconfig
@@ -170,7 +165,7 @@ PRODUCT_PACKAGES += \
 
 # Default permissions
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/privapp-permissions-gemini.xml:system/etc/permissions/privapp-permissions-gemini.xml
+    $(LOCAL_PATH)/configs/privapp-permissions-gemini.xml:system/etc/permissions/privapp-permissions-gemini.xml
 
 # Display
 PRODUCT_PACKAGES += \
@@ -395,7 +390,7 @@ $(call inherit-product, $(LOCAL_PATH)/hidl.mk)
 
 # HIDL manifest
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/manifest.xml:$(TARGET_COPY_OUT_VENDOR)/manifest.xml
+    $(LOCAL_PATH)/configs/manifest.xml:$(TARGET_COPY_OUT_VENDOR)/manifest.xml
 
 # TFA calibration
 PRODUCT_PACKAGES += \
@@ -404,13 +399,13 @@ PRODUCT_PACKAGES += \
 
 #Vendor's public libraries
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/public.libraries.txt:$(TARGET_COPY_OUT_VENDOR)/etc/public.libraries.txt
+    $(LOCAL_PATH)/configs/public.libraries.txt:$(TARGET_COPY_OUT_VENDOR)/etc/public.libraries.txt
 
 PRODUCT_COPY_FILES += vendor/havoc/prebuilt/common/bootanimation/1080.zip:system/media/bootanimation.zip
-#$(LOCAL_PATH)/patches/bootanimation.zip
 PRODUCT_PACKAGES += Phonograph KiwiBrowser
 PRODUCT_PACKAGES += nano htop
-#Google prebuilts
+
+# Google prebuilts
 PRODUCT_PACKAGES += \
     MarkupGoogle \
     WellbeingPrebuilt \
