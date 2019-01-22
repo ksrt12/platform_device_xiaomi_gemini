@@ -1,7 +1,7 @@
 From 1453d51ef29912c8f071394e2bfcca393894e0d6 Mon Sep 17 00:00:00 2001
 From: Kazakov Stepan <ksrt12group@gmail.com>
 Date: Mon, 3 Dec 2018 00:03:51 +0300
-Subject: [PATCH 3/5] try to fix button backlight
+Subject: [PATCH 3/7] try to fix button backlight
 
 Signed-off-by: Kazakov Stepan <ksrt12group@gmail.com>
 ---
