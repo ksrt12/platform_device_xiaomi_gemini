@@ -6,6 +6,7 @@ then
   file_dir=$(dirname "$file_path")/gemini
   file_name=$(basename "$file_path")
   build_date=$2
+if [ -e $file_dir ]; then rm $file_dir; fi
 cat << EOF >> $file_dir
 {
   "donate_url":"https:\/\/www.paypal.me\/ksrt12",
@@ -30,7 +31,7 @@ cat << EOF >> $file_dir
     {
       "title":"Havoc Changelog",
       "summary":"View Havoc-OS changes",
-      "url":"https:\/\/t.me\/Havoc_OS\/531"
+      "url":"https:\/\/t.me\/Havoc_OS\/627"
     },
     {
       "title":"Device Changelog",
@@ -41,6 +42,7 @@ cat << EOF >> $file_dir
   "developer": "Stepan Kazakov (ksrt12)",
   "developer_url": "https:\/\/t.me\/HavocGeminiBugreport",
   "forum_url": "https:\/\/forum.xda-developers.com\/mi-5\/development\/rom-havoc-os-2-0-t3866995",
+  "changelog": "",
 EOF
 
   if [ -f $file_path ]; then
