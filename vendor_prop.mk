@@ -158,7 +158,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # Priv-app permissions whitelist
 PRODUCT_PROPERTY_OVERRIDES += \
-    ro.control_privapp_permissions=disable
+    ro.control_privapp_permissions=log
     
 # Qualcomm BT aptXHD
 PRODUCT_PROPERTY_OVERRIDES += \

@@ -29,4 +29,26 @@ allow init sysfs:file setattr;
 allow init proc:file { open read getattr};
 allow init sensors:process noatsecure;
 allow init nativetest_data_file:file getattr;
+
+#============= init ==============
+allow init adbd:process noatsecure;
+allow init bootanim:process noatsecure;
+allow init bootstat:process noatsecure;
+allow init fsck:process noatsecure;
+allow init hal_keymaster_default:process noatsecure;
+allow init hwservicemanager:process noatsecure;
+allow init kernel:system module_request;
+allow init logd:process noatsecure;
+allow init netd:process noatsecure;
+allow init servicemanager:process noatsecure;
+allow init surfaceflinger:process noatsecure;
+allow init sysfs:dir write;
+allow init toolbox:process noatsecure;
+allow init tzdatacheck:process noatsecure;
+allow init ueventd:process noatsecure;
+allow init vdc:process noatsecure;
+allow init vendor_init:process noatsecure;
+allow init vndservicemanager:process noatsecure;
+allow init vold:process noatsecure;
+
  
