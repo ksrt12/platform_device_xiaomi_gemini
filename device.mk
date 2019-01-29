@@ -37,6 +37,8 @@ PRODUCT_AAPT_PREF_CONFIG := xxhdpi
 # Boot animation
 TARGET_SCREEN_HEIGHT := 1920
 TARGET_SCREEN_WIDTH := 1080
+PRODUCT_COPY_FILES += \
+    vendor/havoc/prebuilt/common/bootanimation/$(TARGET_SCREEN_WIDTH).zip:system/media/bootanimation.zip
 
 PRODUCT_GENERIC_PROPERTIES += \
     ro.sf.lcd_density=480 \
@@ -177,7 +179,7 @@ PRODUCT_PACKAGES += \
     libdisplayconfig \
     libgenlock \
     libqdMetaData.system \
-    libtinyxml
+    libnl
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/calib.cfg:system/etc/calib.cfg
@@ -401,9 +403,17 @@ PRODUCT_PACKAGES += \
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/public.libraries.txt:$(TARGET_COPY_OUT_VENDOR)/etc/public.libraries.txt
 
-PRODUCT_COPY_FILES += vendor/havoc/prebuilt/common/bootanimation/1080.zip:system/media/bootanimation.zip
+# Prebuilt music app and browser
 PRODUCT_PACKAGES += Phonograph KiwiBrowser
+
+# Tools
 PRODUCT_PACKAGES += nano htop
+
+# Lawnchair
+PRODUCT_PACKAGES += Lawnchair2
+PRODUCT_COPY_FILES += \
+    device/apps3/etc/privapp-permissions-lawnchair.xml:system/etc/permissions/privapp-permissions-lawnchair.xml \
+    device/apps3/etc/lawnchair-hiddenapi-package-whitelist.xml:system/etc/sysconfig/lawnchair-hiddenapi-package-whitelist.xml
 
 # Google prebuilts
 PRODUCT_PACKAGES += \

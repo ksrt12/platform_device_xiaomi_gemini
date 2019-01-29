@@ -623,6 +623,10 @@
     <!-- Whether device ignores the RSSNR signal implementation -->
     <bool name="config_ignoreRssnrSignalLevel">true</bool>
 
+    <!-- Allow waking up from Home key -->
     <bool name="config_allowTheaterModeWakeFromKey">true</bool>
+
+    <!-- Set Lawnchair as the default QuickStep -->
+    <string name="config_recentsComponentName">ch.deletescape.lawnchair.ci/com.android.quickstep.RecentsActivity</string>
 
 </resources>
