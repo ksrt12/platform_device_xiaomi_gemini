@@ -161,6 +161,10 @@ TARGET_CRYPTFS_HW_PATH := vendor/qcom/opensource/cryptfs_hw
 # Filesystem
 TARGET_FS_CONFIG_GEN := $(VENDOR_PATH)/configs/config.fs
 
+# FM
+#BOARD_HAVE_QCOM_FM := rue
+#TARGET_QCOM_NO_FM_FIRMWARE := true
+
 # Lights
 TARGET_PROVIDES_LIBLIGHT := true
 
