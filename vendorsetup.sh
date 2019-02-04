@@ -16,13 +16,13 @@ export SDCLANG_COMMON_FLAGS="-O3 -fvectorize -Wno-user-defined-warnings -Wno-vec
 -mllvm -arm-implicit-it=always -Wno-inline-asm -Wno-unused-command-line-argument -Wno-unused-variable";
 # Enable based on host OS/availablitiy
 case $(uname -s) in
-    Linux)
-        if [ -d "$SDCLANG_PATH" ]; then
-            export SDCLANG=true; echo -e "\033[32m""sdclang founded: $SDCLANG_PATH""\033[0m";
-        fi
-        ;;
-    Darwin)
-        ;;
-    *)
-        ;;
+ Linux)
+  if [ -d "$SDCLANG_PATH" ]; then
+   export SDCLANG=true; echo -e "\033[32m""sdclang founded: `$SDCLANG_PATH/clang --version | grep "Snapdragon " | cut -d 'f' -f 1`""\033[0m";
+  fi
+    ;;
+ Darwin)
+    ;;
+ *)
+    ;;
 esac
