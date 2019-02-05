@@ -1,7 +1,7 @@
-From 77a5fb61ec9d74362731d648cd242c99e8a27825 Mon Sep 17 00:00:00 2001
+From 3ffbd33fee25791ebd73fa8849a29c6713dcffd5 Mon Sep 17 00:00:00 2001
 From: Harsh Shandilya <msfjarvis@gmail.com>
 Date: Thu, 24 Aug 2017 13:34:12 +0000
-Subject: [PATCH 2/3] DeviceInfoSettings: Bring back CAF/AOSP tags
+Subject: [PATCH 2/4] DeviceInfoSettings: Bring back CAF/AOSP tags
 
 Change-Id: I8d9a50abbd9158704c8d32edcb8de60172a21475
 Signed-off-by: Simao Gomes Viana <xdevs23@outlook.com>
@@ -16,7 +16,7 @@ Signed-off-by: Kazakov Stepan <ksrt12group@gmail.com>
  create mode 100644 src/com/android/settings/deviceinfo/RomTagsPreferenceController.java
 
 diff --git a/res/values/havoc_strings.xml b/res/values/havoc_strings.xml
-index 0c31f1cd95..3275cf05ab 100644
+index 60c2ff9e0e..23789eeb6f 100644
 --- a/res/values/havoc_strings.xml
 +++ b/res/values/havoc_strings.xml
 @@ -398,6 +398,9 @@
@@ -30,7 +30,7 @@ index 0c31f1cd95..3275cf05ab 100644
      <string name="selinux_status">SELinux status</string>
      <string name="selinux_status_disabled">Disabled</string>
 diff --git a/res/xml/my_device_info.xml b/res/xml/my_device_info.xml
-index 35d402da68..5f29580647 100644
+index e07ecf665e..94676b029d 100644
 --- a/res/xml/my_device_info.xml
 +++ b/res/xml/my_device_info.xml
 @@ -112,6 +112,14 @@
@@ -123,7 +123,7 @@ index 0000000000..d2adeafacf
 +}
 +
 diff --git a/src/com/android/settings/deviceinfo/aboutphone/MyDeviceInfoFragment.java b/src/com/android/settings/deviceinfo/aboutphone/MyDeviceInfoFragment.java
-index 16ed848040..d4cb9e2d34 100644
+index ec874503e0..7413345ac5 100644
 --- a/src/com/android/settings/deviceinfo/aboutphone/MyDeviceInfoFragment.java
 +++ b/src/com/android/settings/deviceinfo/aboutphone/MyDeviceInfoFragment.java
 @@ -40,6 +40,7 @@ import com.android.settings.deviceinfo.BuildNumberPreferenceController;
@@ -132,9 +132,9 @@ index 16ed848040..d4cb9e2d34 100644
  import com.android.settings.deviceinfo.IpAddressPreferenceController;
 +import com.android.settings.deviceinfo.RomTagsPreferenceController;
  import com.android.settings.deviceinfo.SELinuxStatusPreferenceController;
+ import com.android.settings.deviceinfo.UpTimePreferenceController;
  import com.android.settings.deviceinfo.WifiMacAddressPreferenceController;
- import com.android.settings.deviceinfo.firmwareversion.FirmwareVersionPreferenceController;
-@@ -115,6 +116,7 @@ public class MyDeviceInfoFragment extends DashboardFragment
+@@ -116,6 +117,7 @@ public class MyDeviceInfoFragment extends DashboardFragment
          controllers.add(new IpAddressPreferenceController(context, lifecycle));
          controllers.add(new WifiMacAddressPreferenceController(context, lifecycle));
          controllers.add(new BluetoothAddressPreferenceController(context, lifecycle));

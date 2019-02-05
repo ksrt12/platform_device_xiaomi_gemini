@@ -31,7 +31,7 @@ cat << EOF >> $file_dir
     {
       "title":"Havoc Changelog",
       "summary":"View Havoc-OS changes",
-      "url":"https://t.me/Havoc_OS/627"
+      "url":"https://t.me/Havoc_OS/678"
     },
     {
       "title":"Device Changelog",
@@ -42,7 +42,7 @@ cat << EOF >> $file_dir
   "developer": "Stepan Kazakov (ksrt12)",
   "developer_url": "https://t.me/HavocGeminiBugreport",
   "forum_url": "https://forum.xda-developers.com/mi-5/development/rom-havoc-os-2-0-t3866995",
-  "changelog": "\n - Android TAG: 9.0.0_r31n\ - CAF TAG: LA.UM.7.5.r1-04100-8x96.0\n - Fixed Signature Spoofing\n - add Lawnchair\n - kernel: add DTS Eagle\n - partly fixed wireless display",
+  "changelog": "\n - Android TAG: 9.0.0_r33n\ - CAF TAG: LA.UM.7.5.r1-04100-8x96.0\n - Fixed Signature Spoofing\n - add Lawnchair\n - kernel: add DTS Eagle\n - partly fixed wireless display",
 EOF
 
   if [ -f $file_path ]; then

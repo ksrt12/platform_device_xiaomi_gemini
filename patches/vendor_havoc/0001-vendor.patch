@@ -1,4 +1,4 @@
-From 7a76ee5744323a35cf97423348f3284e54a4a474 Mon Sep 17 00:00:00 2001
+From b408c5384de1b04a863349b60370653659e9cb69 Mon Sep 17 00:00:00 2001
 From: Kazakov Stepan <ksrt12group@gmail.com>
 Date: Fri, 11 Jan 2019 23:27:56 +0300
 Subject: [PATCH 1/2] vendor
@@ -579,7 +579,7 @@ index b7167d13..d8ea95a3 100644
      KERNEL_MAKE_FLAGS \
      TARGET_KERNEL_CONFIG \
 diff --git a/config/common.mk b/config/common.mk
-index eb5ed36e..72cdf55b 100644
+index c4aab197..a0a23492 100644
 --- a/config/common.mk
 +++ b/config/common.mk
 @@ -1,6 +1,6 @@
@@ -621,7 +621,7 @@ index eb5ed36e..72cdf55b 100644
  # Do not include art debug targets
  PRODUCT_ART_TARGET_INCLUDE_DEBUG_BUILD := false
  
-@@ -355,8 +342,5 @@ PRODUCT_PROPERTY_OVERRIDES += \
+@@ -357,8 +344,5 @@ PRODUCT_PROPERTY_OVERRIDES += \
  PRODUCT_ENFORCE_RRO_EXCLUDED_OVERLAYS += vendor/havoc/overlay
  DEVICE_PACKAGE_OVERLAYS += vendor/havoc/overlay/common
  
@@ -631,7 +631,7 @@ index eb5ed36e..72cdf55b 100644
  # Version
  include vendor/havoc/config/version.mk
 diff --git a/config/version.mk b/config/version.mk
-index c5f0d078..2f48e748 100644
+index 022684a6..2de89e0f 100644
 --- a/config/version.mk
 +++ b/config/version.mk
 @@ -14,17 +14,16 @@ endif
@@ -640,7 +640,7 @@ index c5f0d078..2f48e748 100644
  # Set all versions
 -DATE := $(shell date -u +%Y%m%d)
 +DATE := $(shell date +%Y%m%d)
- HAVOC_BASE_SET_VERSION = 2.1
+ HAVOC_BASE_SET_VERSION = 2.2
 -HAVOC_BUILD_DATE := $(shell date -u +%Y%m%d-%H%M)
 +HAVOC_BUILD_DATE := $(shell date +%Y%m%d-%H%M)
  HAVOC_BUILD_VERSION := Havoc-OS-$(HAVOC_BASE_VERSION)-$(DATE)-$(HAVOC_BUILD_TYPE)
@@ -656,11 +656,11 @@ index c5f0d078..2f48e748 100644
      ro.havoc.build.date=$(HAVOC_DATE) \
      ro.havoc.build.version=$(HAVOC_BUILD_VERSION) \
 diff --git a/overlay/common/frameworks/base/core/res/res/values/config.xml b/overlay/common/frameworks/base/core/res/res/values/config.xml
-index 0df16f29..45c36193 100644
+index 5dcbec68..04a67546 100644
 --- a/overlay/common/frameworks/base/core/res/res/values/config.xml
 +++ b/overlay/common/frameworks/base/core/res/res/values/config.xml
-@@ -120,7 +120,7 @@
-     <string name="config_icon_mask" translatable="false">"M50 0A50 50,0,1,1,50 100A50 50,0,1,1,50 0"</string>
+@@ -121,7 +121,7 @@
+     <string name="config_icon_mask" translatable="false">"M50 0C77.6 0 100 22.4 100 50C100 77.6 77.6 100 50 100C22.4 100 0 77.6 0 50C0 22.4 22.4 0 50 0Z"</string>
  
      <!-- Misc -->
 -    <string name="config_recentsComponentName">com.google.android.apps.nexuslauncher/com.android.quickstep.RecentsActivity</string>
@@ -668,7 +668,7 @@ index 0df16f29..45c36193 100644
  
      <!-- Whether WiFi display is supported by this device.
           There are many prerequisites for this feature to work correctly.
-@@ -148,4 +148,4 @@
+@@ -149,4 +149,4 @@
  
      <!-- Component name for default assistant on this device -->
      <string name="config_defaultAssistantComponentName">com.google.android.googlequicksearchbox/com.google.android.voiceinteraction.GsaVoiceInteractionService</string>
