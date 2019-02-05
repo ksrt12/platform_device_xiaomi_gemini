@@ -1,0 +1,43 @@
+From 6bf2b217718f11916a445660dc1510e3a733b5b7 Mon Sep 17 00:00:00 2001
+From: Vaibhav Deshu Venkatesh <vdeshuve@codeaurora.org>
+Date: Wed, 29 Aug 2018 17:29:03 -0700
+Subject: [PATCH] media: Add support for level 6-6.2 for AVC
+
+H.264 codec does not have support for level 6-6.2. This
+is needed for 8k video.
+
+CRs-Fixed: 2306511
+Change-Id: Iad0804105fb42315ca9f6ac4d2606c472cad8549
+---
+ headers/media_plugin/media/openmax/OMX_AsString.h | 3 +++
+ headers/media_plugin/media/openmax/OMX_Video.h    | 3 +++
+ 2 files changed, 6 insertions(+)
+
+diff --git a/headers/media_plugin/media/openmax/OMX_AsString.h b/headers/media_plugin/media/openmax/OMX_AsString.h
+index dc25deddb..c53ec124f 100644
+--- a/headers/media_plugin/media/openmax/OMX_AsString.h
++++ b/headers/media_plugin/media/openmax/OMX_AsString.h
+@@ -907,6 +907,9 @@ inline static const char *asString(OMX_VIDEO_AVCLEVELTYPE i, const char *def = "
+         case OMX_VIDEO_AVCLevel5:  return "Level5";
+         case OMX_VIDEO_AVCLevel51: return "Level51";
+         case OMX_VIDEO_AVCLevel52: return "Level52";
++        case OMX_VIDEO_AVCLevel6:  return "Level6";
++        case OMX_VIDEO_AVCLevel61: return "Level61";
++        case OMX_VIDEO_AVCLevel62: return "Level62";
+         default:                   return def;
+     }
+ }
+diff --git a/headers/media_plugin/media/openmax/OMX_Video.h b/headers/media_plugin/media/openmax/OMX_Video.h
+index 9fd2fd2d6..b6edaa900 100644
+--- a/headers/media_plugin/media/openmax/OMX_Video.h
++++ b/headers/media_plugin/media/openmax/OMX_Video.h
+@@ -832,6 +832,9 @@ typedef enum OMX_VIDEO_AVCLEVELTYPE {
+     OMX_VIDEO_AVCLevel5   = 0x4000,   /**< Level 5 */
+     OMX_VIDEO_AVCLevel51  = 0x8000,   /**< Level 5.1 */
+     OMX_VIDEO_AVCLevel52  = 0x10000,  /**< Level 5.2 */
++    OMX_VIDEO_AVCLevel6   = 0x20000,  /**< Level 6 */
++    OMX_VIDEO_AVCLevel61  = 0x40000,  /**< Level 6.1 */
++    OMX_VIDEO_AVCLevel62  = 0x80000,  /**< Level 6.2 */
+     OMX_VIDEO_AVCLevelKhronosExtensions = 0x6F000000, /**< Reserved region for introducing Khronos Standard Extensions */
+     OMX_VIDEO_AVCLevelVendorStartUnused = 0x7F000000, /**< Reserved region for introducing Vendor Extensions */
+     OMX_VIDEO_AVCLevelMax = 0x7FFFFFFF
