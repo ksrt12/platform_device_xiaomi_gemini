@@ -422,7 +422,6 @@ PRODUCT_PACKAGES += \
     Turbo
 
 PRODUCT_COPY_FILES += \
-    device/apps3/lib/libsketchology_native.so:system/lib/libsketchology_native.so \
     device/apps3/lib64/libsketchology_native.so:system/lib64/libsketchology_native.so \
     device/apps3/etc/turbo.xml:system/etc/sysconfig/turbo.xml \
     device/apps3/etc/privapp-permissions-turbo.xml:system/etc/permissions/privapp-permissions-turbo.xml
