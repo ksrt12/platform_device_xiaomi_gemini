@@ -21,7 +21,7 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 
 # Inherit from gemini device
 $(call inherit-product, device/xiaomi/gemini/device.mk)
-HAVOC_BUILD_TYPE ?= Official
+HAVOC_BUILD_TYPE ?= Unofficial
 VENDOR_SECURITY_PATCH := 2018-10-01
 
 # Device identifier. This must come after all inclusions.

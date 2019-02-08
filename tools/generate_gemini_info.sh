@@ -16,7 +16,7 @@ cat << EOF >> $file_dir
     {
       "title":"Firmware",
       "summary":"Latest firmware for gemini",
-      "url":"https://sourceforge.net/projects/xiaomi-firmware-updater/files/Developer/8.11.22/gemini/"
+      "url":"https://github.com/XiaomiFirmwareUpdater/firmware_xiaomi_gemini/releases"
     },
     {
       "title":"Official Open GApps",
@@ -52,7 +52,7 @@ EOF
     echo "  \"build_date\":\"$build_date\"," >>  $file_dir
     echo "  \"filesize\":\"$file_size\"," >>  $file_dir
     echo "  \"md5\":\"$md5\"," >>  $file_dir
-    echo "  \"url\":\"https://sourceforge.net/projects/havoc-os/files/gemini/$file_name/download\"" >>  $file_dir
+    echo "  \"url\":\"https://sourceforge.net/projects/havoc-gemini/files/$file_name/download\"" >>  $file_dir
     echo "}" >>  $file_dir
   fi
 fi
