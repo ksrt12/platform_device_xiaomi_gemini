@@ -1,0 +1,35 @@
+From 3e46dad1e4426e1762fe603494e71c98267995d3 Mon Sep 17 00:00:00 2001
+From: Kazakov Stepan <ksrt12group@gmail.com>
+Date: Thu, 31 Jan 2019 19:05:34 +0300
+Subject: [PATCH] change battery save color
+
+Signed-off-by: Kazakov Stepan <ksrt12group@gmail.com>
+---
+ packages/SettingsLib/res/color/batterymeter_plus_color.xml | 2 +-
+ packages/SettingsLib/res/values/arrays.xml                 | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/packages/SettingsLib/res/color/batterymeter_plus_color.xml b/packages/SettingsLib/res/color/batterymeter_plus_color.xml
+index 949bedeb8ac..8b47b9b0ed6 100644
+--- a/packages/SettingsLib/res/color/batterymeter_plus_color.xml
++++ b/packages/SettingsLib/res/color/batterymeter_plus_color.xml
+@@ -14,5 +14,5 @@
+      limitations under the License.
+ -->
+ <selector xmlns:android="http://schemas.android.com/apk/res/android">
+-    <item android:color="?android:attr/colorError" />
++    <item android:color="#ff9f0d" />
+ </selector>
+diff --git a/packages/SettingsLib/res/values/arrays.xml b/packages/SettingsLib/res/values/arrays.xml
+index 50b741823ad..5d971d81156 100644
+--- a/packages/SettingsLib/res/values/arrays.xml
++++ b/packages/SettingsLib/res/values/arrays.xml
+@@ -581,7 +581,7 @@
+         <item>100</item>
+     </array>
+     <array name="batterymeter_color_values">
+-        <item>?android:attr/colorError</item>
++        <item>#ffc72d</item>
+         <item>@android:color/white</item>
+     </array>
+     <array name="batterymeter_bolt_points">

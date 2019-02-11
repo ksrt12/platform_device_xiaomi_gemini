@@ -235,6 +235,26 @@ BOARD_SEPOLICY_DIRS += $(VENDOR_PATH)/sepolicy
 include device/qcom/sepolicy/sepolicy.mk
 include device/havoc/sepolicy/qcom/sepolicy.mk
 
+# TWRP specific build flags
+ifeq ($(RECOVERY_TWRP),twrp)
+TARGET_RECOVERY_FSTAB := $(VENDOR_PATH)/rootdir/etc/twrp.fstab
+endif
+BOARD_HAS_NO_REAL_SDCARD := true
+RECOVERY_SDCARD_ON_DATA := true
+TARGET_RECOVERY_QCOM_RTC_FIX := true
+TW_BRIGHTNESS_PATH := "/sys/class/leds/lcd-backlight/brightness"
+TW_DEFAULT_BRIGHTNESS := 2047
+TW_EXCLUDE_DEFAULT_USB_INIT := true
+TW_EXCLUDE_SUPERSU := true
+TW_EXTRA_LANGUAGES := true
+TW_INCLUDE_CRYPTO := true
+TW_INCLUDE_NTFS_3G := true
+TW_MAX_BRIGHTNESS := 4095
+TW_NO_USB_STORAGE := true
+TW_SCREEN_BLANK_ON_BOOT := true
+TW_THEME := portrait_hdpi
+TW_USE_TOOLBOX := true
+
 # Vendor init
 TARGET_INIT_VENDOR_LIB := libinit_gemini
 TARGET_RECOVERY_DEVICE_MODULES := libinit_gemini

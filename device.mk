@@ -406,25 +406,8 @@ PRODUCT_COPY_FILES += \
 # Prebuilt music app and browser
 PRODUCT_PACKAGES += Phonograph KiwiBrowser
 
-# Tools
-PRODUCT_PACKAGES += nano htop
-
-# Lawnchair
-PRODUCT_PACKAGES += Lawnchair2
-PRODUCT_COPY_FILES += \
-    device/apps3/etc/privapp-permissions-lawnchair.xml:system/etc/permissions/privapp-permissions-lawnchair.xml \
-    device/apps3/etc/lawnchair-hiddenapi-package-whitelist.xml:system/etc/sysconfig/lawnchair-hiddenapi-package-whitelist.xml
-
-# Google prebuilts
-PRODUCT_PACKAGES += \
-    MarkupGoogle \
-    WellbeingPrebuilt \
-    Turbo
-
-PRODUCT_COPY_FILES += \
-    device/apps3/lib64/libsketchology_native.so:system/lib64/libsketchology_native.so \
-    device/apps3/etc/turbo.xml:system/etc/sysconfig/turbo.xml \
-    device/apps3/etc/privapp-permissions-turbo.xml:system/etc/permissions/privapp-permissions-turbo.xml
+# TWRP
+PRODUCT_COPY_FILES += system/timezone/output_data/iana/tzdata:recovery/root/system/usr/share/zoneinfo/tzdata
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/media/audio/alarms/Creamy.ogg:system/media/audio/alarms/Creamy.ogg \
