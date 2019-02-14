@@ -1,21 +1,25 @@
-From 39eb0b61c92e7d1989afa3d62382f53f941157d4 Mon Sep 17 00:00:00 2001
+From 4e2a5bb55deb1a0c0d2ebc9263fb70d60abfce61 Mon Sep 17 00:00:00 2001
 From: Kazakov Stepan <ksrt12group@gmail.com>
 Date: Thu, 31 Jan 2019 20:56:21 +0300
 Subject: [PATCH] my OTA
 
 Signed-off-by: Kazakov Stepan <ksrt12group@gmail.com>
 ---
- src/com/havoc/ota/misc/Constants.java               | 2 +-
+ src/com/havoc/ota/misc/Constants.java               | 4 ++--
  src/com/havoc/ota/preferences/UpdatePreference.java | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ src/com/havoc/ota/utils/Utils.java                  | 3 +--
+ 3 files changed, 4 insertions(+), 5 deletions(-)
 
 diff --git a/src/com/havoc/ota/misc/Constants.java b/src/com/havoc/ota/misc/Constants.java
-index 57dcab0..24ccba4 100644
+index 57dcab0..f620080 100644
 --- a/src/com/havoc/ota/misc/Constants.java
 +++ b/src/com/havoc/ota/misc/Constants.java
-@@ -33,7 +33,7 @@ public class Constants {
+@@ -31,9 +31,9 @@ public class Constants {
+     public static final long UPDATE_DEFAULT_FREQ = AlarmManager.INTERVAL_HALF_DAY;
+     // Build vars
      public static final String CURRENT_DEVICE_NAME = "ro.havoc.device";
-     public static final String CURRENT_VERSION = "ro.mod.version";
+-    public static final String CURRENT_VERSION = "ro.mod.version";
++    public static final String CURRENT_VERSION = "ro.havoc.version";
      public static final String CURRENT_BUILD_TYPE = "ro.havoc.releasetype";
 -    public static final String OTA_URL = "https://raw.githubusercontent.com/Havoc-OS/OTA/pie/%s";
 +    public static final String OTA_URL = "https://raw.githubusercontent.com/ksrt12/OTA/pie/%s";
@@ -35,6 +39,20 @@ index 3b01da8..1be3c16 100644
              }
          });
          expandableChangelogLayout.setOnExpansionUpdateListener(new ExpandableLayout.OnExpansionUpdateListener() {
+diff --git a/src/com/havoc/ota/utils/Utils.java b/src/com/havoc/ota/utils/Utils.java
+index 560dd56..bec18ab 100644
+--- a/src/com/havoc/ota/utils/Utils.java
++++ b/src/com/havoc/ota/utils/Utils.java
+@@ -100,8 +100,7 @@ public class Utils {
+     }
+ 
+     public static boolean isOTAConfigured() {
+-        String prop = getSystemProperty(Constants.CURRENT_BUILD_TYPE, "UNOFFICIAL");
+-        return prop.toLowerCase().equals("official");
++        return true;
+     }
+ 
+     public static String getDeviceName() {
 -- 
-2.19.1
+2.20.1
 
