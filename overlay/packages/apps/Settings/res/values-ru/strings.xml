@@ -62,4 +62,8 @@
     <string name="volume_panel_on_left_title">Панель громкости слева</string>
     <string name="volume_panel_on_left_summary">Показывать панель громкости с левой стороны экрана</string>
 
+    <!-- Home button wake -->
+    <string name="home_wake_button_title">Пробуждение кнопкой \"Домой\"</string>
+    <string name="home_wake_button_summary">Нажатие кнопки Домой пробуждает устройство</string>   
+
 </resources>

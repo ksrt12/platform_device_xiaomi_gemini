@@ -1,0 +1,28 @@
+From 1a5efc8b3836e5315bb8e5a1e9e69b209fbcff83 Mon Sep 17 00:00:00 2001
+From: Kazakov Stepan <ksrt12group@gmail.com>
+Date: Sun, 17 Feb 2019 00:21:49 +0300
+Subject: [PATCH] my colors
+
+Signed-off-by: Kazakov Stepan <ksrt12group@gmail.com>
+---
+ res/values/colors.xml | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/res/values/colors.xml b/res/values/colors.xml
+index af9ee128bc..81460137ff 100644
+--- a/res/values/colors.xml
++++ b/res/values/colors.xml
+@@ -121,8 +121,8 @@
+     <color name="homepage_storage_background">#C14CE6</color>
+     <color name="homepage_security_background">#0F9D58</color>
+     <color name="homepage_accounts_background">#F15B8D</color>
+-    <color name="homepage_accessibility_background">#5011C1</color>
+-    <color name="homepage_system_background">#757575</color>
++    <color name="homepage_accessibility_background">#FFD427</color>
++    <color name="homepage_system_background">#5011C1</color>
+     <color name="homepage_about_background">#6876c5</color>
+     <color name="homepage_support_background">#26459C</color>
+     <color name="homepage_generic_icon_background">#1A73E8</color>
+-- 
+2.20.1
+

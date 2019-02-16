@@ -1,0 +1,45 @@
+From fea88f715f50170f8b134d7f63e806b6dc3ba97c Mon Sep 17 00:00:00 2001
+From: Kazakov Stepan <ksrt12group@gmail.com>
+Date: Sun, 17 Feb 2019 00:30:13 +0300
+Subject: [PATCH 9/9] show bt battery for all devices
+
+Signed-off-by: Kazakov Stepan <ksrt12group@gmail.com>
+---
+ packages/SettingsLib/res/values-ru/arrays.xml                   | 1 +
+ .../android/systemui/statusbar/phone/PhoneStatusBarPolicy.java  | 2 ++
+ 2 files changed, 3 insertions(+)
+
+diff --git a/packages/SettingsLib/res/values-ru/arrays.xml b/packages/SettingsLib/res/values-ru/arrays.xml
+index 7603a0e689f4..60adca1dfa7f 100644
+--- a/packages/SettingsLib/res/values-ru/arrays.xml
++++ b/packages/SettingsLib/res/values-ru/arrays.xml
+@@ -125,6 +125,7 @@
+     <item msgid="4118561796005528173">"Выбор системы (по умолчанию)"</item>
+     <item msgid="8900559293912978337">"Моно"</item>
+     <item msgid="8883739882299884241">"Стерео"</item>
++    <item>Dual Channel</item>
+   </string-array>
+   <string-array name="bluetooth_a2dp_codec_ldac_playback_quality_titles">
+     <item msgid="7158319962230727476">"Оптимизировать качество звука (990/909 Кбит/с)"</item>
+diff --git a/packages/SystemUI/src/com/android/systemui/statusbar/phone/PhoneStatusBarPolicy.java b/packages/SystemUI/src/com/android/systemui/statusbar/phone/PhoneStatusBarPolicy.java
+index 17820891b23e..a19b603a1819 100644
+--- a/packages/SystemUI/src/com/android/systemui/statusbar/phone/PhoneStatusBarPolicy.java
++++ b/packages/SystemUI/src/com/android/systemui/statusbar/phone/PhoneStatusBarPolicy.java
+@@ -555,12 +555,14 @@ public class PhoneStatusBarPolicy implements Callback, Callbacks,
+     private boolean showBatteryForThis(BluetoothClass type) {
+         boolean show = false;
+         if (type != null) {
++		Log.i(TAG, "btdevice = " + type.getDeviceClass());
+             switch (type.getDeviceClass()) {
+             case BluetoothClass.Device.AUDIO_VIDEO_WEARABLE_HEADSET:
+             case BluetoothClass.Device.AUDIO_VIDEO_HANDSFREE:
+             case BluetoothClass.Device.AUDIO_VIDEO_PORTABLE_AUDIO:
+             case BluetoothClass.Device.AUDIO_VIDEO_LOUDSPEAKER:
+             case BluetoothClass.Device.AUDIO_VIDEO_HEADPHONES:
++			case BluetoothClass.Device.Major.UNCATEGORIZED:
+                 show = true;
+                 break;
+             default:
+-- 
+2.20.1
+

@@ -1,15 +1,15 @@
-From 6229c4838c8496d29ec64a0ee3ac448593bdb444 Mon Sep 17 00:00:00 2001
+From 2c3ba91a3b5c67aa68af48b219804b16ac6e6134 Mon Sep 17 00:00:00 2001
 From: Kazakov Stepan <ksrt12group@gmail.com>
 Date: Sat, 10 Nov 2018 18:16:14 +0300
-Subject: [PATCH 2/7] fix perms
+Subject: [PATCH 2/9] fix priv-apps permissions
 
 Signed-off-by: Kazakov Stepan <ksrt12group@gmail.com>
 ---
- data/etc/privapp-permissions-platform.xml | 5 +++++
- 1 file changed, 5 insertions(+)
+ data/etc/privapp-permissions-platform.xml | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
 diff --git a/data/etc/privapp-permissions-platform.xml b/data/etc/privapp-permissions-platform.xml
-index 3697e8084a1..ccc4578aa34 100644
+index 3697e8084a1d..b9593525c7cd 100644
 --- a/data/etc/privapp-permissions-platform.xml
 +++ b/data/etc/privapp-permissions-platform.xml
 @@ -242,6 +242,7 @@ applications that come with the platform
@@ -47,6 +47,17 @@ index 3697e8084a1..ccc4578aa34 100644
          <permission name="android.permission.ONE_HANDED_MODE"/>
          <permission name="android.permission.OVERRIDE_WIFI_CONFIG"/>
          <permission name="android.permission.PACKAGE_USAGE_STATS"/>
+@@ -443,6 +448,10 @@ applications that come with the platform
+         <permission name="com.android.launcher.permission.INSTALL_SHORTCUT" />
+     </privapp-permissions>
+ 
++    <privapp-permissions package="com.custom.ambient.display">
++        <permission name="android.permission.INTERACT_ACROSS_USERS" />
++    </privapp-permissions>
++
+     <privapp-permissions package="com.google.android.gms">
+         <permission name="android.permission.FAKE_PACKAGE_SIGNATURE"/>
+     </privapp-permissions>
 -- 
-2.19.1
+2.20.1
 

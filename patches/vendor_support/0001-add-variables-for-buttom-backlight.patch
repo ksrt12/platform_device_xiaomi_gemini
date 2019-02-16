@@ -1,0 +1,63 @@
+From d2915e17d3777362e3ddd4a69453f1d9fed40bc8 Mon Sep 17 00:00:00 2001
+From: Kazakov Stepan <ksrt12group@gmail.com>
+Date: Sun, 17 Feb 2019 22:58:00 +0300
+Subject: [PATCH] add variables for buttom backlight
+
+Signed-off-by: Kazakov Stepan <ksrt12group@gmail.com>
+---
+ .../preferences/CustomSeekBarPreference.java   | 18 +++++++++++++++++-
+ 1 file changed, 17 insertions(+), 1 deletion(-)
+
+diff --git a/src/com/havoc/support/preferences/CustomSeekBarPreference.java b/src/com/havoc/support/preferences/CustomSeekBarPreference.java
+index cdceea4..65ea861 100644
+--- a/src/com/havoc/support/preferences/CustomSeekBarPreference.java
++++ b/src/com/havoc/support/preferences/CustomSeekBarPreference.java
+@@ -47,7 +47,6 @@ public class CustomSeekBarPreference extends Preference implements SeekBar.OnSee
+     protected int mMinValue = 0;
+     protected int mMaxValue = 100;
+     protected boolean mDefaultValueExists = false;
+-    protected int mDefaultValue;
+ 
+     protected int mValue;
+ 
+@@ -57,6 +56,11 @@ public class CustomSeekBarPreference extends Preference implements SeekBar.OnSee
+     protected ImageView mPlusImageView;
+     protected SeekBar mSeekBar;
+ 
++    protected int mMin = 0;
++    protected int mCurrentValue;
++    protected int mDefaultValue;
++    protected int mMax = 255;
++
+     protected boolean mTrackingTouch = false;
+     protected int mTrackingValue;
+ 
+@@ -81,6 +85,8 @@ public class CustomSeekBarPreference extends Preference implements SeekBar.OnSee
+         mUnits = getAttributeStringValue(attrs, SETTINGS_NS, "units", "");
+         mMinValue = attrs.getAttributeIntValue(SETTINGS_NS, "min", mMinValue);
+         mMaxValue = attrs.getAttributeIntValue(ANDROIDNS, "max", mMaxValue);
++        mMax = attrs.getAttributeIntValue(ANDROIDNS, "max", 255);
++        mMin = attrs.getAttributeIntValue(SETTINGS_NS, "min", 0);
+         if (mMaxValue < mMinValue)
+             mMaxValue = mMinValue;
+         String defaultValue = attrs.getAttributeValue(ANDROIDNS, "defaultValue");
+@@ -332,6 +338,16 @@ public class CustomSeekBarPreference extends Preference implements SeekBar.OnSee
+         return mValue;
+     }
+ 
++    public void setMax(int max) {
++        mMax = max;
++        mSeekBar.setMax(mMax - mMin);
++    }
++
++    public void setMin(int min) {
++        mMin = min;
++        mSeekBar.setMax(mMax - mMin);
++    }
++
+     // need some methods here to set/get other attrs at runtime,
+     // but who really need this ...
+ 
+-- 
+2.20.1
+

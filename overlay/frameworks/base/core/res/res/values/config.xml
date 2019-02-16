@@ -392,6 +392,8 @@
          turned off and the screen off animation has been performed. -->
     <bool name="config_dozeAfterScreenOffByDefault">true</bool>
 
+    <bool name="doze_display_state_supported">true</bool>
+
     <!-- Power Management: Specifies whether to decouple the auto-suspend state of the
          device from the display on/off state.
 
@@ -625,6 +627,7 @@
 
     <!-- Allow waking up from Home key -->
     <bool name="config_allowTheaterModeWakeFromKey">true</bool>
+    <bool name="config_HomeWakeButton">true</bool>
 
     <!-- Set Lawnchair as the default QuickStep -->
     <string name="config_recentsComponentName">ch.deletescape.lawnchair.ci/com.android.quickstep.RecentsActivity</string>

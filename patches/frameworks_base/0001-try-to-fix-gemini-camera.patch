@@ -1,7 +1,7 @@
-From 6b81dbcece0e98c2875ec7e189614c4479dc39d8 Mon Sep 17 00:00:00 2001
+From 645357178ffed252ea8ca15ff066e11914dda66d Mon Sep 17 00:00:00 2001
 From: Kazakov Stepan <ksrt12group@gmail.com>
 Date: Tue, 27 Nov 2018 01:34:27 +0300
-Subject: [PATCH 1/7] try to fix gemini camera
+Subject: [PATCH 1/9] try to fix gemini camera
 
 Signed-off-by: Kazakov Stepan <ksrt12group@gmail.com>
 ---
@@ -16,7 +16,7 @@ Signed-off-by: Kazakov Stepan <ksrt12group@gmail.com>
  8 files changed, 85 insertions(+), 350 deletions(-)
 
 diff --git a/core/java/android/hardware/Camera.java b/core/java/android/hardware/Camera.java
-index 20b5d1341e5..be76dd1cd91 100644
+index 20b5d1341e5a..be76dd1cd91a 100644
 --- a/core/java/android/hardware/Camera.java
 +++ b/core/java/android/hardware/Camera.java
 @@ -28,9 +28,6 @@ import android.graphics.ImageFormat;
@@ -416,7 +416,7 @@ index 20b5d1341e5..be76dd1cd91 100644
                  Log.e(TAG, "Invalid area string=" + str);
                  return null;
 diff --git a/core/java/android/hardware/camera2/CameraCharacteristics.java b/core/java/android/hardware/camera2/CameraCharacteristics.java
-index ead3d580ebd..d027fd997b9 100644
+index 2b195fc5ad83..e33060bb9250 100644
 --- a/core/java/android/hardware/camera2/CameraCharacteristics.java
 +++ b/core/java/android/hardware/camera2/CameraCharacteristics.java
 @@ -31,7 +31,6 @@ import java.util.Collections;
@@ -441,7 +441,7 @@ index ead3d580ebd..d027fd997b9 100644
      }
  
 diff --git a/core/java/android/hardware/camera2/CameraDevice.java b/core/java/android/hardware/camera2/CameraDevice.java
-index 715267a6f0d..ce88697fa8d 100644
+index 715267a6f0de..ce88697fa8db 100644
 --- a/core/java/android/hardware/camera2/CameraDevice.java
 +++ b/core/java/android/hardware/camera2/CameraDevice.java
 @@ -455,10 +455,6 @@ public abstract class CameraDevice implements AutoCloseable {
@@ -456,7 +456,7 @@ index 715267a6f0d..ce88697fa8d 100644
       * <p>Create a new camera capture session by providing the target output set of Surfaces and
       * its corresponding surface configuration to the camera device.</p>
 diff --git a/core/java/android/hardware/camera2/CameraManager.java b/core/java/android/hardware/camera2/CameraManager.java
-index 3ef2642cb4f..87058848360 100644
+index 3ef2642cb4f5..87058848360b 100644
 --- a/core/java/android/hardware/camera2/CameraManager.java
 +++ b/core/java/android/hardware/camera2/CameraManager.java
 @@ -23,7 +23,6 @@ import android.annotation.RequiresPermission;
@@ -607,7 +607,7 @@ index 3ef2642cb4f..87058848360 100644
                  Log.e(TAG, String.format("Ignoring invalid device %s torch status 0x%x", id,
                                  status));
 diff --git a/core/java/android/hardware/camera2/impl/CameraCaptureSessionImpl.java b/core/java/android/hardware/camera2/impl/CameraCaptureSessionImpl.java
-index eee5f7febdf..a4640c1fa51 100644
+index eee5f7febdf2..a4640c1fa519 100644
 --- a/core/java/android/hardware/camera2/impl/CameraCaptureSessionImpl.java
 +++ b/core/java/android/hardware/camera2/impl/CameraCaptureSessionImpl.java
 @@ -206,8 +206,7 @@ public class CameraCaptureSessionImpl extends CameraCaptureSession
@@ -621,7 +621,7 @@ index eee5f7febdf..a4640c1fa51 100644
          }
      }
 diff --git a/core/java/android/hardware/camera2/impl/CameraDeviceImpl.java b/core/java/android/hardware/camera2/impl/CameraDeviceImpl.java
-index 87ccc221f63..d967fbaf610 100644
+index 87ccc221f635..d967fbaf610c 100644
 --- a/core/java/android/hardware/camera2/impl/CameraDeviceImpl.java
 +++ b/core/java/android/hardware/camera2/impl/CameraDeviceImpl.java
 @@ -16,13 +16,10 @@
@@ -734,7 +734,7 @@ index 87ccc221f63..d967fbaf610 100644
              boolean validFormat = false;
              for (int format : inputFormats) {
 diff --git a/core/java/android/hardware/camera2/utils/SurfaceUtils.java b/core/java/android/hardware/camera2/utils/SurfaceUtils.java
-index c90214caf27..92478441aea 100644
+index c90214caf27d..92478441aea3 100644
 --- a/core/java/android/hardware/camera2/utils/SurfaceUtils.java
 +++ b/core/java/android/hardware/camera2/utils/SurfaceUtils.java
 @@ -29,11 +29,6 @@ import java.util.Collection;
@@ -785,7 +785,7 @@ index c90214caf27..92478441aea 100644
 -    }
  }
 diff --git a/core/jni/android_hardware_Camera.cpp b/core/jni/android_hardware_Camera.cpp
-index e107fe429c4..909686d68dd 100644
+index e107fe429c44..909686d68dd5 100644
 --- a/core/jni/android_hardware_Camera.cpp
 +++ b/core/jni/android_hardware_Camera.cpp
 @@ -43,7 +43,6 @@ enum {
@@ -886,5 +886,5 @@ index e107fe429c4..909686d68dd 100644
          { "android/hardware/Camera$CameraInfo", "orientation",   "I", &fields.orientation },
          { "android/hardware/Camera$CameraInfo", "canDisableShutterSound",   "Z",
 -- 
-2.19.1
+2.20.1
 
