@@ -46,7 +46,7 @@ PRODUCT_GENERIC_PROPERTIES += \
     hpx_send_params=1
 
 # HWUI and Dalvik VM overrides
-$(call inherit-product, $(LOCAL_PATH)/phone-xxhdpi-3072-dalvik-heap.mk)
+$(call inherit-product, frameworks/native/build/phone-xxhdpi-3072-dalvik-heap.mk)
 
 # Permissions
 PRODUCT_COPY_FILES += \
