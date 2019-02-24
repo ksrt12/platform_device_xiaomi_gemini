@@ -44,11 +44,9 @@ allow untrusted_app_27 console_silent_prop:file read;
 allow webview_zygote theme_data_file:dir search;
 
 #============= bluetooth ==============
-allow bluetooth adbtcp_prop:file read;
 allow bluetooth bg_boot_complete_prop:file read;
 
 #============= dataservice_app ==============
-allow dataservice_app adbtcp_prop:file read;
 allow dataservice_app bg_boot_complete_prop:file read;
 allow dataservice_app bg_daemon_prop:file read;
 allow dataservice_app runtime_event_log_tags_file:file read;

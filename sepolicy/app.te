@@ -1,4 +1,3 @@
 # Allow appdomain to get vendor_camera_prop
 get_prop(appdomain, vendor_camera_prop)
-get_prop(appdomain, adbtcp_prop)
 get_prop(appdomain, bluetooth_prop)
