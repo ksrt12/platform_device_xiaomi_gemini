@@ -1,6 +1,6 @@
 *.bak
 *.orig
 *~
-patches/apply
+patches/*
 changelog.sh
 Changelog.txt

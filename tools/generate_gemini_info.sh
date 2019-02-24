@@ -31,7 +31,7 @@ cat << EOF >> $file_dir
     {
       "title":"Havoc Changelog",
       "summary":"View Havoc-OS changes",
-      "url":"https://t.me/Havoc_OS/678"
+      "url":"https://t.me/Havoc_OS/797"
     },
     {
       "title":"Device Changelog",
@@ -52,7 +52,7 @@ EOF
     echo "  \"build_date\":\"$build_date\"," >>  $file_dir
     echo "  \"filesize\":\"$file_size\"," >>  $file_dir
     echo "  \"md5\":\"$md5\"," >>  $file_dir
-    echo "  \"url\":\"https://sourceforge.net/projects/havoc-gemini/files/$file_name/download\"" >>  $file_dir
+    echo "  \"url\":\"https://sourceforge.net/projects/havoc-gemini/files/gemini/$file_name/download\"" >>  $file_dir
     echo "}" >>  $file_dir
   fi
 fi

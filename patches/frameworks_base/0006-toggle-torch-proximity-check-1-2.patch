@@ -1,43 +1,44 @@
-From d2fa619e3353d599bb5b051ae2a762e716e446a8 Mon Sep 17 00:00:00 2001
+From 19ead65ca7d838fbb49de5d520d5baf42795ef67 Mon Sep 17 00:00:00 2001
 From: Kazakov Stepan <ksrt12group@gmail.com>
 Date: Tue, 22 Jan 2019 12:28:08 +0300
 Subject: [PATCH 6/9] toggle torch proximity check [1/2]
 
 Signed-off-by: Kazakov Stepan <ksrt12group@gmail.com>
 ---
- core/java/android/provider/Settings.java                  | 5 +++++
- .../com/android/server/policy/PhoneWindowManager.java     | 8 +++++++-
- 2 files changed, 12 insertions(+), 1 deletion(-)
+ core/java/android/provider/Settings.java               |  5 +++++
+ .../com/android/server/policy/PhoneWindowManager.java  | 10 +++++++++-
+ 2 files changed, 14 insertions(+), 1 deletion(-)
 
 diff --git a/core/java/android/provider/Settings.java b/core/java/android/provider/Settings.java
-index 4034fbe5684d..bc31199e8544 100644
+index fe14f38cb548..b12401498180 100644
 --- a/core/java/android/provider/Settings.java
 +++ b/core/java/android/provider/Settings.java
-@@ -5211,6 +5211,11 @@ public final class Settings {
+@@ -5214,6 +5214,11 @@ public final class Settings {
           */
-         public static final String TORCH_LONG_PRESS_POWER_GESTURE = "torch_long_press_power_gesture";
+         public static final String POWERMENU_LOCKSCREEN = "powermenu_lockscreen";
  
 +        /**
 +         * @hide
 +         */
-+        public static final String TORCH_LONG_PRESS_POWER_CHECK = "torch_long_press_power_check";
++        public static final String POWER_BUTTON_TORCH_CHECK = "power_button_torch_check";
 +
          /**
+          * Whether to display cross sign for a data disabled connection
           * @hide
-          */
 diff --git a/services/core/java/com/android/server/policy/PhoneWindowManager.java b/services/core/java/com/android/server/policy/PhoneWindowManager.java
-index 6218d95a12c9..ea428638f4e5 100644
+index a7599f97ef83..ffc9fea09bb8 100644
 --- a/services/core/java/com/android/server/policy/PhoneWindowManager.java
 +++ b/services/core/java/com/android/server/policy/PhoneWindowManager.java
-@@ -975,6 +975,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
-     private String mRearFlashCameraId;
-     private boolean mTorchLongPressPowerEnabled;
-     private boolean mTorchEnabled;
-+    private boolean mTorchProximityCheck;
-     private int mTorchTimeout;
-     private PendingIntent mTorchOffPendingIntent;
+@@ -964,6 +964,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
  
-@@ -1163,7 +1164,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
+     private boolean mHasPermanentMenuKey;
+ 
++    private boolean mTorchProximityCheck;
++
+     private boolean mClearedBecauseOfForceShow;
+     private boolean mTopWindowIsKeyguard;
+ 
+@@ -1149,7 +1151,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
      }
  
      private void toggleFlashLightProximityCheck() {
@@ -46,25 +47,26 @@ index 6218d95a12c9..ea428638f4e5 100644
              if (mHandler.hasMessages(MSG_CLEAR_PROXIMITY)) {
                  // A message is already queued
                  return;
-@@ -1334,6 +1335,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
+@@ -1317,6 +1319,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
              resolver.registerContentObserver(Settings.System.getUriFor(
                      Settings.System.BOTTOM_GESTURE_FEEDBACK_DURATION), false, this,
                      UserHandle.USER_ALL);
 +            resolver.registerContentObserver(Settings.System.getUriFor(
-+                    Settings.System.TORCH_LONG_PRESS_POWER_CHECK), false, this,
++                    Settings.System.POWER_BUTTON_TORCH_CHECK), false, this,
 +                    UserHandle.USER_ALL);
              resolver.registerContentObserver(Settings.System.getUriFor(
                      Settings.System.USE_EDGE_SERVICE_FOR_GESTURES), false, this,
                      UserHandle.USER_ALL);
-@@ -3309,6 +3313,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
-             mTorchLongPressPowerEnabled = Settings.System.getIntForUser(
-                     resolver, Settings.System.TORCH_LONG_PRESS_POWER_GESTURE, 0,
-                     UserHandle.USER_CURRENT) == 1;
+@@ -3279,6 +3284,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
+             mVolumeRockerWake = Settings.System.getIntForUser(resolver,
+                     Settings.System.VOLUME_ROCKER_WAKE, 0, UserHandle.USER_CURRENT) != 0;
+ 
 +            mTorchProximityCheck = Settings.System.getIntForUser(resolver,
-+                    Settings.System.TORCH_LONG_PRESS_POWER_CHECK, 0, UserHandle.USER_CURRENT) == 1;
-             mTorchTimeout = Settings.System.getIntForUser(
-                     resolver, Settings.System.TORCH_LONG_PRESS_POWER_TIMEOUT, 0,
-                     UserHandle.USER_CURRENT);
++                    Settings.System.POWER_BUTTON_TORCH_CHECK, 0, UserHandle.USER_CURRENT) == 1;
++
+ 	        // home wake button
+             mHomeWakeButton = Settings.System.getIntForUser(resolver,
+                     Settings.System.HOME_WAKE_BUTTON, 0, UserHandle.USER_CURRENT) != 0;
 -- 
 2.20.1
 
