@@ -55,4 +55,5 @@ EOF
     echo "  \"url\":\"https://sourceforge.net/projects/havoc-gemini/files/gemini/$file_name/download\"" >>  $file_dir
     echo "}" >>  $file_dir
   fi
+  cp $file_dir $3/OTA/gemini;
 fi
