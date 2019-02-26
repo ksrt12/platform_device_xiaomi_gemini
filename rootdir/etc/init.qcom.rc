@@ -27,6 +27,7 @@
 
 import /vendor/etc/init/hw/init.qcom.power.rc
 import /vendor/etc/init/hw/init.qcom.usb.rc
+import /vendor/etc/init/hw/init.target.rc
 
 on early-init
     mount debugfs debugfs /sys/kernel/debug
@@ -106,6 +107,7 @@ on fs
     symlink /dev/block/platform/soc/${ro.boot.bootdevice} /dev/block/bootdevice
 
     mount_all /vendor/etc/fstab.qcom --early
+    restorecon_recursive /mnt/vendor/persist
 
     # Start HW service manager early
     start hwservicemanager
@@ -454,6 +456,18 @@ on property:sys.boot_completed=1
     write /sys/block/dm-0/queue/read_ahead_kb 128
     write /sys/block/dm-1/queue/read_ahead_kb 128
     write /sys/block/sda/queue/iostats 1
+
+    # UFS health
+    chmod 755 /sys/kernel/debug/ufshcd0
+    chmod 644 /sys/kernel/debug/ufshcd0/err_state
+    chmod 644 /sys/kernel/debug/ufshcd0/power_mode
+    chmod 644 /sys/kernel/debug/ufshcd0/host_regs
+    chmod 644 /sys/kernel/debug/ufshcd0/show_hba
+    chmod 644 /sys/kernel/debug/ufshcd0/dump_device_desc
+    chmod 755 /sys/kernel/debug/ufshcd0/stats
+    chmod 644 /sys/kernel/debug/ufshcd0/stats/req_stats
+    chmod 644 /sys/kernel/debug/ufshcd0/stats/query_stats
+    chmod 644 /sys/kernel/debug/ufshcd0/stats/err_stats
 
     # CPE fw_name used by sound trigger HAL
     chown media audio /sys/kernel/wcd_cpe0/fw_name

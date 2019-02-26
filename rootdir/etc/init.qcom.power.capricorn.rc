@@ -1,0 +1,234 @@
+# Copyright (c) 2016, Code Aurora Forum. All rights reserved.
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are met:
+#     * Redistributions of source code must retain the above copyright
+#       notice, this list of conditions and the following disclaimer.
+#     * Redistributions in binary form must reproduce the above copyright
+#       notice, this list of conditions and the following disclaimer in the
+#       documentation and/or other materials provided with the distribution.
+#     * Neither the name of Code Aurora nor
+#       the names of its contributors may be used to endorse or promote
+#       products derived from this software without specific prior written
+#       permission.
+#
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+# AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+# IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NON-INFRINGEMENT ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+# CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+# EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+# PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+# OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+# WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+# OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+# ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+#
+
+on init
+    # Disable UFS powersaving
+    write /sys/devices/soc/${ro.boot.bootdevice}/clkscale_enable 0
+    write /sys/devices/soc/${ro.boot.bootdevice}/clkgate_enable 0
+    write /sys/devices/soc/${ro.boot.bootdevice}/${ro.boot.bootdevice}:ufs_variant/pm_qos_enable 0
+
+on boot
+    # Update foreground and background cpusets
+    write /dev/cpuset/foreground/cpus 0-3
+    write /dev/cpuset/background/cpus 0-3
+    write /dev/cpuset/system-background/cpus 0-3
+    write /dev/cpuset/top-app/cpus 0-3
+
+    # Add a cpuset for the camera daemon
+    # we want all cores for camera
+    mkdir /dev/cpuset/camera-daemon
+    write /dev/cpuset/camera-daemon/cpus 0-3
+    write /dev/cpuset/camera-daemon/mems 0
+    chown system system /dev/cpuset/camera-daemon
+    chown system system /dev/cpuset/camera-daemon/tasks
+    chmod 0664 /dev/cpuset/camera-daemon/tasks
+
+    # if EAS is present, switch to sched governor (no effect if not EAS)
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor "schedutil"
+    write /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor "schedutil"
+
+    # Enable sched boost
+    # write /proc/sys/kernel/sched_boost 1
+
+    # Set light thermal restrictions while optimizing apps
+    # [throttle_freq_LITTLE, throttle_freq_big, throttle_temp, unthrottle_temp]
+    write /sys/kernel/msm_thermal/zone0 "1228800 1632000 46 44"
+    write /sys/kernel/msm_thermal/zone1 "1228800 1555200 50 47"
+    write /sys/kernel/msm_thermal/zone2 "1036800 1248000 55 53"
+    write /sys/kernel/msm_thermal/zone3 "729600 729600 65 63"
+
+    write /sys/kernel/msm_thermal/enabled 1
+
+on charger
+    wait /dev/block/platform/soc/${ro.boot.bootdevice}
+    # Enable UFS powersaving
+    write /sys/devices/soc/${ro.boot.bootdevice}/clkscale_enable 1
+    write /sys/devices/soc/${ro.boot.bootdevice}/clkgate_enable 1
+    write /sys/devices/soc/${ro.boot.bootdevice}/${ro.boot.bootdevice}:ufs_variant/pm_qos_enable 1
+
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor "userspace"
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_setspeed 300000
+    write /sys/devices/system/cpu/cpu1/online 1
+    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor "userspace"
+    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_setspeed 300000
+    write /sys/devices/system/cpu/cpu2/online 0
+    write /sys/devices/system/cpu/cpu3/online 0
+    #write /sys/module/msm_thermal/parameters/enabled "N"
+    start vendor.hvdcp_opti
+    start thermal-engine
+
+on enable-low-power
+
+     # Disable thermal hotplug to switch governor
+    #write /sys/module/msm_thermal/core_control/enabled 0
+
+    # Set sync wakee policy tunable
+    # write /proc/sys/kernel/sched_prefer_sync_wakee_to_waker 1
+    
+    # Disable sched_boost after boot complete
+    write /proc/sys/kernel/sched_boost 0
+    # write /proc/sys/kernel/sched_autogroup_enabled 0
+
+    # Enable Adaptive LMK
+    # write /sys/module/lowmemorykiller/parameters/enable_adaptive_lmk 1
+    write /sys/module/lowmemorykiller/parameters/vmpressure_file_min 80640
+
+    write /sys/devices/system/cpu/cpu0/online 1
+
+    write /sys/devices/system/cpu/cpu2/online 1
+
+    # configure governor settings for silver cluster
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor "schedutil"
+    write /sys/devices/system/cpu/cpu0/cpufreq/schedutil/up_rate_limit_us 500
+    write /sys/devices/system/cpu/cpu0/cpufreq/schedutil/down_rate_limit_us 20000
+    write /sys/devices/system/cpu/cpu0/cpufreq/schedutil/iowait_boost_enable 1
+
+    # configure governor settings for gold cluster
+    write /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor "schedutil"
+    write /sys/devices/system/cpu/cpu2/cpufreq/schedutil/up_rate_limit_us 500
+    write /sys/devices/system/cpu/cpu2/cpufreq/schedutil/down_rate_limit_us 20000
+    write /sys/devices/system/cpu/cpu2/cpufreq/schedutil/iowait_boost_enable 1
+
+    # configure governor settings for gold cluster
+    #write /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor "pwrutilx"
+    #write /sys/devices/system/cpu/cpu2/cpufreq/pwrutilx/up_rate_limit_us 250
+    #write /sys/devices/system/cpu/cpu2/cpufreq/pwrutilx/down_rate_limit_us 1500
+    #write /sys/devices/system/cpu/cpu2/cpufreq/pwrutilx/iowait_boost_enable 1
+
+    #write /sys/module/cpu_boost/parameters/input_boost_freq "0:1036800 0:1036800"
+    #write /sys/module/cpu_boost/parameters/dynamic_stune_boost 1
+    #write /sys/module/cpu_boost/parameters/input_boost_ms 100
+    #write /sys/module/cpu_boost/parameters/input_boost_enabled 0
+
+    # Set CPU Input Boost parameters
+    write /sys/module/cpu_input_boost/parameters/input_boost_freq_hp 556800
+    write /sys/module/cpu_input_boost/parameters/input_boost_freq_lp 480000
+    write /sys/module/cpu_input_boost/parameters/dynamic_stune_boost 0
+    write /sys/module/cpu_input_boost/parameters/input_boost_duration 20
+
+    # Set thermal restrictions
+    write /sys/kernel/msm_thermal/enabled 0
+    write /sys/kernel/msm_thermal/zone0 "1401600 1785600 40 38"
+    write /sys/kernel/msm_thermal/zone1 "1324800 1555200 41 40"
+    write /sys/kernel/msm_thermal/zone2 "1228800 1478400 42 41"
+    write /sys/kernel/msm_thermal/zone3 "1228800 1401600 43 42"
+    write /sys/kernel/msm_thermal/zone4 "1190400 1324800 44 43"
+    write /sys/kernel/msm_thermal/zone5 "1190400 1248000 46 44"
+    write /sys/kernel/msm_thermal/zone6 "1113600 1190400 48 46"
+    write /sys/kernel/msm_thermal/zone7 "1036800 940800 53 50"
+    write /sys/kernel/msm_thermal/zone8 "729600 729600 65 60"
+    write /sys/kernel/msm_thermal/sampling_ms 5000
+    write /sys/kernel/msm_thermal/enabled 1
+
+    # Enable bus-dcvs
+    write /sys/class/devfreq/soc:qcom,cpubw/governor "bw_hwmon"
+    write /sys/class/devfreq/soc:qcom,cpubw/polling_interval 50
+    write /sys/class/devfreq/soc:qcom,cpubw/min_freq 1525
+    write /sys/class/devfreq/soc:qcom,cpubw/bw_hwmon/mbps_zones "1525 5195 11863 13763"
+    write /sys/class/devfreq/soc:qcom,cpubw/bw_hwmon/sample_ms 4
+    write /sys/class/devfreq/soc:qcom,cpubw/bw_hwmon/io_percent 34
+    write /sys/class/devfreq/soc:qcom,cpubw/bw_hwmon/hist_memory 20
+    write /sys/class/devfreq/soc:qcom,cpubw/bw_hwmon/hyst_length 10
+    write /sys/class/devfreq/soc:qcom,cpubw/bw_hwmon/low_power_ceil_mbps 0
+    write /sys/class/devfreq/soc:qcom,cpubw/bw_hwmon/low_power_io_percent 34
+    write /sys/class/devfreq/soc:qcom,cpubw/bw_hwmon/low_power_delay 20
+    write /sys/class/devfreq/soc:qcom,cpubw/bw_hwmon/guard_band_mbps 0
+    write /sys/class/devfreq/soc:qcom,cpubw/bw_hwmon/up_scale 250
+    write /sys/class/devfreq/soc:qcom,cpubw/bw_hwmon/idle_mbps 1600
+
+    # Enable UFS powersaving
+    write /sys/devices/soc/${ro.boot.bootdevice}/clkscale_enable 1
+    write /sys/devices/soc/${ro.boot.bootdevice}/clkgate_enable 1
+    write /sys/devices/soc/${ro.boot.bootdevice}/${ro.boot.bootdevice}:ufs_variant/pm_qos_enable 1
+
+    # Set idle GPU to 133 MHz
+    write /sys/class/kgsl/kgsl-3d0/default_pwrlevel 6
+    write /sys/class/kgsl/kgsl-3d0/max_pwrlevel 0
+    write /sys/class/kgsl/kgsl-3d0/devfreq/adrenoboost 0
+    write /sys/class/kgsl/kgsl-3d0/devfreq/min_clock_mhz 133
+    write /sys/class/kgsl/kgsl-3d0/devfreq/min_freq 133000000
+    write /sys/class/kgsl/kgsl-3d0/devfreq/max_clock_mhz 624
+    write /sys/class/kgsl/kgsl-3d0/devfreq/max_freq 624000000
+
+    write /sys/module/workqueue/parameters/power_efficient Y
+
+    # Set schedTune boost values (only affects EAS)
+    write /dev/stune/schedtune.sched_boost 10
+    write /dev/stune/rt/schedtune.sched_boost 30
+
+    # update cpusets now that boot is complete and we want better load balancing
+    write /dev/cpuset/top-app/cpus 0-3
+    write /dev/cpuset/foreground/boost/cpus 0-3
+    write /dev/cpuset/foreground/cpus 0-3
+    write /dev/cpuset/background/cpus 0
+    write /dev/cpuset/system-background/cpus 0-2
+
+    # Set swappiness and cache pressure
+    write /proc/sys/vm/swappiness 35
+    write /proc/sys/vm/vfs_cache_pressure 10
+    write /proc/sys/vm/dirty_ratio 20
+    write /proc/sys/vm/dirty_background_ratio 5
+
+    write /sys/block/dm-0/queue/read_ahead_kb 128
+    write /sys/block/sda/queue/read_ahead_kb 128
+    write /sys/block/sde/queue/read_ahead_kb 128
+    write /sys/block/dm-0/queue/scheduler cfq
+    write /sys/block/sda/queue/scheduler cfq
+    write /sys/block/sde/queue/scheduler cfq
+    write /sys/block/dm-0/queue/iosched/group_idle 0
+    write /sys/block/sda/queue/iosched/group_idle 0
+    write /sys/block/sde/queue/iosched/group_idle 0
+
+    write /sys/module/msm_thermal/core_control/enabled 0
+
+    # Set nice Level to 9
+    write /proc/sys/kernel/sched_upmigrate_min_nice 9
+
+    # Set PowerHal property
+    setprop vendor.post_boot.parsed 1
+
+on property:sys.boot_completed=1
+    trigger enable-low-power
+
+    # Set I/O squeduler
+    setprop sys.io.scheduler "cfq"
+
+    # Enable PowerHAL hint processing
+    setprop vendor.powerhal.init 1
+
+on property:init.svc.recovery=running
+    trigger enable-low-power
+
+service charger /sbin/chargeonlymode
+    class charger
+    group system graphics
+    seclabel u:r:charger:s0
+
+service vendor.hvdcp_opti /vendor/bin/hvdcp_opti
+    class main
+    user root
+    group system wakelock

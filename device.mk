@@ -18,7 +18,7 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/product_launched_with_m.mk)
 
 # Get non-open-source specific aspects
-$(call inherit-product-if-exists, vendor/xiaomi/gemini/gemini-vendor.mk)
+$(call inherit-product-if-exists, vendor/xiaomi/$(LDEV)/$(LDEV)-vendor.mk)
 $(call inherit-product-if-exists, vendor/xiaomi/msm8996-common/msm8996-common-vendor.mk)
 
 PERM_PATH := $(TARGET_COPY_OUT_VENDOR)/etc/permissions
@@ -27,7 +27,7 @@ PERM_PATH := $(TARGET_COPY_OUT_VENDOR)/etc/permissions
 #$(call inherit-product-if-exists, vendor/miui/miui-apps.mk)
 
 # Overlays
-DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay
+DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay $(LOCAL_PATH)/overlay-$(LDEV)
 
 PRODUCT_ENFORCE_RRO_TARGETS := \
     framework-res
@@ -160,8 +160,13 @@ PRODUCT_PACKAGES += \
     init.qcom.rc \
     init.qcom.power.rc \
     init.qcom.usb.rc \
-    ueventd.qcom.rc \
-    init.qcom.sh 
+    init.qcom.sh \
+    ueventd.qcom.rc
+
+ifeq ($(LDEV), capricorn)
+PRODUCT_PACKAGES += \
+    init.target.rc
+endif
 #    init.spectrum.rc \
 #    init.spectrum.sh
 
@@ -229,8 +234,8 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/idc/uinput-fpc.idc:$(TARGET_COPY_OUT_VENDOR)/usr/idc/uinput-fpc.idc
 
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/keylayout/atmel-maxtouch.kl:$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/atmel-maxtouch.kl \
-    $(LOCAL_PATH)/keylayout/synaptics_dsx.kl:$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/synaptics_dsx.kl \
+    $(LOCAL_PATH)/keylayout/atmel-maxtouch-$(LDEV).kl:$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/atmel-maxtouch.kl \
+    $(LOCAL_PATH)/keylayout/synaptics_dsx-$(LDEV).kl:$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/synaptics_dsx.kl \
     $(LOCAL_PATH)/keylayout/uinput-fpc.kl:$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/uinput-fpc.kl \
     $(LOCAL_PATH)/keylayout/gpio-keys.kl:$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/gpio-keys.kl \
     $(LOCAL_PATH)/keylayout/msm8996-tasha-mtp-snd-card_Button_Jack.kl:$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/msm8996-tasha-mtp-snd-card_Button_Jack.kl \

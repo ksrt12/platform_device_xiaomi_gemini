@@ -1,5 +1,6 @@
 #
 # Copyright (C) 2016 The JDCTeam
+#           (c) 2019 ksrt12
 #
 # This file should set PRODUCT_MAKEFILES to a list of product makefiles
 # to expose to the build system.  LOCAL_DIR will already be set to
@@ -12,4 +13,6 @@
 #
 
 PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/havoc_gemini.mk 
+    device/xiaomi/gemini/havoc_capricorn.mk \
+    device/xiaomi/gemini/havoc_gemini.mk 
+
