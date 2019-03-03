@@ -1,6 +1,8 @@
 *.bak
 *.orig
 *~
+patches
 patches/*
 changelog.sh
 Changelog.txt
+*.diff
