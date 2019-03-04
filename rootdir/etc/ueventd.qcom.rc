@@ -138,7 +138,7 @@
 /dev/elliptic0            0777   system     system
 
 # QDSS
-/dev/byte-cntr            0660   system    oem_2902
+/dev/byte-cntr            0660   system     oem_2902
 
 /dev/msm_camera/*         0660   system     camera
 /dev/gemini/              0660   system     camera
@@ -186,11 +186,10 @@
 /dev/ttyHSL1              0660   system     system
 /dev/ttyHS1               0660   system     system
 /dev/mdm                  0660   system     radio
-/sys/devices/virtual/smdpkt/smdcntl*       open_timeout   0664 radio radio
 /dev/sdio_tty_ciq_00      0660   system     system
 /dev/tty_sdio_00          0660   system     system
 /dev/ttyGS0               0660   system     system
-/dev/i2c-5                0660   media       media
+/dev/i2c-5                0660   media      media
 /dev/avtimer              0660   system     audio
 
 # DVB devices
@@ -201,6 +200,8 @@
 # Broadcast devices
 /dev/tsc_mux0             0660   media       media
 /dev/tsc_ci0              0660   media       media
+
+/sys/devices/virtual/smdpkt/smdcntl*                open_timeout   0664    radio    radio
 
 # ultrasonic fingerprint
 /sys/devices/soc/757a000.i2c/i2c-6/*                eeprom         0440    system   system
@@ -273,7 +274,13 @@
 /dev/block/bootdevice/by-name/frp                                  0660   system     system
 /dev/block/platform/soc/624000.ufshc/by-name/frp                   0660   system     system
 
-/sys/devices/platform/kcal_ctrl.0/* 0666 system system
+/sys/devices/platform/kcal_ctrl.0/*        kcal            0666  system  system
+/sys/devices/platform/kcal_ctrl.0/*        kcal_cont       0666  system  system
+/sys/devices/platform/kcal_ctrl.0/*        kcal_enable     0666  system  system
+/sys/devices/platform/kcal_ctrl.0/*        kcal_hue        0666  system  system
+/sys/devices/platform/kcal_ctrl.0/*        kcal_min        0666  system  system
+/sys/devices/platform/kcal_ctrl.0/*        kcal_sat        0666  system  system
+/sys/devices/platform/kcal_ctrl.0/*        kcal_val        0666  system  system
 
 # Kmsg device
 /dev/kmsg                 0620   root       system
