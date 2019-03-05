@@ -49,12 +49,6 @@
         <permission name="android.permission.CONTROL_REMOTE_APP_TRANSITION_ANIMATIONS"/>
     </privapp-permissions>
 
-    <privapp-permissions package="com.havoc.ota">
-        <permission name="android.permission.ACCESS_CACHE_FILESYSTEM"/>
-        <permission name="android.permission.REBOOT"/>
-        <permission name="android.permission.RECOVERY"/>
-    </privapp-permissions>
-
     <privapp-permissions package="com.android.vending">
         <permission name="android.permission.SUBSTITUTE_NOTIFICATION_APP_NAME"/>
         <permission name="android.permission.REBOOT"/>
