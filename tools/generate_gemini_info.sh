@@ -5,8 +5,8 @@ then
   file_path=$1
   file_dir=$(dirname "$file_path")
   filename=$(basename "$file_path")
-  romtype=$2
-  version=`echo "$file_path" | cut -d '-' -f3`
+  romtype=$HAVOC_BUILD_TYPE
+  version=$HAVOC_BASE_VERSION
   size=`stat -c "%s" "$file_path"`
   datetime=`cat $file_dir/system/build.prop | grep "ro.build.date.utc=" | cut -d '=' -f2`
   id=`sha256sum $file_path | cut -d ' ' -f1`

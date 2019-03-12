@@ -3,8 +3,6 @@ get_prop({ appdomain mediaprovider untrusted_app_25 }, { bg_daemon_prop bg_boot_
 
 get_prop({ appdomain bluetooth untrusted_app untrusted_app_27}, console_silent_prop)
 
-get_prop(platform_app, firstboot_prop)
-
 get_prop({
  appdomain
  bluetooth
@@ -44,5 +42,10 @@ get_prop({
  ctl_vendor_wigigsvc_prop
  device_logging_prop
  dumpstate_options_prop
+ firstboot_prop
+ fm_prop
+ fst_prop
+ graphics_vulkan_prop
+ hvdcp_opti_prop
  vendor_camera_prop
 })

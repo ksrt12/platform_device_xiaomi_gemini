@@ -486,4 +486,7 @@
     <!-- Allow waking up from Home key -->
     <bool name="config_allowTheaterModeWakeFromKey">true</bool>
     <bool name="config_HomeWakeButton">true</bool>
+
+    <!-- Default LED off time for notification LED in milliseconds. -->
+    <integer name="config_defaultNotificationLedOff">3000</integer>
 </resources>
