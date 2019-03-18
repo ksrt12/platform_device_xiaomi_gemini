@@ -1,6 +1,4 @@
-allow untrusted_app_25 camera_prop:file { open read getattr };
-
-dontaudit untrusted_app_25 proc:file { read open getattr };
-dontaudit untrusted_app_25 proc_stat:file { read open getattr };
-
-allow untrusted_app_25 rootfs:dir { open read };
+dontaudit untrusted_app_25 { proc proc_stat }:file { read open getattr };
+allow untrusted_app_25 app_data_file:dir search;
+allow untrusted_app_25 untrusted_app_27:unix_stream_socket connectto;
+dontaudit untrusted_app_25 rootfs:dir { open read };

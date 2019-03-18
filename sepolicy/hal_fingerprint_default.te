@@ -14,11 +14,7 @@ allow hal_fingerprint_default fpc_data_file:sock_file { create unlink };
 allow hal_fingerprint_default sysfs_fpc:dir r_dir_perms;
 allow hal_fingerprint_default sysfs_fpc:file rw_file_perms;
 allow hal_fingerprint_default sysmatdrv_device:chr_file w_file_perms;
-allow hal_fingerprint_default tee_device:chr_file rw_file_perms;
-allow hal_fingerprint_default uhid_device:chr_file rw_file_perms;
-allow hal_fingerprint_default mnt_user_file:dir search;
-allow hal_fingerprint_default mnt_user_file:lnk_file read;
-
-# Ignore all logging requests
-dontaudit hal_fingerprint_default { sdcardfs storage_file }:dir search;
-allow hal_fingerprint_default storage_file:lnk_file read;
+allow hal_fingerprint_default { tee_device uhid_device }:chr_file rw_file_perms;
+allow hal_fingerprint_default { mnt_user_file sdcardfs storage_file }:dir search;
+allow hal_fingerprint_default { mnt_user_file sdcardfs storage_file }:lnk_file read;
+allow hal_fingerprint_default media_rw_data_file:dir r_dir_perms;

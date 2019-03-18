@@ -1,6 +1,4 @@
-allow kernel kcal_dev:dir relabelto;
-allow kernel kcal_dev:file relabelto;
-allow kernel kcal_dev:lnk_file relabelto;
-allow kernel debugfs_ipc:dir search;
+allow kernel kcal_dev:{ dir file lnk_file } relabelto;
+allow kernel { debugfs_ipc tmpfs }:dir search;
 r_dir_file(kernel, firmware_file)
 allow kernel self:capability { dac_override dac_read_search };

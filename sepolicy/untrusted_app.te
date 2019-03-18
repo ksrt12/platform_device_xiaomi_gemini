@@ -1,5 +1,8 @@
 # allow apps to read battery stats
 r_dir_file(untrusted_app, sysfs_batteryinfo)
-allow untrusted_app vendor_camera_prop:file r_file_perms;
+allow untrusted_app proc_vmstat:file read;
 allow untrusted_app untrusted_app_27:unix_stream_socket connectto;
 allow untrusted_app mnt_vendor_file:dir { getattr search };
+allow untrusted_app { adsprpcd_file bt_firmware_file firmware_file }:filesystem getattr;
+dontaudit untrusted_app rootfs:dir r_dir_perms;
+allow untrusted_app property_socket:sock_file write;

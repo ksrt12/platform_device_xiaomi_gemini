@@ -1,1 +1,2 @@
 allow netd self:capability sys_admin;
+allow netd dnsmasq:process noatsecure;

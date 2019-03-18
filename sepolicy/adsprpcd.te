@@ -1,2 +1,3 @@
+allow init adsprpcd:process noatsecure;
 allow adsprpcd_file self:filesystem associate;
 r_dir_file(adsprpcd, adsprpcd_file)
