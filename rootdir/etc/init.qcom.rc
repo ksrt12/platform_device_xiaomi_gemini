@@ -107,7 +107,6 @@ on fs
     symlink /dev/block/platform/soc/${ro.boot.bootdevice} /dev/block/bootdevice
 
     mount_all /vendor/etc/fstab.qcom --early
-    restorecon_recursive /mnt/vendor/persist
 
     # Start HW service manager early
     start hwservicemanager
@@ -117,8 +116,8 @@ on late-fs
     start servicemanager
     start surfaceflinger
     start bootanim
-    start configstore-hal-1-0
-    start gralloc-2-0
+    start vendor.configstore-hal
+    start vendor.gralloc-2-0
     # mount RW partitions which need run fsck
     mount_all /vendor/etc/fstab.qcom --late
 

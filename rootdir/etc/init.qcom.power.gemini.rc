@@ -83,7 +83,7 @@ on charger
 on enable-low-power
 
     # Disable sched_boost after boot complete
-    write /proc/sys/kernel/sched_boost 0
+    #write /proc/sys/kernel/sched_boost 0
 
     #write /sys/module/lowmemorykiller/parameters/vmpressure_file_min 80640
 
@@ -153,7 +153,7 @@ on enable-low-power
     write /sys/class/kgsl/kgsl-3d0/max_clock_mhz 624
     write /sys/class/kgsl/kgsl-3d0/devfreq/max_freq 624000000
 
-    write /sys/module/workqueue/parameters/power_efficient Y
+    #write /sys/module/workqueue/parameters/power_efficient Y
 
     # Set schedTune boost values (only affects EAS)
     #write /dev/stune/schedtune.sched_boost 10
