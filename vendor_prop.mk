@@ -269,6 +269,9 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.lmk.downgrade_pressure=100 \
     ro.lmk.kill_heaviest_task=true
 
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.hardware.keystore=msm8996
+
 # ro.location properties below are used in conjunction
 # with NLP_MODE setting in /vendor/etc/izat.conf
 # either as the main network provider or as a fallback
