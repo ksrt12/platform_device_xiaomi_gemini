@@ -3,7 +3,7 @@ export WITH_SU=true;
 export USE_CCACHE=true;
 export SKIP_ABI_CHECKS=true;
 #export INC_ZIP="-i thi/havoc_gemini-target_files-fb721505ac.zip";
-apply=device/xiaomi/gemini/patches/apply;
+apply=patches/apply;
 if [ ! -e $apply ]
 then sh $apply.sh;
 touch $apply; fi;

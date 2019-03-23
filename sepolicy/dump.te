@@ -1,0 +1,14 @@
+allow {
+ audioserver
+ cameraserver
+ hal_drm_widevine
+ hal_graphics_composer_default
+ hal_sensors_default
+ surfaceflinger
+} crash_dump:process noatsecure;
+
+#============= dumpstate ==============
+allow dumpstate self:capability sys_admin;
+allow dumpstate sysfs:file read;
+
+allow { hal_graphics_allocator_default hal_vibrator_default } dumpstate:fd use;

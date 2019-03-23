@@ -1,17 +1,10 @@
 #============= dpmd netmgrd ==============
 allow { dpmd netmgrd } netutils_wrapper:process noatsecure;
 
-#============= su ==============
-allow su devpts:chr_file open;
-allow su functionfs:file ioctl;
-allow su kernel:security read_policy;
-allow su selinuxfs:file { open read };
-allow su device_logging_prop:file { getattr open read };
-
 read_runtime_log_tags({ dataservice_app dex2oat vndservicemanager hwservicemanager untrusted_app_all })
 
 #============= hal_wifi_default ==============
-allow { hal_wifi_default netmgrd } kernel:system module_request;
+allow hal_wifi_default kernel:system module_request;
 
 allow {
  adbd

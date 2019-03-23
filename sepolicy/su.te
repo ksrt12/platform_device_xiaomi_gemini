@@ -1,0 +1,14 @@
+#============= su ==============
+allow su devpts:chr_file open;
+allow su functionfs:file ioctl;
+allow su kernel:security read_policy;
+allow su selinuxfs:file { open read };
+allow su device_logging_prop:file { getattr open read };
+allow su ffs_prop:property_service set;
+allow su functionfs:file { open read write };
+allow su { init dumpstate }:unix_stream_socket connectto;
+allow su kernel:system syslog_read;
+allow su kmsg_device:chr_file { open read };
+allow su { property_socket dumpstate_socket }:sock_file write;
+allow su self:capability dac_override;
+allow su shell_data_file:dir { getattr search write };

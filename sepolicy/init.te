@@ -38,11 +38,15 @@ allow init {
  adsprpcd
  bootanim
  bootstat
- fsck
  cameraserver
- installd
+ dumpstate
+ fsck
+ hal_alarm_qti_default
+ hal_audio_default
+ hal_bluetooth_qti
  hal_camera_default
  hal_configstore_default
+ hal_display_color_default
  hal_drm_clearkey
  hal_drm_default
  hal_drm_widevine
@@ -50,13 +54,26 @@ allow init {
  hal_gnss_qti
  hal_graphics_allocator_default
  hal_graphics_composer_default
+ hal_health_default
  hal_wifi_supplicant_default
  hal_cas_default
  hal_imsrtp
+ hal_ir_default
+ hal_light_default
  hal_keymaster_default
+ hal_memtrack_default
+ hal_nfc_default
+ hal_power_default
  hal_rcsservice
+ hal_sensors_default
+ hal_thermal_default
+ hal_usb_default
+ hal_vibrator_default
+ init_panel
+ installd
  hwservicemanager
  keystore
+ mediaextractor
  mediadrmserver
  mediametrics
  logd
@@ -78,6 +95,3 @@ allow init {
 
 allow init sysfs:dir write;
 allow init system_file:dir relabelfrom;
-
-
- 
