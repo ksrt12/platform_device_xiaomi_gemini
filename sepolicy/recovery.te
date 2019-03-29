@@ -1,0 +1,5 @@
+allow recovery app_data_file:dir { getattr open read };
+allow recovery app_data_file:file getattr;
+allow recovery default_prop:property_service set;
+allow recovery rootfs:dir { add_name write };
+allow recovery system_radio_prop:property_service set;
