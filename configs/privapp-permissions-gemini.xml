@@ -66,4 +66,8 @@
         <permission name="android.permission.PREVENT_POWER_KEY"/>
     </privapp-permissions>
 
+    <privapp-permissions package="com.google.android.gms">
+        <permission name="android.permission.ALLOCATE_AGGRESSIVE"/>
+    </privapp-permissions>
+
 </permissions>
