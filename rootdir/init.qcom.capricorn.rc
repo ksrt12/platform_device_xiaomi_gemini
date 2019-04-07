@@ -444,6 +444,9 @@ on boot
     # Wifi firmware reload path
     chown wifi wifi /sys/module/wlan/parameters/fwpath
 
+    # Access permission for QC3.0 charging current limit
+    chown system system /sys/module/qpnp_smbcharger/parameters/default_hvdcp3_icl_ma
+
     # Create vpp directory
     mkdir /persist/vpp 0770 media media
 
