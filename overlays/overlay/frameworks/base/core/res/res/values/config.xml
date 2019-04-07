@@ -393,11 +393,6 @@
         <item>/system/priv-app/ConfigPanel/ConfigPanel.apk</item>
     </string-array>
 
-    <!-- Names of the key handler classes -->
-    <string-array name="config_deviceKeyHandlerClasses" translatable="false">
-        <item>com.havoc.settings.device.KeyHandler</item>
-    </string-array>
-
     <!-- Control the behavior when the user long presses the home button.
             0 - Nothing
             1 - Menu key

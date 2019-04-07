@@ -13,6 +13,7 @@
 #
 
 PRODUCT_MAKEFILES := \
+    device/xiaomi/gemini/syberia_gemini.mk  \
     device/xiaomi/gemini/havoc_capricorn.mk \
     device/xiaomi/gemini/havoc_gemini.mk 
 

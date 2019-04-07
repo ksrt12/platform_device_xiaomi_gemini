@@ -27,8 +27,11 @@ PERM_PATH := $(TARGET_COPY_OUT_VENDOR)/etc/permissions
 #$(call inherit-product-if-exists, vendor/miui/miui-apps.mk)
 
 # Overlays
-DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay $(LOCAL_PATH)/overlay-$(LDEV)
-DEVICE_PACKAGE_OVERLAYS += device/xiaomi/translations
+DEVICE_PACKAGE_OVERLAYS += \
+    $(LOCAL_PATH)/overlays/overlay \
+    $(LOCAL_PATH)/overlays/overlay-$(LROM) \
+    $(LOCAL_PATH)/overlays/overlay-$(LDEV) \
+    device/xiaomi/translations
 
 PRODUCT_ENFORCE_RRO_TARGETS := \
     framework-res
@@ -40,8 +43,6 @@ PRODUCT_AAPT_PREF_CONFIG := xxhdpi
 # Boot animation
 TARGET_SCREEN_HEIGHT := 1920
 TARGET_SCREEN_WIDTH := 1080
-PRODUCT_COPY_FILES += \
-    vendor/havoc/prebuilt/common/bootanimation/$(TARGET_SCREEN_WIDTH).zip:system/media/bootanimation.zip
 
 PRODUCT_GENERIC_PROPERTIES += \
     ro.sf.lcd_density=480 \
@@ -177,7 +178,7 @@ PRODUCT_PACKAGES += \
 
 # ConfigPanel
 PRODUCT_PACKAGES += \
-    ConfigPanel \
+    ConfigPanel
 
 # Default permissions
 PRODUCT_COPY_FILES += \
