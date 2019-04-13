@@ -17,7 +17,7 @@
 #define LOG_TAG "xiaomi_readfem"
 #define LOG_NDEBUG 0
 
-#include <cutils/log.h>
+#include <log/log.h>
 #include <cutils/properties.h>
 
 #include <dlfcn.h>
