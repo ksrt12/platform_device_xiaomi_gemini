@@ -68,6 +68,7 @@ ifeq ($(LDEV),gemini)
 TARGET_KERNEL_CROSS_COMPILE_PREFIX := aarch64-linux-android-
 TARGET_KERNEL_CLANG_COMPILE := true
 TARGET_KERNEL_CLANG_VERSION := 9.0.2
+TARGET_KERNEL_USE_LLD := true
 KERNEL_TOOLCHAIN := /home/ksrt12/UBERTC/out/aarch64-linux-android-8.x/bin
 else
 TARGET_KERNEL_CROSS_COMPILE_PREFIX := aarch64-linux-gnu-
