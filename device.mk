@@ -427,8 +427,7 @@ PRODUCT_PACKAGES += \
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/public.libraries.txt:$(TARGET_COPY_OUT_VENDOR)/etc/public.libraries.txt
 
-# Prebuilt music app and browser
-PRODUCT_PACKAGES += Phonograph KiwiBrowser
+# MiUI Camera
 $(call inherit-product-if-exists, vendor/MiuiCamera/config.mk)
 
 # TWRP
