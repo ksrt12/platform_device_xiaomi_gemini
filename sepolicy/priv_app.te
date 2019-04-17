@@ -2,4 +2,5 @@ allow priv_app { adsprpcd_file bt_firmware_file firmware_file }:filesystem getat
 allow priv_app device:dir r_dir_perms;
 allow priv_app { firmware_file mnt_vendor_file }:dir search;
 allow priv_app { firmware_file proc proc_interrupts proc_modules sysfs sysfs_android_usb }:file r_file_perms;
+allow priv_app sysfs:dir read;
 get_prop(priv_app, { firstboot_prop fm_prop })

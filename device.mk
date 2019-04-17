@@ -23,9 +23,6 @@ $(call inherit-product-if-exists, vendor/xiaomi/msm8996-common/msm8996-common-ve
 
 PERM_PATH := $(TARGET_COPY_OUT_VENDOR)/etc/permissions
 
-#Miui Apps
-#$(call inherit-product-if-exists, vendor/miui/miui-apps.mk)
-
 # Overlays
 DEVICE_PACKAGE_OVERLAYS += \
     $(LOCAL_PATH)/overlays/overlay \
@@ -354,7 +351,6 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/seccomp_policy/mediacodec.policy:$(TARGET_COPY_OUT_VENDOR)/etc/seccomp_policy/mediacodec.policy \
     $(LOCAL_PATH)/seccomp_policy/mediaextractor-seccomp.policy:$(TARGET_COPY_OUT_VENDOR)/etc/seccomp_policy/mediaextractor.policy
 
-
 # Telephony
 PRODUCT_PACKAGES += \
     telephony-ext
@@ -379,8 +375,15 @@ PRODUCT_PACKAGES += \
     android.hardware.usb@1.0-service.xiaomi_8996
 
 # VNDK
+ifeq ($(BOARD_VNDK_VERSION),)
 PRODUCT_PACKAGES += \
     vndk-sp
+else
+PRODUCT_PACKAGES += \
+    libstdc++.vendor \
+    libvulkan \
+    vndk_package
+endif
 
 # WiFi
 PRODUCT_PACKAGES += \

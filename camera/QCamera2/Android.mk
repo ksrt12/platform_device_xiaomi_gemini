@@ -119,7 +119,7 @@ endif
 
 #LOCAL_STATIC_LIBRARIES := libqcamera2_util
 
-LOCAL_SHARED_LIBRARIES := libcamera_client liblog libhardware libutils libcutils libdl libsync
+LOCAL_SHARED_LIBRARIES := liblog libhardware libutils libcutils libdl libsync
 LOCAL_SHARED_LIBRARIES += libmmcamera_interface libmmjpeg_interface libui libcamera_metadata
 LOCAL_SHARED_LIBRARIES += libqdMetaData libqservice libbinder android.hardware.camera.common@1.0
 ifeq ($(USE_DISPLAY_SERVICE),true)
@@ -129,6 +129,9 @@ LOCAL_SHARED_LIBRARIES += libgui
 endif
 ifeq ($(TARGET_TS_MAKEUP),true)
 LOCAL_SHARED_LIBRARIES += libts_face_beautify_hal libts_detected_face_hal
+endif
+ifeq ($(BOARD_VNDK_VERSION),)
+LOCAL_SHARED_LIBRARIES += libcamera_client
 endif
 
 LOCAL_HEADER_LIBRARIES += media_plugin_headers

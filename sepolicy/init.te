@@ -76,6 +76,7 @@ allow init {
  mediaextractor
  mediadrmserver
  mediametrics
+ mm-qcamerad
  logd
  netd
  readfem
