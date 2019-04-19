@@ -2,12 +2,12 @@
 export WITH_SU=true;
 export USE_CCACHE=true;
 export SKIP_ABI_CHECKS=true;
-#export INC_ZIP="-i thi/havoc_gemini-target_files-fb721505ac.zip";
 apply=patches/apply;
 if [ ! -e $apply ]
 then sh $apply.sh;
 touch $apply; fi;
-export changelog_days=10;
+if [ -z $dtl ]; then dtl=0; fi
+export changelog_days=$dtl;
 export SDCLANG_PATH=/home/ksrt12/u/sdclang/toolchains/llvm-Snapdragon_LLVM_for_Android_6.0/prebuilt/linux-x86_64/bin;
 export SDCLANG_LTO_DEFS=device/xiaomi/gemini/sdllvm-lto-defs.mk;
 export SDCLANG_COMMON_FLAGS="-O3 -fvectorize -Wno-user-defined-warnings -Wno-vectorizer-no-neon -Wno-unknown-warning-option \
