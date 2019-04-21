@@ -2,3 +2,5 @@ dontaudit untrusted_app_25 { proc proc_stat proc_vmstat }:file { read open getat
 allow untrusted_app_25 app_data_file:dir search;
 allow untrusted_app_25 untrusted_app_27:unix_stream_socket connectto;
 dontaudit untrusted_app_25 rootfs:dir { open read };
+
+allow { platform_app untrusted_app_25 } theme_data_file:dir search;

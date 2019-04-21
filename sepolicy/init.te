@@ -30,12 +30,11 @@ allow init proc:file { open read getattr};
 allow init nativetest_data_file:file getattr;
 allow init kernel:system module_request;
 
-#halserverdomain
-
 #============= init ==============
 allow init {
  adbd
  adsprpcd
+ audioserver
  bootanim
  bootstat
  cameraserver
@@ -50,6 +49,7 @@ allow init {
  hal_drm_clearkey
  hal_drm_default
  hal_drm_widevine
+ hal_fingerprint_default
  hal_gatekeeper_default
  hal_gnss_qti
  hal_graphics_allocator_default
@@ -63,36 +63,45 @@ allow init {
  hal_keymaster_default
  hal_memtrack_default
  hal_nfc_default
+ hal_neuralnetworks_hvx
  hal_power_default
  hal_rcsservice
  hal_sensors_default
  hal_thermal_default
  hal_usb_default
  hal_vibrator_default
+ hal_wifi_default
+ ims
  init_panel
  installd
+ irsc_util
  hwservicemanager
  keystore
  mediaextractor
  mediadrmserver
  mediametrics
  mm-qcamerad
+ msm_irqbalanced
  logd
  netd
  readfem
+ rfs_access
+ rmt_storage
  sensors
  servicemanager
  surfaceflinger
+ tee
  thermal-engine
  toolbox
  tzdatacheck
  ueventd
  vdc
  vendor_init
+ vendor_per_mgr
  vndservicemanager
  vold
  zygote
 }:process noatsecure;
 
 allow init sysfs:dir write;
-allow init system_file:dir relabelfrom;
+allow init system_file:{ dir file } relabelfrom;
