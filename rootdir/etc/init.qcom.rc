@@ -626,6 +626,13 @@ service time_daemon /vendor/bin/time_daemon
     group root
     writepid /dev/cpuset/system-background/tasks
 
+service vendor.power_off_alarm /vendor/bin/power_off_alarm
+    class core
+    group system
+    disabled
+    oneshot
+    writepid /dev/cpuset/system-background/tasks
+
 # Start camera server as daemon
 service qcamerasvr /vendor/bin/mm-qcamera-daemon
     class late_start
