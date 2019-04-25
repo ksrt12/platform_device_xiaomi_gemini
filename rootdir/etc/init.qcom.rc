@@ -490,7 +490,7 @@ service vendor.cnd /vendor/bin/cnd
     group system wifi inet radio wakelock net_admin
     writepid /dev/cpuset/system-background/tasks
 
-service irsc_util /vendor/bin/irsc_util "/vendor/etc/sec_config"
+service vendor.irsc_util /vendor/bin/irsc_util "/vendor/etc/sec_config"
     class core
     user root
     oneshot
@@ -584,13 +584,13 @@ service wpa_supplicant /vendor/bin/hw/wpa_supplicant \
     disabled
     oneshot
 
-service loc_launcher /vendor/bin/loc_launcher
+service vendor.loc_launcher /vendor/bin/loc_launcher
     class late_start
     user gps
     group gps
     writepid /dev/cpuset/system-background/tasks
 
-service qcom-sh /vendor/bin/init.qcom.sh
+service vendor.qcom-sh /vendor/bin/init.qcom.sh
     class late_start
     user root
     group root system radio
@@ -599,7 +599,7 @@ service qcom-sh /vendor/bin/init.qcom.sh
 on property:ro.vendor.ril.mbn_copy_completed=1
     write /data/vendor/radio/copy_complete 1
 
-service panel-sh /vendor/bin/init.panel.sh
+service vendor.panel-sh /vendor/bin/init.panel.sh
     class core
     user root
     oneshot
@@ -620,7 +620,7 @@ service vendor.qseecomd /vendor/bin/qseecomd
     group root
     writepid /dev/cpuset/system-background/tasks
 
-service time_daemon /vendor/bin/time_daemon
+service vendor.time_daemon /vendor/bin/time_daemon
     class main
     user root
     group root
@@ -661,13 +661,13 @@ on property:sys.shutdown.requested=*
     stop vendor.per_proxy
     stop vendor.ims_rtp_daemon
 
-service readfem /vendor/bin/readfem
+service vendor.readfem /vendor/bin/readfem
     class main
     user root
     group root oem_2901
     oneshot
 
-service readmac /vendor/bin/readmac
+service vendor.readmac /vendor/bin/readmac
     class main
     user system
     group system net_raw
@@ -683,7 +683,7 @@ service thermal-engine /vendor/bin/thermal-engine -c ${sys.qcom.thermalcfg:-/ven
     group system root diag
     writepid /dev/cpuset/system-background/tasks
 
-service adsprpcd /vendor/bin/adsprpcd
+service vendor.adsprpcd /vendor/bin/adsprpcd
     class main
     user media
     group media
@@ -722,14 +722,14 @@ service vendor.imsrcsservice /vendor/bin/imsrcsd
 on property:vendor.ims.DATA_DAEMON_STATUS=1
     restart vendor.ims_rtp_daemon
 
-service ppd /vendor/bin/mm-pp-dpps
+service vendor.ppd /vendor/bin/mm-pp-dpps
     class hal
     user system
     group system graphics
     socket pps stream 0660 system system
     disabled
 
-service tfa-sh /vendor/bin/init.tfa.sh /vendor/etc/silence_short.wav 15 1
+service vendor.tfa-sh /vendor/bin/init.tfa.sh /vendor/etc/silence_short.wav 15 1
     class main
     user system
     group system
