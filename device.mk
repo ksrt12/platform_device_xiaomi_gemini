@@ -27,7 +27,8 @@ PERM_PATH := $(TARGET_COPY_OUT_VENDOR)/etc/permissions
 DEVICE_PACKAGE_OVERLAYS += \
     $(LOCAL_PATH)/overlays/overlay \
     $(LOCAL_PATH)/overlays/overlay-$(LROM) \
-    $(LOCAL_PATH)/overlays/overlay-$(LDEV) \
+    $(LOCAL_PATH)/overlays/overlay-$(LDEV)
+PRODUCT_PACKAGE_OVERLAYS += \
     device/xiaomi/translations
 
 PRODUCT_ENFORCE_RRO_TARGETS := \
