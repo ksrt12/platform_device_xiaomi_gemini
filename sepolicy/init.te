@@ -38,6 +38,7 @@ allow init {
  bootanim
  bootstat
  cameraserver
+ cnd
  dumpstate
  fsck
  hal_alarm_qti_default
@@ -74,6 +75,7 @@ allow init {
  ims
  init_panel
  installd
+ ipacm
  irsc_util
  hwservicemanager
  keystore
@@ -82,9 +84,13 @@ allow init {
  mediametrics
  mm-qcamerad
  msm_irqbalanced
+ lmkd
  logd
  netd
+ netmgrd
+ readmac
  readfem
+ rild
  rfs_access
  rmt_storage
  sensors
@@ -92,6 +98,7 @@ allow init {
  surfaceflinger
  tee
  thermal-engine
+ time_daemon
  toolbox
  tzdatacheck
  ueventd

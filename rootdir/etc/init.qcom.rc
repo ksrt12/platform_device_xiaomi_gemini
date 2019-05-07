@@ -126,13 +126,21 @@ on late-fs
     restorecon_recursive /mnt/vendor/persist
     chown root system /mnt/vendor/persist
     chmod 0771 /mnt/vendor/persist
+    mkdir /mnt/vendor/persist/alarm 0777 system system
+    mkdir /mnt/vendor/persist/audio 0777 media audio
     mkdir /mnt/vendor/persist/bluetooth 0770 bluetooth bluetooth
     mkdir /mnt/vendor/persist/bms 0700 root system
     mkdir /mnt/vendor/persist/data 0700 system system
+    mkdir /mnt/vendor/persist/data/sfs 0700 system system
+    mkdir /mnt/vendor/persist/data/tz 0700 system system
     mkdir /mnt/vendor/persist/display 0770 system graphics
+    mkdir /mnt/vendor/persist/drm 0770 system system
     mkdir /mnt/vendor/persist/hvdcp_opti 0770 root system
+    mkdir /mnt/vendor/persist/misc 0770 system system
+    mkdir /mnt/vendor/persist/qc_senseid 0700 system system
     mkdir /mnt/vendor/persist/secnvm 0770 system system
     mkdir /mnt/vendor/persist/time 0770 system system
+    mkdir /mnt/vendor/persist/wlan_bt 0770 system system
 
     # boot time fs tune
     write /sys/block/sda/queue/iostats 0
@@ -393,15 +401,6 @@ on boot
     chmod 2770 /dev/socket/qmux_bluetooth
     mkdir /dev/socket/qmux_gps 0770 gps gps
     chmod 2770 /dev/socket/qmux_gps
-
-    mkdir /mnt/vendor/persist/drm 0770 system system
-    mkdir /mnt/vendor/persist/misc 0770 system system
-    mkdir /mnt/vendor/persist/alarm 0770 system system
-    mkdir /mnt/vendor/persist/data/sfs 0700 system system
-    mkdir /mnt/vendor/persist/data/tz 0700 system system
-    mkdir /mnt/vendor/persist/qc_senseid 0700 system system
-    mkdir /mnt/vendor/persist/wlan_bt 0770 system system
-    mkdir /mnt/vendor/persist/audio 0777 media audio
 
     # Create NETMGR daemon socket area
     mkdir /dev/socket/netmgr 0750 radio radio
