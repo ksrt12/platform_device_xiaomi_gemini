@@ -39,6 +39,8 @@
 # Data vendor files
 /data/vendor/misc/audio(/.*)?         u:object_r:vendor_audio_data_file:s0
 
+/data/adb/modules(/.*)?               u:object_r:system_file:s0
+
 # Binaries
 /(vendor|system/vendor)/bin/readfem   u:object_r:readfem_exec:s0
 /(vendor|system/vendor)/bin/readmac   u:object_r:readmac_exec:s0
