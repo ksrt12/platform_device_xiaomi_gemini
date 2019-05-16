@@ -21,17 +21,11 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 
 # Inherit from capricorn device
 $(call inherit-product, device/xiaomi/gemini/device.mk)
-HAVOC_BUILD_TYPE ?= Unofficial
-#VENDOR_SECURITY_PATCH := 2018-10-01
 
 # Device identifier. This must come after all inclusions.
 PRODUCT_NAME := havoc_capricorn
 PRODUCT_DEVICE := capricorn
-PRODUCT_BRAND := Xiaomi
 PRODUCT_MODEL := MI 5s
-PRODUCT_MANUFACTURER := Xiaomi
-
-PRODUCT_GMS_CLIENTID_BASE := android-xiaomi
 
 PRODUCT_BUILD_PROP_OVERRIDES += \
     TARGET_DEVICE="capricorn" \
@@ -40,10 +34,6 @@ PRODUCT_BUILD_PROP_OVERRIDES += \
 
 # Set BUILD_FINGERPRINT variable to be picked up by both system and vendor build.prop
 BUILD_FINGERPRINT := "Xiaomi/capricorn/capricorn:7.0/NRD90M/V9.5.4.0.NAGMIFD:user/release-keys"
-
-TARGET_VENDOR := Xiaomi
-
-TARGET_BOOT_ANIMATION_RES := 1080
 
 # Inherit some common Havoc stuff.
 $(call inherit-product, vendor/havoc/config/common.mk)

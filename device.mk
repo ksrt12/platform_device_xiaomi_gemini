@@ -444,3 +444,10 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/media/audio/notifications/Huawei_Cascade.ogg:system/media/audio/notifications/Huawei_Cascade.ogg \
     $(LOCAL_PATH)/media/audio/ringtones/Huawei_Tune_Piano.ogg:system/media/audio/ringtones/Huawei_Tune_Piano.ogg \
     $(LOCAL_PATH)/media/audio/ringtones/Huawei_Tune.ogg:system/media/audio/ringtones/Huawei_Tune.ogg
+
+TARGET_BOOT_ANIMATION_RES := 1080
+PRODUCT_GMS_CLIENTID_BASE := android-xiaomi
+VENDOR_SECURITY_PATCH := 2018-10-01
+PRODUCT_BRAND := Xiaomi
+PRODUCT_MANUFACTURER := Xiaomi
+TARGET_VENDOR := Xiaomi
