@@ -1,0 +1,28 @@
+// (c) 2019 ksrt12
+
+cc_library_shared {
+    name: "liblocation_api",
+    vendor: true,
+    srcs: [
+        "LocationAPI.cpp",
+        "LocationAPIClientBase.cpp",
+    ],
+    cflags: ["-fno-short-enums"] + GNSS_CFLAGS,
+    shared_libs: [
+        "libutils",
+        "libcutils",
+        "libgps.utils",
+        "libdl",
+        "liblog",
+    ],
+    header_libs: [
+        "libloc_pla_headers",
+        "libgps.utils_headers",
+    ],
+}
+
+cc_library_headers {
+    name: "liblocation_api_headers",
+    vendor: true,
+    export_include_dirs: ["."],
+}

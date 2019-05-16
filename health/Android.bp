@@ -1,7 +1,8 @@
+//
 cc_binary {
     name: "android.hardware.health@2.0-service.gemini",
     init_rc: ["android.hardware.health@2.0-service.gemini.rc"],
-    proprietary: true,
+    vendor: true,
     relative_install_path: "hw",
     srcs: [
         "HealthServiceDefault.cpp",

@@ -1,5 +1,4 @@
-//
-// Copyright (C) 2017-2018 The LineageOS Project
+// Copyright (C) 2017 The Android Open Source Project
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,19 +13,28 @@
 // limitations under the License.
 
 cc_binary {
-    name: "android.hardware.ir@1.0-service.xiaomi_8996",
+    name: "android.hardware.power@1.2-service.gemini-libperfmgr",
+    init_rc: ["android.hardware.power@1.2-service.gemini-libperfmgr.rc"],
+    owner: "qcom",
+    vendor: true,
     relative_install_path: "hw",
-    defaults: ["hidl_defaults"],
-    init_rc: ["android.hardware.ir@1.0-service.xiaomi_8996.rc"],
-    srcs: ["service.cpp", "ConsumerIr.cpp"],
+    srcs: [
+        "service.cpp",
+        "Power.cpp",
+        "InteractionHandler.cpp",
+        "power-helper.c",
+    ],
+    cflags: ["-DNO_WLAN_STATS"],
     shared_libs: [
         "libbase",
-        "libhardware",
+        "libcutils",
         "libhidlbase",
         "libhidltransport",
-        "libhwbinder",
+        "liblog",
         "libutils",
-        "android.hardware.ir@1.0",
+        "android.hardware.power@1.0",
+        "android.hardware.power@1.1",
+        "android.hardware.power@1.2",
+        "libperfmgr",
     ],
-    vendor: true,
 }

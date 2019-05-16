@@ -1,0 +1,12 @@
+// (c) 2019 ksrt12
+
+cc_library_static {
+    name: "librecovery_updater_gemini",
+    srcs: ["recovery_updater.cpp"],
+    include_dirs: ["bootable/recovery/updater/include"],
+    static_libs: [
+        "libotautil",
+        "libedify",
+    ],
+
+}

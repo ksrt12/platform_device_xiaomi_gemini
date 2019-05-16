@@ -1,0 +1,51 @@
+// (c) 2019 ksrt12
+
+cc_library_shared {
+
+    name: "libloc_core",
+    vendor: true,
+
+    srcs: [
+        "LocApiBase.cpp",
+        "LocAdapterBase.cpp",
+        "ContextBase.cpp",
+        "LocDualContext.cpp",
+        "loc_core_log.cpp",
+        "data-items/DataItemsFactoryProxy.cpp",
+        "SystemStatusOsObserver.cpp",
+        "SystemStatus.cpp",
+    ],
+
+    cflags: [
+        "-DPDK_FEATURE_SET",
+        "-fno-short-enums",
+        "-D_ANDROID_",
+    ] + GNSS_CFLAGS,
+
+    shared_libs: [
+        "liblog",
+        "libutils",
+        "libcutils",
+        "libgps.utils",
+        "libdl",
+        "liblog",
+    ],
+
+    header_libs: [
+        "libutils_headers",
+        "libgps.utils_headers",
+        "libloc_pla_headers",
+        "liblocation_api_headers",
+        "libloc_core_headers",
+    ],
+
+}
+
+cc_library_headers {
+    name: "libloc_core_headers",
+    vendor: true,
+    export_include_dirs: ["."] + [
+        "data-items",
+        "observer",
+    ],
+}

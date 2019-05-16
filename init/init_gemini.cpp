@@ -64,7 +64,7 @@ void vendor_load_properties()
     std::string platform;
 
     platform = GetProperty("ro.board.platform", "");
-    if (platform != ANDROID_TARGET)
+    if (platform != "msm8996")
         return;
 
     check_device();

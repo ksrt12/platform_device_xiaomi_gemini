@@ -1,5 +1,4 @@
-//
-// Copyright (C) 2017-2018 The LineageOS Project
+// Copyright (C) 2016 The CyanogenMod Project
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -13,20 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-cc_binary {
-    name: "android.hardware.ir@1.0-service.xiaomi_8996",
-    relative_install_path: "hw",
-    defaults: ["hidl_defaults"],
-    init_rc: ["android.hardware.ir@1.0-service.xiaomi_8996.rc"],
-    srcs: ["service.cpp", "ConsumerIr.cpp"],
-    shared_libs: [
+cc_library_static {
+    name: "libinit_gemini",
+    srcs: ["init_gemini.cpp"],
+    cflags: ["-Wall"],
+    include_dirs: ["system/core/init"],
+    static_libs: [
         "libbase",
-        "libhardware",
-        "libhidlbase",
-        "libhidltransport",
-        "libhwbinder",
-        "libutils",
-        "android.hardware.ir@1.0",
+        "libinit"
     ],
-    vendor: true,
 }

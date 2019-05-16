@@ -1,5 +1,14 @@
 subdirs = [
     "consumerir",
+    "gps",
+    "gpt-utils",
+    "init",
+    "libhild",
     "light",
+    "power",
+    "readfem",
+    "readmac",
+    "recovery",
+    "thermal",
     "usb",
 ]

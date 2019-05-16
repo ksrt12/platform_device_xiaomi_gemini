@@ -1,0 +1,27 @@
+// (c) 2019 ksrt12
+
+cc_library_shared {
+    name: "libgnss",
+    vendor: true,
+    srcs: [
+        "location_gnss.cpp",
+        "GnssAdapter.cpp",
+        "Agps.cpp",
+        "XtraSystemStatusObserver.cpp",
+    ],
+    cflags: ["-fno-short-enums"] + GNSS_CFLAGS,
+    shared_libs: [
+        "libutils",
+        "libcutils",
+        "libdl",
+        "liblog",
+        "libloc_core",
+        "libgps.utils",
+    ],
+    header_libs: [
+        "libgps.utils_headers",
+        "libloc_core_headers",
+        "libloc_pla_headers",
+        "liblocation_api_headers",
+    ],
+}

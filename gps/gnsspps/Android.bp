@@ -1,0 +1,27 @@
+// (c) 2019 ksrt12
+
+cc_library_shared {
+    name: "libgnsspps",
+    vendor: true,
+    srcs: ["gnsspps.c"],
+    cflags: [
+        "-fno-short-enums",
+        "-D_ANDROID_",
+    ] + GNSS_CFLAGS,
+    shared_libs: [
+        "libutils",
+        "libcutils",
+        "libgps.utils",
+        "liblog",
+    ],
+    header_libs: [
+        "libgps.utils_headers",
+        "libloc_pla_headers",
+    ],
+}
+
+cc_library_headers {
+    name: "libgnsspps_headers",
+    vendor: true,
+    export_include_dirs: ["."],
+}

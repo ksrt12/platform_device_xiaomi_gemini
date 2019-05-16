@@ -1,0 +1,12 @@
+// (c) 2019 ksrt12
+
+cc_binary {
+    name: "readmac",
+    vendor: true,
+    srcs: ["xiaomi_readmac.c"],
+    cflags: [
+        "-Wall",
+        "-Werror",
+    ],
+    shared_libs: ["liblog"],
+}
