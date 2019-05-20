@@ -1,34 +1,30 @@
 allow init adsprpcd_file:filesystem { mount relabelfrom relabelto };
-allow init debugfs:file write;
-allow init perfd:unix_stream_socket connectto;
-allow init perfd_data_file:sock_file write;
-allow init system_data_file:file { ioctl lock };
-# symlink /sdcard to backing block
-allow init tmpfs:lnk_file create;
-allow init proc_kernel_sched:file w_file_perms;
-allow init sysfs_type:lnk_file read;
-allow init firmware_file:dir mounton;
-allow init userdata_block_device:blk_file { write };
 allow init audio_data_file:file append;
-allow init audio_device:chr_file { ioctl write };
+allow init { audio_device serial_device video_device }:chr_file { ioctl write };
 allow init audioserver:binder transfer;
 allow init bluetooth:binder call;
 allow init bluetooth_data_file:file append;
-allow init camera_data_file:sock_file write;
+allow init debugfs:file write;
+allow init firmware_file:dir mounton;
 allow init hwservicemanager:binder { call transfer };
 allow init ion_device:chr_file ioctl;
-allow init mm-qcamerad:unix_dgram_socket sendto;
-allow init property_socket:sock_file write;
-allow init self:capability sys_nice;
-allow init serial_device:chr_file { ioctl write };
-allow init sysfs_kgsl:dir write;
-allow init video_device:chr_file { ioctl write };
-allow init vndbinder_device:chr_file { ioctl open read write };
-allow init wcnss_filter:unix_stream_socket connectto;
-allow init sysfs:file setattr;
-allow init proc:file { open read getattr};
-allow init nativetest_data_file:file getattr;
 allow init kernel:system module_request;
+allow init mm-qcamerad:unix_dgram_socket sendto;
+allow init nativetest_data_file:file getattr;
+allow init proc:file { open read getattr};
+allow init proc_kernel_sched:file w_file_perms;
+allow init { perfd wcnss_filter }:unix_stream_socket connectto;
+allow init { camera_data_file perfd_data_file property_socket }:sock_file write;
+allow init system_data_file:file { ioctl lock };
+# symlink /sdcard to backing block
+allow init tmpfs:lnk_file create;
+allow init self:capability sys_nice;
+allow init sysfs:file setattr;
+allow init { sysfs sysfs_kgsl }:dir write;
+allow init sysfs_type:lnk_file read;
+allow init userdata_block_device:blk_file { write };
+allow init vndbinder_device:chr_file { ioctl open read write };
+allow init { system_file vendor_configs_file }:{ dir file lnk_file } relabelfrom;
 
 #============= init ==============
 allow init {
@@ -109,6 +105,3 @@ allow init {
  vold
  zygote
 }:process noatsecure;
-
-allow init sysfs:dir write;
-allow init system_file:{ dir file } relabelfrom;
