@@ -4,6 +4,7 @@
 cc_library_shared {
     name: "libgps.utils",
     vendor: true,
+    sdclang: true,
     srcs: [
         "loc_log.cpp",
         "loc_cfg.cpp",

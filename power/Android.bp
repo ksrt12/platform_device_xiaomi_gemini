@@ -17,6 +17,7 @@ cc_binary {
     init_rc: ["android.hardware.power@1.2-service.gemini-libperfmgr.rc"],
     owner: "qcom",
     vendor: true,
+    sdclang: true,
     relative_install_path: "hw",
     srcs: [
         "service.cpp",

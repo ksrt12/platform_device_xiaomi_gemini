@@ -3,6 +3,7 @@
 cc_library_shared {
     name: "libgnss",
     vendor: true,
+    sdclang: true,
     srcs: [
         "location_gnss.cpp",
         "GnssAdapter.cpp",

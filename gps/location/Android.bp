@@ -3,6 +3,7 @@
 cc_library_shared {
     name: "liblocation_api",
     vendor: true,
+    sdclang: true,
     srcs: [
         "LocationAPI.cpp",
         "LocationAPIClientBase.cpp",

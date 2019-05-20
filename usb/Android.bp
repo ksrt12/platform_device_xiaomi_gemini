@@ -28,4 +28,5 @@ cc_binary {
         "android.hardware.usb@1.0",
     ],
     vendor: true,
+    sdclang: true,
 }
