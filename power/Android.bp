@@ -13,8 +13,8 @@
 // limitations under the License.
 
 cc_binary {
-    name: "android.hardware.power@1.2-service.gemini-libperfmgr",
-    init_rc: ["android.hardware.power@1.2-service.gemini-libperfmgr.rc"],
+    name: "android.hardware.power@1.2-service.xiaomi_8996",
+    init_rc: ["android.hardware.power@1.2-service.xiaomi_8996.rc"],
     owner: "qcom",
     vendor: true,
     sdclang: true,

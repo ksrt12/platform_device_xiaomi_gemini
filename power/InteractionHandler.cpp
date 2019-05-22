@@ -16,7 +16,7 @@
 
 //#define LOG_NDEBUG 0
 
-#define LOG_TAG "android.hardware.power@1.2-service.gemini-libperfmgr"
+#define LOG_TAG "android.hardware.power@1.2-service.xiaomi_8996"
 #define ATRACE_TAG (ATRACE_TAG_POWER | ATRACE_TAG_HAL)
 
 #include <fcntl.h>

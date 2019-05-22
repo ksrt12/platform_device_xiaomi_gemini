@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-#define LOG_TAG "android.hardware.power@1.2-service.gemini-libperfmgr"
+#define LOG_TAG "android.hardware.power@1.2-service.xiaomi_8996"
 
 #include <android-base/file.h>
 #include <android-base/logging.h>

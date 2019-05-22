@@ -258,8 +258,8 @@ TWRP_INCLUDE_LOGCAT := true
 TARGET_USES_LOGD := true
 
 # Vendor init
-TARGET_INIT_VENDOR_LIB := libinit_gemini
-TARGET_RECOVERY_DEVICE_MODULES := libinit_gemini
+TARGET_INIT_VENDOR_LIB := libinit_xiaomi
+TARGET_RECOVERY_DEVICE_MODULES := libinit_xiaomi
 
 # WebView Beta
 PREBUILT_WEBVIEW_VERSION := chromium

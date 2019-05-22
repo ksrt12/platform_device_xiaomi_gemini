@@ -13,9 +13,9 @@
 // limitations under the License.
 
 cc_library_static {
-    name: "libinit_gemini",
+    name: "libinit_xiaomi",
     sdclang: true,
-    srcs: ["init_gemini.cpp"],
+    srcs: ["init_xiaomi.cpp"],
     cflags: ["-Wall"],
     include_dirs: ["system/core/init"],
     static_libs: [

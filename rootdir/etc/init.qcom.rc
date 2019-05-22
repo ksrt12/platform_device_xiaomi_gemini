@@ -224,7 +224,7 @@ on post-fs-data
     mkdir /dev/socket/location/mq 0770 gps gps
     mkdir /dev/socket/location/xtra 0770 gps gps
 
-    # for android.hardware.health@2.0-service.gemini cycle count backup
+    # for android.hardware.health@2.0-service.xiaomi_msm8996 cycle count backup
     mkdir /mnt/vendor/persist/battery 0700 system system
 
     # /dev/sensors only supports an ioctl to get the current SLPI timestamp;
