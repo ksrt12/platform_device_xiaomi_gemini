@@ -434,6 +434,9 @@ PRODUCT_COPY_FILES += \
 # MiUI Camera
 $(call inherit-product-if-exists, vendor/MiuiCamera/config.mk)
 
+# QuickPic Gallery mod
+PRODUCT_PACKAGES += QPGallery
+
 # TWRP
 PRODUCT_COPY_FILES += system/timezone/output_data/iana/tzdata:recovery/root/system/usr/share/zoneinfo/tzdata
 
