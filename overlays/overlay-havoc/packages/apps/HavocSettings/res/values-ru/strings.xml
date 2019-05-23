@@ -19,5 +19,5 @@
 -->
 
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="hardware_keys_menu_key_title">Сканер Отпечатков</string>
+    <string name="hardware_keys_menu_key_title">Сканер отпечатков</string>
 </resources>
