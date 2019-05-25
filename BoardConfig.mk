@@ -65,6 +65,7 @@ TARGET_KERNEL_ARCH := arm64
 TARGET_KERNEL_CONFIG := $(LDEV)_defconfig
 TARGET_KERNEL_SOURCE := kernel/xiaomi/msm8996
 TARGET_KERNEL_CROSS_COMPILE_PREFIX := aarch64-elf-
+TARGET_KERNEL_CROSS_COMPILE_ARM32 := $(ANDROID_TOP)/prebuilts/gcc/linux-x86/arm/arm-linux-gnueabi-8.3/bin/arm-linux-gnueabi-
 KERNEL_TOOLCHAIN := $(ANDROID_TOP)/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-9.1/bin
 #TARGET_KERNEL_CLANG_COMPILE := true
 #TARGET_KERNEL_CLANG_VERSION := 9.0.3
