@@ -3,6 +3,6 @@
 *~
 patches
 patches/*
-changelog.sh
-Changelog.txt
+changelog.*
 *.diff
+*.patch
