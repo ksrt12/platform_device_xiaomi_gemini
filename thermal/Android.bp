@@ -28,9 +28,10 @@ cc_library_shared {
         "libutils",
         "libhardware",
     ],
+    header_libs: ["thermal-engine"],
 }
 
 cc_library_headers {
     name: "thermal-engine",
-    export_include_dirs: ["."],
+    export_include_dirs: ["./"],
 }
