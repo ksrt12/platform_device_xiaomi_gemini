@@ -107,7 +107,7 @@ on fs
     symlink /dev/block/platform/soc/${ro.boot.bootdevice} /dev/block/bootdevice
 
     mount_all /vendor/etc/fstab.qcom --early
-    restorecon /mnt/vendor/persist
+    restorecon /persist
 
     # Start HW service manager early
     start hwservicemanager
@@ -123,24 +123,24 @@ on late-fs
     mount_all /vendor/etc/fstab.qcom --late
 
     # Set permissions for persist partition
-    restorecon_recursive /mnt/vendor/persist
-    chown root system /mnt/vendor/persist
-    chmod 0771 /mnt/vendor/persist
-    mkdir /mnt/vendor/persist/alarm 0777 system system
-    mkdir /mnt/vendor/persist/audio 0777 media audio
-    mkdir /mnt/vendor/persist/bluetooth 0770 bluetooth bluetooth
-    mkdir /mnt/vendor/persist/bms 0700 root system
-    mkdir /mnt/vendor/persist/data 0700 system system
-    mkdir /mnt/vendor/persist/data/sfs 0700 system system
-    mkdir /mnt/vendor/persist/data/tz 0700 system system
-    mkdir /mnt/vendor/persist/display 0770 system graphics
-    mkdir /mnt/vendor/persist/drm 0770 system system
-    mkdir /mnt/vendor/persist/hvdcp_opti 0770 root system
-    mkdir /mnt/vendor/persist/misc 0770 system system
-    mkdir /mnt/vendor/persist/qc_senseid 0700 system system
-    mkdir /mnt/vendor/persist/secnvm 0770 system system
-    mkdir /mnt/vendor/persist/time 0770 system system
-    mkdir /mnt/vendor/persist/wlan_bt 0770 system system
+    restorecon_recursive /persist
+    chown root system /persist
+    chmod 0771 /persist
+    mkdir /persist/alarm 0777 system system
+    mkdir /persist/audio 0777 media audio
+    mkdir /persist/bluetooth 0770 bluetooth bluetooth
+    mkdir /persist/bms 0700 root system
+    mkdir /persist/data 0700 system system
+    mkdir /persist/data/sfs 0700 system system
+    mkdir /persist/data/tz 0700 system system
+    mkdir /persist/display 0770 system graphics
+    mkdir /persist/drm 0770 system system
+    mkdir /persist/hvdcp_opti 0770 root system
+    mkdir /persist/misc 0770 system system
+    mkdir /persist/qc_senseid 0700 system system
+    mkdir /persist/secnvm 0770 system system
+    mkdir /persist/time 0770 system system
+    mkdir /persist/wlan_bt 0770 system system
 
     # boot time fs tune
     write /sys/block/sda/queue/iostats 0
@@ -225,7 +225,7 @@ on post-fs-data
     mkdir /dev/socket/location/xtra 0770 gps gps
 
     # for android.hardware.health@2.0-service.xiaomi_msm8996 cycle count backup
-    mkdir /mnt/vendor/persist/battery 0700 system system
+    mkdir /persist/battery 0700 system system
 
     # /dev/sensors only supports an ioctl to get the current SLPI timestamp;
     # allow the sensors daemon to perform this as non-root
@@ -298,16 +298,16 @@ on early-boot
     chown system system /persist/sensors/registry/config
     chmod 0664 /persist/sensors/sensors_settings
 
-    chown system system /mnt/vendor/persist/sensors
-    chown system system /mnt/vendor/persist/sensors/sns.reg
-    chown system system /mnt/vendor/persist/sensors/sensors_list.txt
-    chown system system /mnt/vendor/persist/sensors/registry
-    chown system system /mnt/vendor/persist/sensors/registry/registry
-    chown system system /mnt/vendor/persist/sensors/registry/registry/sensors_registry
-    chown system system /mnt/vendor/persist/sensors/sensors_settings
-    chown system system /mnt/vendor/persist/sensors/registry/sns_reg_config
-    chown system system /mnt/vendor/persist/sensors/registry/config
-    chmod 0664 /mnt/vendor/persist/sensors/sensors_settings
+    chown system system /persist/sensors
+    chown system system /persist/sensors/sns.reg
+    chown system system /persist/sensors/sensors_list.txt
+    chown system system /persist/sensors/registry
+    chown system system /persist/sensors/registry/registry
+    chown system system /persist/sensors/registry/registry/sensors_registry
+    chown system system /persist/sensors/sensors_settings
+    chown system system /persist/sensors/registry/sns_reg_config
+    chown system system /persist/sensors/registry/config
+    chmod 0664 /persist/sensors/sensors_settings
     chown root audio /sys/kernel/boot_adsp/boot
 
     # SSR setup
@@ -445,7 +445,7 @@ on boot
     chown wifi wifi /sys/module/wlan/parameters/fwpath
 
     # Create vpp directory
-    mkdir /mnt/vendor/persist/vpp 0770 media media
+    mkdir /persist/vpp 0770 media media
 
     setprop ro.boot.wificountrycode VE
 
@@ -549,7 +549,7 @@ service vendor.dataqti /vendor/bin/qti
     group radio oem_2901 diag usb
     writepid /dev/cpuset/system-background/tasks
 
-service vendor.sensors /vendor/bin/sensors.qti
+service vendor.sensors /vendor/bin/sensors.qcom
     class core
     user system
     group system
