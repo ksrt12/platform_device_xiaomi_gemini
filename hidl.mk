@@ -124,3 +124,10 @@ PRODUCT_PACKAGES += \
 # LiveDisplay native
 PRODUCT_PACKAGES += \
     vendor.lineage.livedisplay@2.0-service-sdm
+
+# Vendor Display
+PRODUCT_PACKAGES += \
+    vendor.display.config@1.0 \
+    vendor.display.config@1.1 \
+    vendor.display.config@1.2 \
+    vendor.display.config@1.7
