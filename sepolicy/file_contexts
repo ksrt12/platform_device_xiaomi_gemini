@@ -22,7 +22,7 @@
 /sys/devices/platform/kcal_ctrl.0(/.*)?                 u:object_r:kcal_dev:s0
 /sys/bus/platform/drivers/kcal_ctrl(/.*)?               u:object_r:kcal_dev:s0
 
-/sys/module/cnss_common/parameters/bdwlan_file                                  u:object_r:sysfs_cnss_common:s0
+/sys/module/cnss_common/parameters/bdwlan_file          u:object_r:sysfs_cnss_common:s0
 
 # Data files
 /data/fpc(/.*)?                       u:object_r:fpc_data_file:s0

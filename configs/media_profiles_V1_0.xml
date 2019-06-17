@@ -38,7 +38,7 @@
             <Audio codec="aac"
                    bitRate="96000"
                    sampleRate="48000"
-                   channels="1" />
+                   channels="2" />
         </EncoderProfile>
         <EncoderProfile quality="qcif" fileFormat="3gp" duration="60">
             <Video codec="h264"
@@ -93,7 +93,7 @@
             <Audio codec="aac"
                    bitRate="96000"
                    sampleRate="48000"
-                   channels="1" />
+                   channels="2" />
         </EncoderProfile>
         <EncoderProfile quality="1080p" fileFormat="mp4" duration="30">
             <Video codec="h264"
@@ -104,7 +104,7 @@
             <Audio codec="aac"
                    bitRate="96000"
                    sampleRate="48000"
-                   channels="1" />
+                   channels="2" />
         </EncoderProfile>
         <EncoderProfile quality="2160p" fileFormat="mp4" duration="30">
             <Video codec="h264"
@@ -115,7 +115,7 @@
             <Audio codec="aac"
                    bitRate="96000"
                    sampleRate="48000"
-                   channels="1" />
+                   channels="2" />
         </EncoderProfile>
         <EncoderProfile quality="timelapseqcif" fileFormat="mp4" duration="30">
             <Video codec="h264"
@@ -265,7 +265,7 @@
             <Audio codec="aac"
                    bitRate="96000"
                    sampleRate="48000"
-                   channels="1" />
+                   channels="2" />
         </EncoderProfile>
         <EncoderProfile quality="qcif" fileFormat="3gp" duration="60">
             <Video codec="h264"
@@ -320,7 +320,7 @@
             <Audio codec="aac"
                    bitRate="96000"
                    sampleRate="48000"
-                   channels="1" />
+                   channels="2" />
         </EncoderProfile>
         <EncoderProfile quality="1080p" fileFormat="mp4" duration="30">
             <Video codec="h264"
@@ -331,7 +331,7 @@
             <Audio codec="aac"
                    bitRate="96000"
                    sampleRate="48000"
-                   channels="1" />
+                   channels="2" />
         </EncoderProfile>
         <EncoderProfile quality="timelapseqcif" fileFormat="mp4" duration="30">
             <Video codec="h264"
