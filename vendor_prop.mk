@@ -289,4 +289,4 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.location.osnlp.region.package=none
 
 PRODUCT_PROPERTY_OVERRIDES += \
-    ro.mod.romtags=droid=9.0.0_r42,caf=LA.UM.7.5.r1-05300-8x96.0
+    ro.mod.romtags=droid=9.0.0_r45,caf=LA.UM.7.6.2.r1-09200-89xx.0

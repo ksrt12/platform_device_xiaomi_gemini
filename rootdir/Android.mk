@@ -1,22 +1,20 @@
 LOCAL_PATH:= $(call my-dir)
 
+inishpkg := init.panel.sh init.qcom.sh
+inircpkg := init.qcom.usb.rc init.target.rc init.spectrum.rc
+
 # Common config scripts
-
-include $(CLEAR_VARS)
-LOCAL_MODULE       := init.panel.sh
+define dinitsh
+include $$(CLEAR_VARS)
+LOCAL_MODULE       := $1
 LOCAL_MODULE_TAGS  := optional eng
 LOCAL_MODULE_CLASS := ETC
-LOCAL_SRC_FILES    := init.panel.sh
-LOCAL_MODULE_PATH  := $(TARGET_OUT_VENDOR_EXECUTABLES)
-include $(BUILD_PREBUILT)
+LOCAL_SRC_FILES    := $1
+LOCAL_MODULE_PATH  := $$(TARGET_OUT_VENDOR_EXECUTABLES)
+include $$(BUILD_PREBUILT)
+endef
 
-include $(CLEAR_VARS)
-LOCAL_MODULE       := init.qcom.sh
-LOCAL_MODULE_TAGS  := optional eng
-LOCAL_MODULE_CLASS := ETC
-LOCAL_SRC_FILES    := init.qcom.sh
-LOCAL_MODULE_PATH  := $(TARGET_OUT_VENDOR_EXECUTABLES)
-include $(BUILD_PREBUILT)
+$(foreach initsh,$(inishpkg),$(eval $(call dinitsh,$(initsh))))
 
 # Common init scripts
 
@@ -44,13 +42,17 @@ LOCAL_SRC_FILES    := init.qcom.power.$(LDEV).rc
 LOCAL_MODULE_PATH  := $(TARGET_OUT_VENDOR_ETC)/init/hw
 include $(BUILD_PREBUILT)
 
-include $(CLEAR_VARS)
-LOCAL_MODULE       := init.qcom.usb.rc
+define dinitrc
+include $$(CLEAR_VARS)
+LOCAL_MODULE       := $1
 LOCAL_MODULE_TAGS  := optional eng
 LOCAL_MODULE_CLASS := ETC
-LOCAL_SRC_FILES    := init.qcom.usb.rc
-LOCAL_MODULE_PATH  := $(TARGET_OUT_VENDOR_ETC)/init/hw
-include $(BUILD_PREBUILT)
+LOCAL_SRC_FILES    := $1
+LOCAL_MODULE_PATH  := $$(TARGET_OUT_VENDOR_ETC)/init/hw
+include $$(BUILD_PREBUILT)
+endef
+
+$(foreach initrc,$(inircpkg),$(eval $(call dinitrc,$(initrc))))
 
 include $(CLEAR_VARS)
 LOCAL_MODULE       := ueventd.qcom.rc
@@ -59,22 +61,6 @@ LOCAL_MODULE_TAGS  := optional eng
 LOCAL_MODULE_CLASS := ETC
 LOCAL_SRC_FILES    := ueventd.qcom.rc
 LOCAL_MODULE_PATH  := $(TARGET_OUT_VENDOR)
-include $(BUILD_PREBUILT)
-
-include $(CLEAR_VARS)
-LOCAL_MODULE       := init.target.rc
-LOCAL_MODULE_TAGS  := optional eng
-LOCAL_MODULE_CLASS := ETC
-LOCAL_SRC_FILES    := init.target.rc
-LOCAL_MODULE_PATH  := $(TARGET_OUT_VENDOR_ETC)/init/hw
-include $(BUILD_PREBUILT)
-
-include $(CLEAR_VARS)
-LOCAL_MODULE       := init.spectrum.rc
-LOCAL_MODULE_TAGS  := optional eng
-LOCAL_MODULE_CLASS := ETC
-LOCAL_SRC_FILES    := init.spectrum.rc
-LOCAL_MODULE_PATH  := $(TARGET_OUT_VENDOR_ETC)/init/hw
 include $(BUILD_PREBUILT)
 
 include $(CLEAR_VARS)

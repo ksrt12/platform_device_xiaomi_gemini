@@ -6,7 +6,7 @@ apply=patches/apply;
 if [ ! -e $apply ]
 then sh $apply.sh;
 touch $apply; fi;
-if [ -z $dtl ]; then dtl=0; fi
+if [ -z $dtl ]; then dtl=1; fi
 export changelog_days=$dtl;
 export SDCLANG_PATH=/home/ksrt12/u/sdclang/toolchains/llvm-Snapdragon_LLVM_for_Android_8.0/prebuilt/linux-x86_64/bin;
 export SDCLANG_LTO_DEFS=device/xiaomi/gemini/sdllvm-lto-defs.mk;
