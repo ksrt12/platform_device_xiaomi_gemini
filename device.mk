@@ -180,7 +180,8 @@ PRODUCT_PACKAGES += \
 
 # Default permissions
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/privapp-permissions-gemini.xml:system/etc/permissions/privapp-permissions-gemini.xml
+    $(LOCAL_PATH)/configs/privapp-permissions-gemini.xml:system/etc/permissions/privapp-permissions-gemini.xml \
+    $(LOCAL_PATH)/configs/privapp-permissions-snapcam.xml:system/etc/permissions/privapp-permissions-snapcam.xml
 
 # Dex
 PRODUCT_DEXPREOPT_SPEED_APPS += \
