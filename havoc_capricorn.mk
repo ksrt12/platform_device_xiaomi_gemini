@@ -21,6 +21,7 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 
 # Inherit from capricorn device
 $(call inherit-product, device/xiaomi/gemini/device.mk)
+PRODUCT_PACKAGES += Snap
 
 # Device identifier. This must come after all inclusions.
 PRODUCT_NAME := havoc_capricorn
