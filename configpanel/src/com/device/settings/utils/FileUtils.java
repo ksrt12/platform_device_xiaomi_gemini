@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.havoc.settings.device.utils;
+package com.device.settings.utils;
 
 import android.util.Log;
 

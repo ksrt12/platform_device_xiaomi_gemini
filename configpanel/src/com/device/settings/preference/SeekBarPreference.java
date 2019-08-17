@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package com.havoc.settings.device.preference;
+package com.device.settings.preference;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -35,8 +35,8 @@ import android.widget.TextView;
 import android.os.Handler;
 import android.os.Message;
 
-import com.havoc.settings.device.R;
-import com.havoc.settings.device.utils.Utils;
+import com.device.settings.R;
+import com.device.settings.utils.Utils;
 
 public class SeekBarPreference extends Preference {
 

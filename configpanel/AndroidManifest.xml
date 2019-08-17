@@ -16,9 +16,9 @@
      limitations under the License.
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.havoc.settings.device"
-    android:versionCode="1"
-    android:versionName="1.0"
+    package="com.device.settings"
+    android:versionCode="6"
+    android:versionName="2.5"
     android:sharedUserId="android.uid.system">
 
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
@@ -26,7 +26,7 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
 
-    <protected-broadcast android:name="com.havoc.settings.device.CUST_UPDATE" />
+    <protected-broadcast android:name="com.device.settings.CUST_UPDATE" />
 
     <uses-sdk
         android:minSdkVersion="28" />
@@ -35,12 +35,23 @@
         android:icon="@mipmap/ic_launcher_settings"
         android:label="@string/device_settings_app_name"
         android:theme="@style/XiaomiPartsTheme"
-        android:persistent="true"
         android:defaultToDeviceProtectedStorage="true"
         android:directBootAware="true">
 
+        <provider
+            android:name=".ConfigPanelSearchIndexablesProvider"
+            android:authorities="com.device.settings"
+            android:multiprocess="false"
+            android:grantUriPermissions="true"
+            android:permission="android.permission.READ_SEARCH_INDEXABLES"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.content.action.SEARCH_INDEXABLES_PROVIDER" />
+            </intent-filter>
+        </provider>
+
         <activity
-            android:name="com.havoc.settings.device.ButtonSettingsActivity"
+            android:name=".ButtonSettingsActivity"
             android:label="@string/button_panel_title">
             <intent-filter>
                 <action android:name="com.android.settings.action.EXTRA_SETTINGS" />
@@ -57,7 +68,7 @@
         </activity>
 
         <activity
-            android:name="com.havoc.settings.device.DisplayCalibration"
+            android:name="com.device.settings.DisplayCalibration"
             android:exported="true"
             android:label="@string/kcal_title" >
             <intent-filter>
@@ -68,16 +79,13 @@
 
         <activity android:name=".KeyHandler" />
 
-        <receiver android:name="com.havoc.settings.device.Startup" >
+        <receiver android:name=".Startup" >
             <intent-filter android:priority="100">
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.PRE_BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
 
-        <service android:name=".PocketModeService"
-                 android:permission="PocketModeService">
-        </service>
     </application>
 
 </manifest>

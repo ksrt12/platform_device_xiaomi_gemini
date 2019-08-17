@@ -388,11 +388,6 @@
     <!-- Shutdown if the battery temperature exceeds (this value * 0.1) Celsius. -->
     <integer name="config_shutdownBatteryTemperature">600</integer>
 
-    <!-- Paths to the libraries that contain device specific key handlers -->
-    <string-array name="config_deviceKeyHandlerLibs" translatable="false">
-        <item>/system/priv-app/ConfigPanel/ConfigPanel.apk</item>
-    </string-array>
-
     <!-- Control the behavior when the user long presses the home button.
             0 - Nothing
             1 - Menu key

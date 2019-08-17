@@ -16,7 +16,7 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 *
 */
-package com.havoc.settings.device;
+package com.device.settings;
 
 import android.content.Context;
 import android.content.Intent;

@@ -21,6 +21,7 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 
 # Inherit from gemini device
 $(call inherit-product, device/xiaomi/gemini/device.mk)
+DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlays/overlay-syberia
 
 # Device identifier. This must come after all inclusions.
 PRODUCT_NAME := syberia_capricorn

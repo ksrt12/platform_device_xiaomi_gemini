@@ -1,4 +1,4 @@
-package com.havoc.settings.device.utils;
+package com.device.settings.utils;
 
 import android.content.Context;
 import android.util.AttributeSet;
