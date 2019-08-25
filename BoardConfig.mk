@@ -63,7 +63,11 @@ BOARD_KERNEL_TAGS_OFFSET := 0x00000100
 BOARD_RAMDISK_OFFSET := 0x01000000
 TARGET_KERNEL_ARCH := arm64
 TARGET_KERNEL_CONFIG := $(LDEV)_defconfig
+ifeq ($(BUILD_MSM4_4), true)
+TARGET_KERNEL_SOURCE := kernel/xiaomi/msm-4.4
+else
 TARGET_KERNEL_SOURCE := kernel/xiaomi/msm8996
+endif
 TARGET_KERNEL_CROSS_COMPILE_PREFIX := aarch64-elf-
 TARGET_KERNEL_CROSS_COMPILE_ARM32 := $(ANDROID_TOP)/prebuilts/gcc/linux-x86/arm/arm-linux-gnueabi-8.3/bin/arm-linux-gnueabi-
 KERNEL_TOOLCHAIN := $(ANDROID_TOP)/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-9.1/bin
@@ -126,9 +130,6 @@ TARGET_SUPPORT_HAL1 := false
 # Charger
 BOARD_CHARGER_ENABLE_SUSPEND := true
 BOARD_GLOBAL_CFLAGS += -DBATTERY_REAL_INFO
-
-# Hardware
-TARGET_TAP_TO_WAKE_NODE := "/proc/touchpanel/double_tap_enable"
 
 # Command Line Tools
 BOARD_INCLUDE_CMDLINE_TOOLS := true

@@ -367,8 +367,11 @@ PRODUCT_PACKAGES += \
     textclassifier.smartselection.bundle1
 
 # USB
-PRODUCT_PACKAGES += \
-    android.hardware.usb@1.0-service.xiaomi_8996
+ifeq ($(BUILD_MSM4_4), true)
+PRODUCT_PACKAGES += android.hardware.usb@1.0-service
+else
+PRODUCT_PACKAGES += android.hardware.usb@1.0-service.xiaomi_8996
+endif
 
 # VNDK
 ifeq ($(BOARD_VNDK_VERSION),)
