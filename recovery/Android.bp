@@ -8,5 +8,5 @@ cc_library_static {
         "libotautil",
         "libedify",
     ],
-    sdclang: true,
+
 }

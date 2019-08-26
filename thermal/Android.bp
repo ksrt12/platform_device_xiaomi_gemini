@@ -18,7 +18,7 @@ cc_library_shared {
     name: "thermal.msm8996",
     owner: "qcom",
     vendor: true,
-    sdclang: true,
+
     relative_install_path: "hw",
     srcs: ["thermal.c"],
     cflags: ["-Wno-unused-parameter"],

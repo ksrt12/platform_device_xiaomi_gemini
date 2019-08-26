@@ -30,5 +30,5 @@ cc_binary {
     ],
     cflags: ["-DLOG_TAG=\"XiaomiLightService\""],
     vendor: true,
-    sdclang: true,
+
 }

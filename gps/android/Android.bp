@@ -3,7 +3,7 @@
 cc_library_shared {
     name: "android.hardware.gnss@1.0-impl-qti",
     vendor: true,
-    sdclang: true,
+
     relative_install_path: "hw",
     srcs: [
         "AGnss.cpp",
@@ -51,7 +51,7 @@ cc_binary {
     name: "android.hardware.gnss@1.0-service-qti",
     init_rc: ["android.hardware.gnss@1.0-service-qti.rc"],
     vendor: true,
-    sdclang: true,
+
     relative_install_path: "hw",
     srcs: ["service.cpp"],
 

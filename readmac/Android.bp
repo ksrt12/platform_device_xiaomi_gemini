@@ -3,7 +3,7 @@
 cc_binary {
     name: "readmac",
     vendor: true,
-    sdclang: true,
+
     srcs: ["xiaomi_readmac.c"],
     cflags: [
         "-Wall",

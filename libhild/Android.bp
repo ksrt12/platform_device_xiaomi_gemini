@@ -19,12 +19,12 @@ cc_library_shared {
     name: "android.hidl.base@1.0",
     shared_libs: ["libhidltransport"],
     vendor: true,
-    sdclang: true,
+
 }
 
 cc_library_shared {
     name: "android.hidl.manager@1.0",
     shared_libs: ["libhidltransport"],
     vendor: true,
-    sdclang: true,
+
 }

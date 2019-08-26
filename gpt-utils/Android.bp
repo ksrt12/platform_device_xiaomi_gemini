@@ -18,7 +18,7 @@ cc_library_shared {
     name: "libgptutils",
     owner: "qti",
     vendor: true,
-    sdclang: true,
+
     srcs: ["gpt-utils.cpp"],
     header_libs: [
         "generated_kernel_headers",
