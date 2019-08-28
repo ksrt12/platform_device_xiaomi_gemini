@@ -4,7 +4,7 @@ export USE_CCACHE=true;
 export SKIP_ABI_CHECKS=true;
 apply=patches/apply;
 if [ ! -e $apply ]
-then sh $apply.sh;
+then bash $apply.sh;
 touch $apply; fi;
 if [ -z $dtl ]; then dtl=1; fi
 export changelog_days=$dtl;

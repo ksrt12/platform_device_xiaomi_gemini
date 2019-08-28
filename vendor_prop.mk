@@ -42,8 +42,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # Bluetooth
 PRODUCT_PROPERTY_OVERRIDES += \
-    bt.max.hfpclient.connections=1 \
     vendor.qcom.bluetooth.soc=rome \
+    bt.max.hfpclient.connections=1 \
     ro.bluetooth.dun=true \
     ro.bluetooth.hfp.ver=1.7 \
     ro.bluetooth.sap=true \
@@ -81,12 +81,9 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # DPM
 PRODUCT_PROPERTY_OVERRIDES += \
+    drm.service.enabled=true \
     persist.vendor.dpm.feature=5
 
-# DRM
-PRODUCT_PROPERTY_OVERRIDES += \
-    drm.service.enabled=true
-    
 # Fingerprint
 ifeq ($(LDEV),capricorn)
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -147,7 +144,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     vendor.display.rotator_downscale=1 \
     vendor.display.perf_hint_window=50 \
     vendor.display.update_vsync_on_doze=1 \
-    vendor.display.enable_default_color_mode=0
+    vendor.display.enable_default_color_mode=1
 
 # Property to enable display default color mode
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -201,6 +198,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.telephony.call_ring.multiple=false \
     ro.telephony.default_cdma_sub=0 \
     ro.telephony.default_network=20,20 \
+    telephony.lteOnCdmaDevice=1 \
     persist.data.qmi.adb_logmask=0 \
     persist.net.doxlat=true \
     persist.radio.apm_sim_not_pwdn=1 \
@@ -220,7 +218,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.vendor.radio.force_on_dc=true \
     persist.vendor.radio.ignore_dom_time=5 \
     persist.vendor.radio.calls.on.ims=1 \
-    telephony.lteOnCdmaDevice=1 \
     persist.vendor.radio.sib16_support=1
 
 # RmNet Data
