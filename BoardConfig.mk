@@ -56,7 +56,6 @@ DEVICE_MATRIX_FILE := $(VENDOR_PATH)/configs/compatibility_matrix.xml
 BOARD_KERNEL_BASE := 0x80000000
 BOARD_KERNEL_CMDLINE := androidboot.hardware=qcom ehci-hcd.park=3 cma=32M@0-0xffffffff
 BOARD_KERNEL_CMDLINE += firmware_class.path=/vendor/firmware_mnt/image loop.max_part=7
-#BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
 BOARD_KERNEL_IMAGE_NAME := Image.gz-dtb
 BOARD_KERNEL_PAGESIZE := 4096
 BOARD_KERNEL_TAGS_OFFSET := 0x00000100
@@ -65,6 +64,7 @@ TARGET_KERNEL_ARCH := arm64
 TARGET_KERNEL_CONFIG := $(LDEV)_defconfig
 ifeq ($(BUILD_MSM4_4), true)
 TARGET_KERNEL_SOURCE := kernel/xiaomi/msm-4.4
+BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
 else
 TARGET_KERNEL_SOURCE := kernel/xiaomi/msm8996
 endif
