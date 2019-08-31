@@ -1,7 +1,7 @@
 LOCAL_PATH:= $(call my-dir)
 
 inishpkg := init.panel.sh init.qcom.sh
-inircpkg := init.qcom.usb.rc init.target.rc init.spectrum.rc
+inircpkg := init.target.rc init.spectrum.rc
 
 # Common config scripts
 define dinitsh
@@ -53,6 +53,18 @@ include $$(BUILD_PREBUILT)
 endef
 
 $(foreach initrc,$(inircpkg),$(eval $(call dinitrc,$(initrc))))
+
+include $(CLEAR_VARS)
+LOCAL_MODULE       := init.qcom.usb.rc
+LOCAL_MODULE_TAGS  := optional eng
+LOCAL_MODULE_CLASS := ETC
+ifeq ($(BUILD_MSM4_4), true)
+LOCAL_SRC_FILES    := init.qcom.usb.4.4.rc
+else
+LOCAL_SRC_FILES    := init.qcom.usb.3.18.rc
+endif
+LOCAL_MODULE_PATH  := $(TARGET_OUT_VENDOR_ETC)/init/hw
+include $(BUILD_PREBUILT)
 
 include $(CLEAR_VARS)
 LOCAL_MODULE       := ueventd.qcom.rc
