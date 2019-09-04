@@ -1,0 +1,27 @@
+# Sensors - from LA.UM.7.5.r1-05300-8x96.0
+vendor/bin/sensors.qti|e66234a6836c1337dbd81556b6e454db81e699dc
+vendor/etc/sensors/hals.conf|bf3677cbfa5ce5735662e8c259cb027969f65c87
+vendor/etc/sensors/sensor_def_qcomdev.conf|b0d21e39bf33cf88a76d70871cb281cf8c0ac3f6
+vendor/lib/libsdsprpc.so|6ab1f21553ca33514958cdd501c672eab9838e6c
+vendor/lib/libsensor1.so|d73573eca4e1eaf52f09f9cc7292cdc6d9d69c70
+vendor/lib/libsensor_reg.so|2d95cea1df93dcaae0f067157f6932c1381dec53
+vendor/lib/libsensor_cit.so|154e5f5f6f0f6bf0342768814542d1e6ce1c4a6d
+vendor/lib/libsensor_crosstalk.so|0654699d57a1c278ad72c29007b913f61dda3385
+vendor/lib/libsensor_test.so|ddb9a546d5ceaa0e51f71b59851ff3edc0b29a9c
+vendor/lib/libsensor_user_cal.so|c4dc36b5995781ad1a69d3b935e0a5bd98cc6d2f
+vendor/lib64/libsdsprpc.so|8b226b29f88476466d0b9835563d03c4d325177d
+vendor/lib64/libsensor1.so|1934268e2f28ee9d705d5ff060544d06e42afcc3
+vendor/lib64/libsensor_reg.so|942fbf9ef1cfc87596f850e7ff1a86e7a9ddc846
+vendor/lib/sensors.ssc.so|96a37b515969d72875debd9ee0a505406d75bd3c
+vendor/lib64/sensors.ssc.so|e49e3c585da09b323948e1c1201118d426f3d558
+vendor/lib64/libsensor_cit.so|01e1b091d80a22567a012cd39e215cdb38a8a2c6
+vendor/lib64/libsensor_crosstalk.so|625995fecf1783e0770c8a5cafec3d04f5ae2537
+vendor/lib64/libsensor_test.so|53bee1f5ba654ac34bc4c4b4c23f9bcf337c5b7c
+vendor/lib64/libsensor_user_cal.so|72e96e0604cf967d3d70e1b066da6f655d52ac38
+
+# Sensor Calibration - from LA.UM.7.5.r1-05300-8x96.0
+framework/vendor.qti.hardware.sensorscalibrate-V1.0-java.jar|0f254c05b7c49f8b29fc29b7c69855cb30d096ce
+vendor/lib/vendor.qti.hardware.sensorscalibrate@1.0.so|6d76292841912ff7d79d82418a4b60e884a955aa
+vendor/lib/sensor_calibrate.so|39ca3c985d67c296ef21e8ce0822f7fc26023dcd
+vendor/lib64/vendor.qti.hardware.sensorscalibrate@1.0.so|ebbef1190ff9f09e04cc398afb0649123e5d1846
+vendor/lib64/sensor_calibrate.so|8d23318acf49b044512af1501407206a727bd978
