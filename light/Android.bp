@@ -28,6 +28,7 @@ cc_binary {
         "libutils",
         "android.hardware.light@2.0",
     ],
+    cflags: ["-DLOG_TAG=\"XiaomiLightService\""],
     vendor: true,
     sdclang: true,
 }

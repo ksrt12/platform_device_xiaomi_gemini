@@ -25,7 +25,7 @@ cc_binary {
         "InteractionHandler.cpp",
         "power-helper.c",
     ],
-    cflags: ["-DNO_WLAN_STATS"],
+    cflags: ["-DNO_WLAN_STATS","-DLOG_TAG=\"XiaomiPowerService\""],
     shared_libs: [
         "libbase",
         "libcutils",

@@ -13,6 +13,7 @@ cc_binary {
     cflags: [
         "-Wall",
         "-Werror",
+        "-DLOG_TAG=\"XiaomiHealthService\"",
     ],
 
     static_libs: [

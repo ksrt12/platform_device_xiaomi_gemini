@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 
-#define LOG_TAG "android.hardware.power@1.2-service.xiaomi_8996"
-
 #include <android/log.h>
 #include <hidl/HidlTransportSupport.h>
 
