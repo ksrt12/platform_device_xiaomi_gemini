@@ -285,8 +285,10 @@ on early-boot
 
     # dumpstate needs to read, vendor.health-hal needs to be able to RW
     chown system system /sys/devices/soc/qpnp-fg-22/power_supply/bms/charge_full
+    chown system system /sys/devices/soc/400f000.qcom,spmi/spmi-0/spmi0-02/400f000.qcom,spmi:qcom,pmi8994@2:qcom,fg/power_supply/bms/charge_full
     # HardwareInfo needs to be able to read charge_full
     chmod 644 /sys/devices/soc/qpnp-fg-22/power_supply/bms/charge_full
+    chmod 644 /sys/devices/soc/400f000.qcom,spmi/spmi-0/spmi0-02/400f000.qcom,spmi:qcom,pmi8994@2:qcom,fg/power_supply/bms/charge_full
 
     # for backward compatibility
     chown system system /persist/sensors

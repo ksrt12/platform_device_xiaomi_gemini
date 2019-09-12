@@ -156,8 +156,8 @@ on enable-low-power
     #write /sys/module/workqueue/parameters/power_efficient Y
 
     # Set schedTune boost values (only affects EAS)
-    #write /dev/stune/schedtune.sched_boost 10
-    write /dev/stune/rt/schedtune.sched_boost 30
+    #write /dev/stune/schedtune.boost 10
+    write /dev/stune/rt/schedtune.boost 30
 
     # update cpusets now that boot is complete and we want better load balancing
     write /dev/cpuset/top-app/cpus 0-3
