@@ -95,7 +95,7 @@ PRODUCT_PACKAGES += \
 
 # Health
 PRODUCT_PACKAGES += \
-    android.hardware.health@2.0-service.xiaomi_8996
+    android.hardware.health@2.0-service
 
 # Vibrator HIDL
 PRODUCT_PACKAGES += \
