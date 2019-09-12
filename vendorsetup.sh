@@ -1,7 +1,6 @@
 #!/bin/bash
-if [ -z $BUILD_MSM4_4 ]; then 
-if [ "$LDEV" == "gemini" ]; then export BUILD_MSM4_4=true;
-else export BUILD_MSM4_4=false; fi; fi;
+if [ "$LDEV" == "gemini" ]; then BUILD_MSM4_4=true; else BUILD_MSM4_4=false; fi;
+export BUILD_MSM4_4=$BUILD_MSM4_4
 export USE_CCACHE=true;
 export SKIP_ABI_CHECKS=true;
 apply=patches/apply;
