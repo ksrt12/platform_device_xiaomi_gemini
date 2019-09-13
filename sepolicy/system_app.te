@@ -26,4 +26,5 @@ allow system_app sysfs_zram:file r_file_perms;
 allow system_app sysfs_batteryinfo:dir search;
 
 allow system_app sysfs_qc:file rw_file_perms;
+allow system_app fs_bpf:dir search;
 

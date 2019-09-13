@@ -6,3 +6,4 @@ allow untrusted_app mnt_vendor_file:dir { getattr search };
 allow untrusted_app { adsprpcd_file bt_firmware_file firmware_file }:filesystem getattr;
 dontaudit untrusted_app rootfs:dir r_dir_perms;
 allow untrusted_app property_socket:sock_file write;
+allow untrusted_app { sysfs_kgsl sysfs_kgsl_proc }:dir search;

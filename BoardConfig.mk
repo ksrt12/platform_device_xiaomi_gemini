@@ -64,7 +64,7 @@ TARGET_KERNEL_ARCH := arm64
 TARGET_KERNEL_CONFIG := $(LDEV)_defconfig
 ifeq ($(BUILD_MSM4_4), true)
 TARGET_KERNEL_SOURCE := kernel/xiaomi/msm-4.4
-BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
+#BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
 else
 TARGET_KERNEL_SOURCE := kernel/xiaomi/msm8996
 endif
