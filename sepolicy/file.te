@@ -14,7 +14,6 @@ type sysfs_fpc_proximity, sysfs_type, fs_type;
 type sysfs_panel, sysfs_type, fs_type;
 type sysfs_soc, sysfs_type, fs_type, mlstrustedobject;
 type sysfs_perf, sysfs_type, fs_type;
-type sysfs_qc, sysfs_type, file_type;
 type thermal_data_file, core_data_file_type, file_type, data_file_type;
 type kcal_dev, sysfs_type, file_type;
 
