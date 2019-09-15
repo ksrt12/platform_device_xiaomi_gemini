@@ -4,3 +4,8 @@ allow untrusted_app_27 { hal_memtrack_hwservice hal_perf_hwservice }:hwservice_m
 allow untrusted_app_27 sysfs_kgsl_proc:dir search;
 
 allow untrusted_app_27 hal_memtrack_default:binder call;
+
+allow untrusted_app_27 anr_data_file:dir read;
+allow untrusted_app_27 apk_data_file:file setattr;
+allow untrusted_app_27 proc_version:file read;
+allow untrusted_app_27 sysfs_net:dir read;
