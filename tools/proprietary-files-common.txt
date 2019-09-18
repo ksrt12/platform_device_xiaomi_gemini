@@ -297,6 +297,7 @@ vendor/lib64/libSecureUILib.so|725350f672b416601a11e2c5e5727f8e2dd77c43
 vendor/lib64/libStDrvInt.so|768602d8b0c04ff8d09ebcf010c19ccb589dc4a7
 vendor/lib64/libdrmfs.so|87526b8b660fc8c27f0c07f1ac2d0d36544ae624
 vendor/lib64/libdrmtime.so|d0ff3f243f399f4b8b3aeeb7f2667d094a95e3c6
+vendor/lib64/libops.so|82579e586db2741c153902545e62b233ac7061fb
 vendor/lib64/libqisl.so|1f1523c03daffa9e1cd45d96d212d2fa8c1b5790
 vendor/lib64/librpmb.so|9f88e88cd8155b69a085548a60a15c5b5be70f48
 vendor/lib64/libsecureui.so|0aa9a03ebcba352ad29122381d5e285a73f08451
