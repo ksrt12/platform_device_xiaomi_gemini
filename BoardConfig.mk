@@ -295,11 +295,5 @@ endif
 USE_DEVICE_SPECIFIC_THERMAL := true
 DEVICE_SPECIFIC_THERMAL_PATH := $(VENDOR_PATH)/thermal
 
-# HALs
-ifeq ($(BUILD_MSM4_4), true)
-USE_DEVICE_SPECIFIC_MEDIA := true
-DEVICE_SPECIFIC_MEDIA_PATH := hardware/qcom/media-caf/msm8998
-endif
-
 # Inherit from the proprietary version
 -include vendor/xiaomi/$(LDEV)/BoardConfigVendor.mk
