@@ -373,7 +373,7 @@ PRODUCT_PACKAGES += \
 
 # USB
 ifeq ($(BUILD_MSM4_4), true)
-PRODUCT_PACKAGES += android.hardware.usb@1.0-service
+PRODUCT_PACKAGES += android.hardware.usb@1.0-service.basic
 else
 PRODUCT_PACKAGES += android.hardware.usb@1.0-service.xiaomi_8996
 endif
