@@ -20,6 +20,6 @@ cc_library_static {
     include_dirs: ["system/core/init"],
     static_libs: [
         "libbase",
-        "libinit"
     ],
+    recovery_available: true,
 }
