@@ -344,8 +344,8 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     telephony-ext
 
-PRODUCT_BOOT_JARS += \
-    telephony-ext
+#PRODUCT_BOOT_JARS += \
+#    telephony-ext
 
 # Thermal
 PRODUCT_PACKAGES += \
@@ -403,8 +403,8 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/wifi/hostapd/hostapd_default.conf:system/etc/hostapd/hostapd_default.conf
 
 # Wfd
-PRODUCT_BOOT_JARS += \
-    WfdCommon
+#PRODUCT_BOOT_JARS += \
+#    WfdCommon
 
 # HIDL
 $(call inherit-product, $(LOCAL_PATH)/hidl.mk)
