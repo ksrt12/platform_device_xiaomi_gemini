@@ -27,6 +27,7 @@ DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlays/overlay-syberia
 PRODUCT_NAME := syberia_gemini
 PRODUCT_DEVICE := gemini
 PRODUCT_MODEL := MI 5
+PRODUCT_BRAND := Xiaomi
 
 PRODUCT_BUILD_PROP_OVERRIDES += \
     TARGET_DEVICE="gemini" \

@@ -27,6 +27,7 @@ PRODUCT_PACKAGES += Snap
 PRODUCT_NAME := havoc_capricorn
 PRODUCT_DEVICE := capricorn
 PRODUCT_MODEL := MI 5s
+PRODUCT_BRAND := Xiaomi
 
 PRODUCT_BUILD_PROP_OVERRIDES += \
     TARGET_DEVICE="capricorn" \
