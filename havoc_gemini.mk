@@ -36,10 +36,13 @@ PRODUCT_BUILD_PROP_OVERRIDES += \
 # Set BUILD_FINGERPRINT variable to be picked up by both system and vendor build.prop
 BUILD_FINGERPRINT := "Xiaomi/gemini/gemini:8.0.0/OPR1.170623.032/V9.6.1.0.OAAMIFD:user/release-keys"
 
-ifneq ($(BOARD_VNDK_VERSION),)
-HAVOC_BUILD_TYPE := VNDK
+ifeq ($(BUILD_MSM4_4), true)
+HAVOC_BUILD_TYPE := 4.4
 else
-HAVOC_BUILD_TYPE ?= Unofficial
+HAVOC_BUILD_TYPE := 3.18
+endif
+ifneq ($(BOARD_VNDK_VERSION),)
+HAVOC_BUILD_TYPE := $(HAVOC_BUILD_TYPE)-VNDK
 endif
 
 # Inherit some common Havoc stuff.
