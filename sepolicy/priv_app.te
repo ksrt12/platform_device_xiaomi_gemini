@@ -3,7 +3,7 @@ allow priv_app device:dir r_dir_perms;
 allow priv_app { firmware_file mnt_vendor_file }:dir search;
 allow priv_app { firmware_file proc proc_interrupts proc_modules sysfs sysfs_android_usb sysfs_kgsl_proc }:file r_file_perms;
 allow priv_app sysfs:dir read;
-get_prop(priv_app, { firstboot_prop fm_prop })
+get_prop(priv_app, firstboot_prop)
 
 allow priv_app {
  file_contexts_file

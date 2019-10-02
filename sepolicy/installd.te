@@ -1,2 +1,2 @@
 allow installd adsprpcd_file:filesystem quotaget;
-allow installd { dex2oat idmap }:process noatsecure;
+allow installd idmap:process noatsecure;

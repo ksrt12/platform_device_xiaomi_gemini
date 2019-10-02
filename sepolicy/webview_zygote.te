@@ -1,3 +1,2 @@
 get_prop(webview_zygote,property_type)
 allow webview_zygote mnt_expand_file:dir getattr;
-allow webview_zygote theme_data_file:dir search;
