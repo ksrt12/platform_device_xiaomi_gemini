@@ -232,8 +232,8 @@ NUM_FRAMEBUFFER_SURFACE_BUFFERS := 3
 DISABLE_RILD_OEM_HOOK := false
 
 # SELinux
-BOARD_SEPOLICY_DIRS += $(VENDOR_PATH)/sepolicy
 include device/qcom/sepolicy/sepolicy.mk
+BOARD_SEPOLICY_DIRS += $(VENDOR_PATH)/sepolicy
 
 # Telephony
 TARGET_USES_ALTERNATIVE_MANUAL_NETWORK_SELECT := true
