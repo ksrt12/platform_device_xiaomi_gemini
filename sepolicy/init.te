@@ -13,7 +13,7 @@ allow init mm-qcamerad:unix_dgram_socket sendto;
 allow init nativetest_data_file:file getattr;
 allow init proc:file { open read getattr};
 allow init proc_kernel_sched:file w_file_perms;
-allow init { perfd wcnss_filter }:unix_stream_socket connectto;
+allow init perfd:unix_stream_socket connectto;
 allow init { camera_data_file perfd_data_file property_socket }:sock_file write;
 allow init system_data_file:file { ioctl lock };
 # symlink /sdcard to backing block
