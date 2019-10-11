@@ -1,0 +1,62 @@
+#============= adsprpcd ==============
+allow adsprpcd vendor_file:dir read;
+
+#============= atfwd ==============
+allow atfwd vendor_file:dir read;
+
+#============= cnd ==============
+allow cnd self:socket ioctl;
+allow cnd vendor_file:dir read;
+
+#============= hal_gatekeeper_default ==============
+allow hal_gatekeeper_default vendor_tee_listener_prop:file read;
+
+#============= hal_imsrtp ==============
+allow hal_imsrtp self:socket create;
+allow hal_imsrtp vendor_file:dir read;
+
+#============= hal_keymaster_default ==============
+allow hal_keymaster_default vendor_tee_listener_prop:file read;
+
+#============= hal_rcsservice ==============
+allow hal_rcsservice vendor_file:dir read;
+
+#============= hvdcp ==============
+allow hvdcp sysfs:file read;
+
+#============= ims ==============
+allow ims self:socket ioctl;
+allow ims vendor_file:dir read;
+
+#============= init ==============
+allow init system_file:file execute_no_trans;
+allow init vendor_file:file execute_no_trans;
+
+#============= init_panel ==============
+allow init_panel vendor_file:dir read;
+
+#============= location ==============
+allow location self:capability net_admin;
+allow location self:socket create;
+allow location vendor_file:dir read;
+
+#============= qti ==============
+allow qti self:socket create;
+allow qti vendor_file:dir read;
+
+#============= qti_init_shell ==============
+allow qti_init_shell vendor_file:dir read;
+
+#============= readmac ==============
+allow readmac vendor_file:dir read;
+
+#============= tee ==============
+allow tee block_device:blk_file { read write };
+
+#============= vendor_per_mgr ==============
+allow vendor_per_mgr sysfs:file read;
+allow vendor_per_mgr vendor_file:dir read;
+
+#============= vendor_per_proxy ==============
+allow vendor_per_proxy sysfs:file read;
+allow vendor_per_proxy vendor_file:dir read;

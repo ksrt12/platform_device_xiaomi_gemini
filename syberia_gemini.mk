@@ -37,7 +37,7 @@ PRODUCT_BUILD_PROP_OVERRIDES += \
 # Set BUILD_FINGERPRINT variable to be picked up by both system and vendor build.prop
 BUILD_FINGERPRINT := "Xiaomi/gemini/gemini:8.0.0/OPR1.170623.032/V9.6.1.0.OAAMIFD:user/release-keys"
 
-SYBERIA_BUILD_TYPE := VitaPostMortem
+SYBERIA_BUILD_TYPE := VitaNova
 
 # Inherit some common Syberia OS stuff.
 $(call inherit-product, vendor/syberia/common.mk)
