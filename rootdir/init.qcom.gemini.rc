@@ -127,6 +127,7 @@ on late-fs
     chmod 0771 /mnt/vendor/persist
     mkdir /mnt/vendor/persist/alarm 0777 system system
     mkdir /mnt/vendor/persist/audio 0777 media audio
+    mkdir /mnt/vendor/persist/battery 0770 system system
     mkdir /mnt/vendor/persist/bluetooth 0770 bluetooth bluetooth
     mkdir /mnt/vendor/persist/bms 0700 root system
     mkdir /mnt/vendor/persist/data 0700 system system
@@ -139,6 +140,7 @@ on late-fs
     mkdir /mnt/vendor/persist/qc_senseid 0700 system system
     mkdir /mnt/vendor/persist/secnvm 0770 system system
     mkdir /mnt/vendor/persist/time 0770 system system
+    mkdir /mnt/vendor/persist/vpp 0770 media media
     mkdir /mnt/vendor/persist/wlan_bt 0770 system system
 
     # boot time fs tune
@@ -223,9 +225,6 @@ on post-fs-data
     mkdir /dev/socket/location/mq 0770 gps gps
     mkdir /dev/socket/location/xtra 0770 gps gps
 
-    # for android.hardware.health@2.0-service.xiaomi_msm8996 cycle count backup
-    mkdir /mnt/vendor/persist/battery 0700 system system
-
     # /dev/sensors only supports an ioctl to get the current SLPI timestamp;
     # allow the sensors daemon to perform this as non-root
     chown root system /dev/sensors
@@ -245,9 +244,6 @@ on post-fs-data
     mkdir /data/system/perfd 0770 root system
     chmod 2770 /data/system/perfd
    
-    # Create /data/vendor/time folder for time-services
-    mkdir /data/vendor/time/ 0700 system system
-
     # Mark the copy complete flag to not completed
     write /data/vendor/radio/copy_complete 0
     chown radio radio /data/vendor/radio/copy_complete
@@ -335,21 +331,6 @@ on boot
     chown system system /sys/module/msm_core/parameters/disabled
     chown system system /sys/kernel/debug/msm_core/enable
     chown system system /sys/kernel/debug/msm_core/ptable
-
-    chown system system /sys/devices/platform/kcal_ctrl.0/kcal
-    chown system system /sys/devices/platform/kcal_ctrl.0/kcal_enable
-    chown system system /sys/devices/platform/kcal_ctrl.0/kcal_cont
-    chown system system /sys/devices/platform/kcal_ctrl.0/kcal_sat
-    chown system system /sys/devices/platform/kcal_ctrl.0/kcal_hue
-    chown system system /sys/devices/platform/kcal_ctrl.0/kcal_min
-    chown system system /sys/devices/platform/kcal_ctrl.0/kcal_val
-    chmod 0660 /sys/devices/platform/kcal_ctrl.0/kcal
-    chmod 0660 /sys/devices/platform/kcal_ctrl.0/kcal_enable
-    chmod 0660 /sys/devices/platform/kcal_ctrl.0/kcal_cont
-    chmod 0660 /sys/devices/platform/kcal_ctrl.0/kcal_sat
-    chmod 0660 /sys/devices/platform/kcal_ctrl.0/kcal_hue
-    chmod 0660 /sys/devices/platform/kcal_ctrl.0/kcal_min
-    chmod 0660 /sys/devices/platform/kcal_ctrl.0/kcal_val
 
     # Set schedutil permissions
     write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor "schedutil"
@@ -449,8 +430,6 @@ on boot
     chown system system /sys/devices/soc/400f000.qcom,spmi/spmi-0/spmi0-02/400f000.qcom,spmi:qcom,pmi8994@2:qcom,qpnp-smbcharger/power_supply/battery/constant_charge_current_max
     chmod 0664 /sys/devices/soc/400f000.qcom,spmi/spmi-0/spmi0-02/400f000.qcom,spmi:qcom,pmi8994@2:qcom,qpnp-smbcharger/power_supply/battery/constant_charge_current_max
 
-    # Create vpp directory
-    mkdir /mnt/vendor/persist/vpp 0770 media media
 
     setprop ro.boot.wificountrycode VE
 
@@ -481,7 +460,7 @@ on property:sys.boot_completed=1
     chown media audio /sys/kernel/wcd_cpe0/fw_name
 
     #Start TFA calibration script
-    start tfa-sh
+    start vendor.tfa-sh
 
 on property:persist.env.fastdorm.enabled=true
     setprop persist.radio.data_no_toggle 1
