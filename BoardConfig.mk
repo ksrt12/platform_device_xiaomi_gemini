@@ -69,7 +69,7 @@ else
 TARGET_KERNEL_SOURCE := kernel/xiaomi/msm8996
 endif
 TARGET_KERNEL_CROSS_COMPILE_PREFIX := aarch64-ksrt12-linux-android-
-TARGET_KERNEL_CROSS_COMPILE_ARM32 := $(ANDROID_TOP)/prebuilts/gcc/linux-x86/arm/arm-linux-gnueabi-8.3/bin/arm-linux-gnueabi-
+TARGET_KERNEL_CROSS_COMPILE_ARM32 := /home/ksrt12/new/x-tools/arm-ksrt12-linux-androideabi/bin/arm-ksrt12-linux-androideabi-
 KERNEL_TOOLCHAIN := /home/ksrt12/new/x-tools/aarch64-ksrt12-linux-android/bin
 #TARGET_KERNEL_CLANG_COMPILE := true
 #TARGET_KERNEL_CLANG_VERSION := 9.0.3
