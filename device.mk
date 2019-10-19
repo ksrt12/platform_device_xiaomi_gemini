@@ -163,15 +163,15 @@ PRODUCT_PACKAGES += \
     init.qcom.rc \
     init.qcom.power.rc \
     init.qcom.usb.rc \
+    init.qcom.usb.sh \
     init.qcom.sh \
+    init.recovery.qcom.rc \
     ueventd.qcom.rc
 
 ifeq ($(LDEV), capricorn)
 PRODUCT_PACKAGES += \
     init.target.rc
 endif
-#    init.spectrum.rc \
-#    init.spectrum.sh
 
 # CNE
 PRODUCT_PACKAGES += \
