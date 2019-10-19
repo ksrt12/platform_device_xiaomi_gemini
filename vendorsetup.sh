@@ -1,6 +1,7 @@
 #!/bin/bash
 export USE_CCACHE=true;
 export SKIP_ABI_CHECKS=true;
+if [ "$LDEV" == "capricorn" ]; then export BUILD_MSM4_4=false; fi
 apply=patches/apply;
 if [ ! -e $apply ]
 then bash $apply.sh;
