@@ -1,4 +1,4 @@
-get_prop(domain, vendor_camera_prop)
+get_prop(domain, camera_prop)
 
 dontaudit domain self:capability sys_module;
 dontaudit domain kernel:system module_request;
@@ -35,6 +35,3 @@ dontaudit domain kernel:system module_request;
 # Suppress these denials for most domains, since ueventd should be doing the
 # opening of the firmware.
 dontaudit domain firmware_file:dir search;
-
-allow domain debugfs_ion:dir search;
-allow domain debugfs_kgsl:dir search;

@@ -236,6 +236,7 @@ NUM_FRAMEBUFFER_SURFACE_BUFFERS := 3
 DISABLE_RILD_OEM_HOOK := false
 
 # SELinux
+SELINUX_IGNORE_NEVERALLOWS := true
 include device/qcom/sepolicy-legacy-um/sepolicy.mk
 BOARD_SEPOLICY_DIRS += $(VENDOR_PATH)/sepolicy
 

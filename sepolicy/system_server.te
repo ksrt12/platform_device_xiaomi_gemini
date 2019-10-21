@@ -7,9 +7,6 @@ allow system_server sysfs_fpc_wakeup:file rw_file_perms;
 allow system_server kcal_dev:dir r_dir_perms;
 allow system_server kcal_dev:file rw_file_perms;
 
-# rpm
-r_dir_file(system_server, debugfs_rpm)
-
 allowxperm system_server self:udp_socket ioctl priv_sock_ioctls;
 allow system_server mpctl_data_file:dir search;
 allow system_server mpctl_data_file:sock_file write;
@@ -17,6 +14,6 @@ allow system_server mpctl_socket:dir search;
 allow system_server mpctl_socket:sock_file write;
 allow system_server diag_device:chr_file { read write open ioctl };
 allow system_server kernel:system { syslog_read };
-allow system_server vendor_camera_prop:file r_file_perms;
+allow system_server camera_prop:file r_file_perms;
 allow system_server { adb_data_file ota_package_file }:dir getattr;
 allow system_server adb_data_file:dir read;

@@ -35,3 +35,6 @@ type proc_kernel_sched, sysfs_type, file_type, proc_type;
 # msm_irqbalance
 type proc_irq, fs_type, proc_type;
 type irqbalance_socket, file_type;
+
+type persist_battery_file, file_type, vendor_persist_type;
+type persist_qc_senseid_file, file_type, vendor_persist_type;

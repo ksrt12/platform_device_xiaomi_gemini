@@ -52,11 +52,3 @@ allow readmac vendor_file:dir read;
 
 #============= tee ==============
 allow tee block_device:blk_file { read write };
-
-#============= vendor_per_mgr ==============
-allow vendor_per_mgr sysfs:file read;
-allow vendor_per_mgr vendor_file:dir read;
-
-#============= vendor_per_proxy ==============
-allow vendor_per_proxy sysfs:file read;
-allow vendor_per_proxy vendor_file:dir read;
