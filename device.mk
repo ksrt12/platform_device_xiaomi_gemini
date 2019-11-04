@@ -381,7 +381,7 @@ PRODUCT_PACKAGES += \
 ifeq ($(BUILD_MSM4_4), true)
 PRODUCT_PACKAGES += android.hardware.usb@1.0-service
 else
-PRODUCT_PACKAGES += android.hardware.usb@1.0-service.xiaomi_8996
+PRODUCT_PACKAGES += android.hardware.usb@1.0-service.basic
 endif
 
 # VNDK
@@ -421,8 +421,8 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/wifi/hostapd/hostapd_default.conf:system/etc/hostapd/hostapd_default.conf
 
 # Wfd
-#PRODUCT_BOOT_JARS += \
-#    WfdCommon
+PRODUCT_BOOT_JARS += \
+    WfdCommon
 
 # HIDL
 $(call inherit-product, $(LOCAL_PATH)/hidl.mk)
