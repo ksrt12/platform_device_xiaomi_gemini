@@ -64,9 +64,9 @@ BOARD_KERNEL_TAGS_OFFSET := 0x00000100
 BOARD_RAMDISK_OFFSET := 0x01000000
 TARGET_KERNEL_ARCH := arm64
 TARGET_KERNEL_CONFIG := $(LDEV)_defconfig
+BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
 ifeq ($(BUILD_MSM4_4), true)
 TARGET_KERNEL_SOURCE := kernel/xiaomi/msm-4.4
-BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
 else
 TARGET_KERNEL_SOURCE := kernel/xiaomi/msm8996
 endif
