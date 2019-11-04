@@ -53,10 +53,10 @@ public class KeyHandler implements DeviceKeyHandler {
         KEY_RECENTS
     };
 
-    protected final Context mContext;
-    private final PowerManager mPowerManager;
+//    protected final Context mContext;
+//    private final PowerManager mPowerManager;
     private static boolean mButtonDisabled;
-    private Handler mHandler = new Handler();
+/*    private Handler mHandler = new Handler();
     private SensorManager mSensorManager;
     private Sensor mProximitySensor;
     WakeLock mProximityWakeLock;
@@ -81,7 +81,7 @@ public class KeyHandler implements DeviceKeyHandler {
                     "ProximityWakeLock");
         }
     }
-
+*/
     public KeyEvent handleKeyEvent(KeyEvent event) {
         if (DEBUG) Log.i(TAG, "handleKeyEvent called - scancode=" + event.getScanCode() + " - keyevent=" + event.getAction());
         return event;
