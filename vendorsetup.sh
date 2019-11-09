@@ -8,7 +8,7 @@ then bash $apply.sh;
 touch $apply; fi;
 if [ -z $dtl ]; then dtl=1; fi
 export changelog_days=$dtl;
-export SDCLANG_PATH=/home/ksrt12/u/sdclang/toolchains/llvm-Snapdragon_LLVM_for_Android_8.0/prebuilt/linux-x86_64/bin;
+export SDCLANG_PATH=/home/ksrt12/sdclang/bin;
 export SDCLANG_LTO_DEFS=device/xiaomi/gemini/sdllvm-lto-defs.mk;
 export SDCLANG_COMMON_FLAGS="-O3 -fvectorize -Wno-user-defined-warnings -Wno-vectorizer-no-neon -Wno-unknown-warning-option \
 -Wno-deprecated-register -Wno-tautological-type-limit-compare -Wno-sign-compare -Wno-gnu-folding-constant \
