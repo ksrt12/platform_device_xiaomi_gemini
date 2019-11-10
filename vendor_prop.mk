@@ -183,7 +183,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # Priv-app permissions whitelist
 PRODUCT_PROPERTY_OVERRIDES += \
-    ro.control_privapp_permissions=enforce
+    ro.control_privapp_permissions=permessive
     
 # Qualcomm BT aptXHD
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -243,10 +243,12 @@ PRODUCT_PROPERTY_OVERRIDES += \
 # USB
 PRODUCT_PROPERTY_OVERRIDES += \
     sys.usb.controller=6a00000.dwc3 \
-    persist.vendor.usb.config.extra=none
+    persist.vendor.usb.config.extra=adb
 
 # USB debugging
 PRODUCT_PROPERTY_OVERRIDES += \
+    persist.service.adb.enable=1 \
+    persist.service.debuggable=1 \
     persist.sys.usb.config=mtp,adb \
     ro.adb.secure=0 \
     ro.secure=0 \
