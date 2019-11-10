@@ -1,7 +1,6 @@
 #!/bin/bash
 #export BOARD_VNDK_VERSION=current;
-if [ "$LDEV" == "gemini" ]; then BUILD_MSM4_4=true; else BUILD_MSM4_4=false; fi;
-export BUILD_MSM4_4=$BUILD_MSM4_4
+export BUILD_MSM4_4=false
 export USE_CCACHE=true;
 apply=patches/apply;
 if [ ! -e $apply ]
