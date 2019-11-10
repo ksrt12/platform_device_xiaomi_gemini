@@ -52,3 +52,85 @@ allow readmac vendor_file:dir read;
 
 #============= tee ==============
 allow tee block_device:blk_file { read write };
+
+#============= bootanim ==============
+allow bootanim sysfs_kgsl:dir search;
+allow bootanim sysfs_kgsl:lnk_file read;
+
+#============= flags_health_check ==============
+get_prop(flags_health_check,property_type)
+
+#============= hal_graphics_allocator_default ==============
+allow hal_graphics_allocator_default sysfs_kgsl:lnk_file read;
+
+#============= hal_memtrack_default ==============
+allow hal_memtrack_default sysfs_kgsl:lnk_file read;
+
+#============= hal_wifi_default ==============
+allow hal_wifi_default default_prop:property_service set;
+allow hal_wifi_default proc_net:file write;
+
+#============= hvdcp ==============
+allow hvdcp sysfs_batteryinfo:file write;
+allow hvdcp vendor_file:dir read;
+
+#============= init ==============
+allow init sysfs_batteryinfo:file setattr;
+
+#============= irsc_util ==============
+allow irsc_util vendor_file:dir read;
+
+#============= location ==============
+allow location wifi_prop:file { getattr open read };
+
+#============= mm-qcamerad ==============
+allow mm-qcamerad persist_camera_prop:file { getattr open read };
+allow mm-qcamerad persist_camera_prop:property_service set;
+
+#============= msm_irqbalanced ==============
+allow msm_irqbalanced vendor_file:dir read;
+
+#============= netmgrd ==============
+allow netmgrd vendor_file:dir read;
+
+#============= readfem ==============
+allow readfem vendor_file:dir read;
+
+#============= rfs_access ==============
+allow rfs_access vendor_file:dir read;
+
+#============= rmt_storage ==============
+allow rmt_storage debugfs:file { open write };
+allow rmt_storage vendor_file:dir read;
+
+#============= sensors ==============
+allow sensors vendor_file:dir read;
+
+#============= su ==============
+allow su adsprpcd_file:filesystem { getattr remount };
+allow su bt_firmware_file:filesystem getattr;
+allow su firmware_file:filesystem getattr;
+
+#============= surfaceflinger ==============
+allow surfaceflinger sysfs_kgsl:lnk_file read;
+
+#============= thermal-engine ==============
+allow thermal-engine sysfs:dir { open read };
+allow thermal-engine sysfs_batteryinfo:file write;
+allow thermal-engine vendor_file:dir read;
+
+#============= time_daemon ==============
+allow time_daemon vendor_file:dir read;
+
+#============= vendor_per_mgr ==============
+allow vendor_per_mgr vendor_file:dir read;
+
+#============= vndservicemanager ==============
+allow vndservicemanager vendor_file:dir read;
+
+#============= webview_zygote ==============
+allow webview_zygote app_data_file:dir getattr;
+
+#============= zygote ==============
+allow zygote system_file:dir write;
+allow zygote system_file:file write;
