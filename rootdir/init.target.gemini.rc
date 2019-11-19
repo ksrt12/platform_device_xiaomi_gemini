@@ -26,14 +26,11 @@
 #
 #
 
-on init
-    write /sys/bus/i2c/devices/12-0020/captouch 1
-
-on post-fs-data
-    chown system system /dev/sysmatdrv
-    chmod 0660 /dev/sysmatdrv
-
-service qfp-daemon /vendor/bin/qfp-daemon
-    class late_start
+service vendor.sensors /vendor/bin/sensors.qti
+    class core
     user system
-    group system drmrpc diag input sdcard_rw
+    group system
+    # Grants the ability for this daemon to bind IPC router ports so it can
+    # register QMI services
+    capabilities NET_BIND_SERVICE
+    writepid /dev/cpuset/system-background/tasks

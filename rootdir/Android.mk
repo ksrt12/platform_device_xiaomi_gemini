@@ -1,7 +1,7 @@
 LOCAL_PATH:= $(call my-dir)
 
 inishpkg := init.panel.sh init.qcom.sh init.qcom.usb.sh
-inircpkg := init.target.rc init.spectrum.rc
+inircpkg := init.qcom.rc init.qcom.power.rc init.spectrum.rc
 
 # Common config scripts
 define dinitsh
@@ -22,23 +22,15 @@ include $(CLEAR_VARS)
 LOCAL_MODULE       := fstab.qcom
 LOCAL_MODULE_TAGS  := optional
 LOCAL_MODULE_CLASS := ETC
-LOCAL_SRC_FILES    := fstab.$(LDEV).qcom
+LOCAL_SRC_FILES    := fstab.qcom
 LOCAL_MODULE_PATH  := $(TARGET_OUT_VENDOR_ETC)
 include $(BUILD_PREBUILT)
 
 include $(CLEAR_VARS)
-LOCAL_MODULE       := init.qcom.rc
+LOCAL_MODULE       := init.target.rc
 LOCAL_MODULE_TAGS  := optional
 LOCAL_MODULE_CLASS := ETC
-LOCAL_SRC_FILES    := init.qcom.$(LDEV).rc
-LOCAL_MODULE_PATH  := $(TARGET_OUT_VENDOR_ETC)/init/hw
-include $(BUILD_PREBUILT)
-
-include $(CLEAR_VARS)
-LOCAL_MODULE       := init.qcom.power.rc
-LOCAL_MODULE_TAGS  := optional
-LOCAL_MODULE_CLASS := ETC
-LOCAL_SRC_FILES    := init.qcom.power.$(LDEV).rc
+LOCAL_SRC_FILES    := init.target.$(LDEV).rc
 LOCAL_MODULE_PATH  := $(TARGET_OUT_VENDOR_ETC)/init/hw
 include $(BUILD_PREBUILT)
 
@@ -90,3 +82,18 @@ LOCAL_MODULE_CLASS := ETC
 LOCAL_SRC_FILES    := init.spectrum.sh
 LOCAL_MODULE_PATH  := $(TARGET_ROOT_OUT)
 include $(BUILD_PREBUILT)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := rootdir
+LOCAL_MODULE_TAGS := optional
+LOCAL_REQUIRED_MODULES := \
+    fstab.qcom \
+    init.qcom.rc \
+    init.qcom.power.rc \
+    init.qcom.usb.rc \
+    init.qcom.usb.sh \
+    init.qcom.sh \
+    init.recovery.qcom.rc \
+    init.target.rc \
+    ueventd.qcom.rc
+include $(BUILD_PHONY_PACKAGE)

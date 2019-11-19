@@ -27,6 +27,7 @@
 
 import /vendor/etc/init/hw/init.qcom.power.rc
 import /vendor/etc/init/hw/init.qcom.usb.rc
+import /vendor/etc/init/hw/init.target.rc
 
 on early-init
     mount debugfs debugfs /sys/kernel/debug
@@ -427,6 +428,7 @@ on boot
     chown wifi wifi /sys/module/wlan/parameters/fwpath
 
     # Access permission for QC3.0 charging current limit
+    chown system system /sys/module/qpnp_smbcharger/parameters/default_hvdcp3_icl_ma
     chown system system /sys/devices/soc/400f000.qcom,spmi/spmi-0/spmi0-02/400f000.qcom,spmi:qcom,pmi8994@2:qcom,qpnp-smbcharger/power_supply/battery/constant_charge_current_max
     chmod 0664 /sys/devices/soc/400f000.qcom,spmi/spmi-0/spmi0-02/400f000.qcom,spmi:qcom,pmi8994@2:qcom,qpnp-smbcharger/power_supply/battery/constant_charge_current_max
 
