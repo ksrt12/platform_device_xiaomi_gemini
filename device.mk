@@ -166,19 +166,7 @@ PRODUCT_PACKAGES += \
 
 # Device init scripts
 PRODUCT_PACKAGES += \
-    fstab.qcom \
-    init.qcom.rc \
-    init.qcom.power.rc \
-    init.qcom.usb.rc \
-    init.qcom.sh \
-    ueventd.qcom.rc
-
-ifeq ($(LDEV), capricorn)
-PRODUCT_PACKAGES += \
-    init.target.rc
-endif
-#    init.spectrum.rc \
-#    init.spectrum.sh
+    rootdir
 
 # CNE
 PRODUCT_PACKAGES += \
