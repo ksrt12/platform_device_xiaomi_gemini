@@ -144,12 +144,12 @@ on enable-low-power
     write /sys/devices/soc/${ro.boot.bootdevice}/clkgate_enable 1
     write /sys/devices/soc/${ro.boot.bootdevice}/${ro.boot.bootdevice}:ufs_variant/pm_qos_enable 1
 
-    # Set idle GPU to 133 MHz
-    #write /sys/class/kgsl/kgsl-3d0/default_pwrlevel 6
+    # Set idle GPU to 214 MHz
+    write /sys/class/kgsl/kgsl-3d0/default_pwrlevel 5
     write /sys/class/kgsl/kgsl-3d0/max_pwrlevel 0
     #write /sys/class/kgsl/kgsl-3d0/devfreq/adrenoboost 0
-    write /sys/class/kgsl/kgsl-3d0/min_clock_mhz 133
-    write /sys/class/kgsl/kgsl-3d0/devfreq/min_freq 133000000
+    write /sys/class/kgsl/kgsl-3d0/min_clock_mhz 214
+    write /sys/class/kgsl/kgsl-3d0/devfreq/min_freq 214000000
     write /sys/class/kgsl/kgsl-3d0/max_clock_mhz 624
     write /sys/class/kgsl/kgsl-3d0/devfreq/max_freq 624000000
 
