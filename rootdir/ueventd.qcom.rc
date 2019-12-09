@@ -353,14 +353,6 @@ firmware_directories /vendor/firmware_mnt/image/
 # This is temporary while using SD card for initial bring-up
 /dev/block/platform/soc/8804000.sdhci/by-name/frp       0600   system     system
 
-/sys/devices/platform/kcal_ctrl.0/*     kcal            0666   system     system
-/sys/devices/platform/kcal_ctrl.0/*     kcal_cont       0666   system     system
-/sys/devices/platform/kcal_ctrl.0/*     kcal_enable     0666   system     system
-/sys/devices/platform/kcal_ctrl.0/*     kcal_hue        0666   system     system
-/sys/devices/platform/kcal_ctrl.0/*     kcal_min        0666   system     system
-/sys/devices/platform/kcal_ctrl.0/*     kcal_sat        0666   system     system
-/sys/devices/platform/kcal_ctrl.0/*     kcal_val        0666   system     system
-
 # Kmsg device
 /dev/kmsg                                               0620   root       system
 
